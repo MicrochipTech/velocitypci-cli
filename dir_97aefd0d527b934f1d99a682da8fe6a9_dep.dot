@@ -1,0 +1,13 @@
+digraph "/home/vaibhaav/RELEASE_STREAM_DAILY/FOR_GITHUB/velocitypci-cli/lib" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_97aefd0d527b934f1d99a682da8fe6a9 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_97aefd0d527b934f1d99a682da8fe6a9.html"];
+    dir_97aefd0d527b934f1d99a682da8fe6a9 [shape=plaintext label="lib"];
+    dir_2c3e26c67e8926144e9dab970917e9f6 [shape=box label="platform" color="black" fillcolor="white" style="filled" URL="dir_2c3e26c67e8926144e9dab970917e9f6.html"];
+  }
+  dir_bfccd401955b95cf8c75461437045ac0 [shape=box label="inc" fillcolor="white" style="filled" color="red" URL="dir_bfccd401955b95cf8c75461437045ac0.html"];
+  dir_97aefd0d527b934f1d99a682da8fe6a9->dir_bfccd401955b95cf8c75461437045ac0 [headlabel="19", labeldistance=1.5 headhref="dir_000002_000000.html"];
+  dir_2c3e26c67e8926144e9dab970917e9f6->dir_bfccd401955b95cf8c75461437045ac0 [headlabel="10", labeldistance=1.5 headhref="dir_000003_000000.html"];
+}

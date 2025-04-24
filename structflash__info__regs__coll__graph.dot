@@ -1,0 +1,11 @@
+digraph "flash_info_regs"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="flash_info_regs",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" active_cfg\nactive_img\ninactive_cfg\ninactive_img" ,fontname="Helvetica"];
+  Node2 [label="flash_info_regs::active\l_partition_info",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structflash__info__regs_1_1active__partition__info.html",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" img0\ncfg1\nimg1\nnvlog\nvendor\ncfg0" ,fontname="Helvetica"];
+  Node3 [label="flash_info_regs::partition_info",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structflash__info__regs_1_1partition__info.html",tooltip=" "];
+}

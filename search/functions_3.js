@@ -1,0 +1,16 @@
+var searchData=
+[
+  ['gas_5fmrpc_5fmemcpy_5ffrom_5fgas_705',['gas_mrpc_memcpy_from_gas',['../group__GASMRPC.html#ga735a24b9d28b79c2f772eaef64570269',1,'gas_mrpc_memcpy_from_gas(struct switchtec_dev *dev, void *dest, const void __gas *src, size_t n):&#160;gas_mrpc.c'],['../group__GASMRPC.html#ga735a24b9d28b79c2f772eaef64570269',1,'gas_mrpc_memcpy_from_gas(struct switchtec_dev *dev, void *dest, const void __gas *src, size_t n):&#160;gas_mrpc.c']]],
+  ['gas_5fmrpc_5fmemcpy_5fto_5fgas_706',['gas_mrpc_memcpy_to_gas',['../group__GASMRPC.html#ga275d0aeae969cfea400be97969809bd8',1,'gas_mrpc_memcpy_to_gas(struct switchtec_dev *dev, void __gas *dest, const void *src, size_t n):&#160;gas_mrpc.c'],['../group__GASMRPC.html#ga275d0aeae969cfea400be97969809bd8',1,'gas_mrpc_memcpy_to_gas(struct switchtec_dev *dev, void __gas *dest, const void *src, size_t n):&#160;gas_mrpc.c']]],
+  ['gas_5fmrpc_5fwrite_5ffrom_5fgas_707',['gas_mrpc_write_from_gas',['../group__GASMRPC.html#ga7ab1da2d3a106199e2974b594e1befff',1,'gas_mrpc_write_from_gas(struct switchtec_dev *dev, int fd, const void __gas *src, size_t n):&#160;gas_mrpc.c'],['../group__GASMRPC.html#ga7ab1da2d3a106199e2974b594e1befff',1,'gas_mrpc_write_from_gas(struct switchtec_dev *dev, int fd, const void __gas *src, size_t n):&#160;gas_mrpc.c']]],
+  ['gas_5fread16_708',['gas_read16',['../platform_8c.html#a48f9de5b69cc27170563ac83e658f83f',1,'platform.c']]],
+  ['gas_5fread32_709',['gas_read32',['../platform_8c.html#a487ffc6f3fdb11310b9a2a96914b7a43',1,'platform.c']]],
+  ['gas_5fread64_710',['gas_read64',['../platform_8c.html#ab1cdeb69302c9f8952dd87dd1c16d0f5',1,'platform.c']]],
+  ['gas_5fread8_711',['gas_read8',['../platform_8c.html#a8bd6cf063040e1e3e1a8b8f6e2afb5d4',1,'platform.c']]],
+  ['gas_5fwrite16_712',['gas_write16',['../group__GAS.html#ga6ca6c363699bc426b4dee6326a46be86',1,'gas_write16(struct switchtec_dev *dev, uint16_t val, uint16_t __gas *addr):&#160;platform.c'],['../group__GAS.html#ga6ca6c363699bc426b4dee6326a46be86',1,'gas_write16(struct switchtec_dev *dev, uint16_t val, uint16_t __gas *addr):&#160;platform.c']]],
+  ['gas_5fwrite32_713',['gas_write32',['../group__GAS.html#gae8b4658baa4980f2179cff1aeaa31ecd',1,'gas_write32(struct switchtec_dev *dev, uint32_t val, uint32_t __gas *addr):&#160;platform.c'],['../group__GAS.html#gae8b4658baa4980f2179cff1aeaa31ecd',1,'gas_write32(struct switchtec_dev *dev, uint32_t val, uint32_t __gas *addr):&#160;platform.c']]],
+  ['gas_5fwrite64_714',['gas_write64',['../group__GAS.html#gad89c0472d0f6401a9e0cd166c4410a00',1,'gas_write64(struct switchtec_dev *dev, uint64_t val, uint64_t __gas *addr):&#160;platform.c'],['../group__GAS.html#gad89c0472d0f6401a9e0cd166c4410a00',1,'gas_write64(struct switchtec_dev *dev, uint64_t val, uint64_t __gas *addr):&#160;platform.c']]],
+  ['gas_5fwrite8_715',['gas_write8',['../group__GAS.html#gafa01015286e52d7c838fa1493058c745',1,'gas_write8(struct switchtec_dev *dev, uint8_t val, uint8_t __gas *addr):&#160;platform.c'],['../group__GAS.html#gafa01015286e52d7c838fa1493058c745',1,'gas_write8(struct switchtec_dev *dev, uint8_t val, uint8_t __gas *addr):&#160;platform.c']]],
+  ['get_5fconfigs_716',['get_configs',['../group__mfg.html#gac604a771d814c2d8fb06283bae7c8f41',1,'mfg.c']]],
+  ['get_5fi2c_5foperands_717',['get_i2c_operands',['../group__mfg.html#gad8b44456c54011456f78f32179d38f40',1,'mfg.c']]]
+];

@@ -1,0 +1,20 @@
+digraph "switchtec_gfms_event"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="switchtec_gfms_event",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Represents the GFMS event."];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" host" ,fontname="Helvetica"];
+  Node2 [label="switchtec_gfms_event_host",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__event__host.html",tooltip="The event data for SWITCHTEC_GFMS_EVENT_HOST_LINK_UP/DOWN."];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" ep" ,fontname="Helvetica"];
+  Node3 [label="switchtec_gfms_event\l_ep_port",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__event__ep__port.html",tooltip="The event data for SWITCHTEC_GFMS_EVENT_EP_PORT_ADD/REMOVE."];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" dev" ,fontname="Helvetica"];
+  Node4 [label="switchtec_gfms_event_dev",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__event__dev.html",tooltip="The event data for SWITCHTEC_GFMS_EVENT_DEV_ADD/DEL."];
+  Node5 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" hvd" ,fontname="Helvetica"];
+  Node5 [label="switchtec_gfms_event_hvd",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__event__hvd.html",tooltip="The event data for SWITCHTEC_GFMS_EVENT_HVD_INST_ENABLE/DISABLE."];
+  Node6 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" bind" ,fontname="Helvetica"];
+  Node6 [label="switchtec_gfms_event_bind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__event__bind.html",tooltip="The event data for SWITCHTEC_GFMS_EVENT_BIND/UNBIND."];
+  Node7 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" aer" ,fontname="Helvetica"];
+  Node7 [label="switchtec_gfms_event_aer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__event__aer.html",tooltip="The event data for SWITCHTEC_GFMS_EVENT_AER."];
+}

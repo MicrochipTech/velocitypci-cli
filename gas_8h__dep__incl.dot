@@ -1,0 +1,13 @@
+digraph "/home/vaibhaav/RELEASE_STREAM_DAILY/FOR_GITHUB/velocitypci-cli/inc/switchtec/gas.h"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="/home/vaibhaav/RELEASE\l_STREAM_DAILY/FOR_GITHUB\l/velocitypci-cli/inc/switchtec/gas.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="GAS Accessor functions."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/home/vaibhaav/RELEASE\l_STREAM_DAILY/FOR_GITHUB\l/velocitypci-cli/lib/platform\l/gasops.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$gasops_8c_source.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/home/vaibhaav/RELEASE\l_STREAM_DAILY/FOR_GITHUB\l/velocitypci-cli/lib/platform\l/platform.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$platform_8c.html",tooltip="Switchtec platform specific functions."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/home/vaibhaav/RELEASE\l_STREAM_DAILY/FOR_GITHUB\l/velocitypci-cli/lib/platform\l/windows.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$windows_8c_source.html",tooltip=" "];
+}

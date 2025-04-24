@@ -1,0 +1,16 @@
+digraph "switchtec_gfms_db_hvd_detail"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="switchtec_gfms_db_hvd\l_detail",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" hdr" ,fontname="Helvetica"];
+  Node2 [label="switchtec_gfms_db_dump\l_section_hdr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__dump__section__hdr.html",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" body" ,fontname="Helvetica"];
+  Node3 [label="switchtec_gfms_db_hvd\l_detail_body",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__hvd__detail__body.html",tooltip=" "];
+  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" log_port_p2p_bitmap" ,fontname="Helvetica"];
+  Node4 [label="switchtec_gfms_db_hvd\l_detail_body::switchtec\l_cfg_act_bitmap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__hvd__detail__body_1_1switchtec__cfg__act__bitmap.html",tooltip=" "];
+  Node5 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" log_port_region" ,fontname="Helvetica"];
+  Node5 [label="switchtec_gfms_db_hvd\l_log_port",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__hvd__log__port.html",tooltip=" "];
+}

@@ -1,0 +1,51 @@
+digraph "switchtec_gfms_db_pax_all"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="switchtec_gfms_db_pax_all",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pax_general" ,fontname="Helvetica"];
+  Node2 [label="switchtec_gfms_db_pax\l_general",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__pax__general.html",tooltip=" "];
+  Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" body" ,fontname="Helvetica"];
+  Node3 [label="switchtec_gfms_db_pax\l_general_body",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__pax__general__body.html",tooltip=" "];
+  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" hdr" ,fontname="Helvetica"];
+  Node4 [label="switchtec_gfms_db_dump\l_section_hdr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__dump__section__hdr.html",tooltip=" "];
+  Node5 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" fabric_general" ,fontname="Helvetica"];
+  Node5 [label="switchtec_gfms_db_fabric\l_general",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__fabric__general.html",tooltip=" "];
+  Node4 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" hdr" ,fontname="Helvetica"];
+  Node6 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" body" ,fontname="Helvetica"];
+  Node6 [label="switchtec_gfms_db_fabric\l_general_body",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__fabric__general__body.html",tooltip=" "];
+  Node7 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pax_idx" ,fontname="Helvetica"];
+  Node7 [label="switchtec_gfms_db_fabric\l_general_body::pax_idx_info",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__fabric__general__body_1_1pax__idx__info.html",tooltip=" "];
+  Node8 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" hvd_all" ,fontname="Helvetica"];
+  Node8 [label="switchtec_gfms_db_hvd_all",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__hvd__all.html",tooltip=" "];
+  Node4 -> Node8 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" hdr" ,fontname="Helvetica"];
+  Node9 -> Node8 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" bodies" ,fontname="Helvetica"];
+  Node9 [label="switchtec_gfms_db_hvd_body",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__hvd__body.html",tooltip=" "];
+  Node10 -> Node9 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" SWITCHTEC_FABRIC_MAX\l_DSP_PER_HOST" ,fontname="Helvetica"];
+  Node10 [label="switchtec_gfms_db_hvd\l_body::port_bound",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__hvd__body_1_1port__bound.html",tooltip=" "];
+  Node11 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" ep_port_all" ,fontname="Helvetica"];
+  Node11 [label="switchtec_gfms_db_ep\l_port_all_section",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__ep__port__all__section.html",tooltip=" "];
+  Node4 -> Node11 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" hdr" ,fontname="Helvetica"];
+  Node12 -> Node11 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" ep_ports" ,fontname="Helvetica"];
+  Node12 [label="switchtec_gfms_db_ep_port",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__ep__port.html",tooltip=" "];
+  Node13 -> Node12 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" ep_switch" ,fontname="Helvetica"];
+  Node13 [label="switchtec_gfms_db_ep\l_port_switch",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__ep__port__switch.html",tooltip=" "];
+  Node14 -> Node13 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" ds_switch" ,fontname="Helvetica"];
+  Node14 [label="switchtec_gfms_db_ep\l_port_switch::attached\l_switch",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__ep__port__switch_1_1attached__switch.html",tooltip=" "];
+  Node15 -> Node14 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" internal_functions" ,fontname="Helvetica"];
+  Node15 [label="switchtec_gfms_db_ep\l_port_attached_ds_function",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__ep__port__attached__ds__function.html",tooltip=" "];
+  Node16 -> Node13 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" sw_hdr" ,fontname="Helvetica"];
+  Node16 [label="switchtec_gfms_db_ep\l_port_attachement_hdr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__ep__port__attachement__hdr.html",tooltip=" "];
+  Node17 -> Node13 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" switch_eps" ,fontname="Helvetica"];
+  Node17 [label="switchtec_gfms_db_ep\l_port_ep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__ep__port__ep.html",tooltip=" "];
+  Node16 -> Node17 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" ep_hdr" ,fontname="Helvetica"];
+  Node18 -> Node17 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" functions" ,fontname="Helvetica"];
+  Node18 [label="switchtec_gfms_db_ep\l_port_attached_device\l_function",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__ep__port__attached__device__function.html",tooltip=" "];
+  Node19 -> Node18 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" bars" ,fontname="Helvetica"];
+  Node19 [label="switchtec_gfms_db_ep\l_port_attached_device\l_function::bar",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__ep__port__attached__device__function_1_1bar.html",tooltip=" "];
+  Node20 -> Node12 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" port_hdr" ,fontname="Helvetica"];
+  Node20 [label="switchtec_gfms_db_ep\l_port_hdr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__gfms__db__ep__port__hdr.html",tooltip=" "];
+  Node17 -> Node12 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" ep_ep" ,fontname="Helvetica"];
+}

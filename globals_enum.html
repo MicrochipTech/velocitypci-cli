@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Switchtec Userspace: Introduction</title>
+<title>Switchtec Userspace: File Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,18 +61,60 @@ $(function() {
 </iframe>
 </div>
 
-<div class="PageDoc"><div class="header">
-  <div class="headertitle">
-<div class="title">Introduction </div>  </div>
-</div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This is the documentation for the Switchtec Userspace project. The userspace project consists of a command line interface (CLI) program which provides a simple way to perform the most common maintenance operations. The CLI makes use of the userspace library (libswitchtec) which is also included in this project and provides an API interface for all the commands the CLI can do as well as interfaces for writing custom or other unimplemented commands. The library communicates with the kernel space drivers (<a href="https://github.com/Microsemi/switchtec-kernel">switchtec-kernel</a> for Linux and switchtec-kmdf for windows) which are documented in their respective packages. A block diagram showing the relationships between the components is given below.</p>
-<p><object type="image/svg+xml" data="switchtec.svg" style="pointer-events: none;">Block Diagram</object></p>
-<p>It's important to note that, on Linux, the driver does not provide direct access to the GAS registers and this accesses is obtained when necessary through the PCI resource file in SYSFS. Because of this, GAS accesss requires full root privileges where as all normal operations only requires permissions access to the device file. This is a good thing seeing direct GAS access has many security implications and can be dangerous for applications to directly access.</p>
-<p>The Windows kernel driver, on the other hand, was designed as a thin driver with all GAS accesses being done in the userspace library. This was mostly done to ease future development on I2C/TWI and Ethernet interfaces which will always have direct access to the GAS.</p>
-<h1>Switchtec Library </h1>
-<p>To get started using the library you may refer to the examples provided in the examples folder of the switchtec-user repository. The APIs are also documented herein. Basic functions to open a handle to a device and perform custom MRPC commands are documented in the <a class="el" href="group__Device.html">Device API</a>. Additional APIs for other functionality can be browsed in the <a href="modules.html">Modules</a> section. </p>
-</div></div><!-- PageDoc -->
+&#160;<ul>
+<li>stmfd_rcvry_reason
+: <a class="el" href="switchtec_8h.html#a232cd9f9c2cf4e5617d04af55977d382">switchtec.h</a>
+</li>
+<li>stmfd_rev
+: <a class="el" href="switchtec_8h.html#a7935c8119205638afca04a28f72fbfc7">switchtec.h</a>
+</li>
+<li>switchtec_boot_phase
+: <a class="el" href="switchtec_8h.html#aa1b599396cc621d55546e15d3e8c7ed9">switchtec.h</a>
+</li>
+<li>switchtec_bw_type
+: <a class="el" href="switchtec_8h.html#a00f627425d47fc141fbd2a2a0439da81">switchtec.h</a>
+</li>
+<li>switchtec_evcntr_type_mask
+: <a class="el" href="switchtec_8h.html#a4d8fae067392f192302b8967db9148f8">switchtec.h</a>
+</li>
+<li>switchtec_event_flags
+: <a class="el" href="switchtec_8h.html#ad3c36fb6c496ecf450c6aa3438ad1b13">switchtec.h</a>
+</li>
+<li>switchtec_event_id
+: <a class="el" href="switchtec_8h.html#a1fd97606072a660c0cce93ec4ba78d3e">switchtec.h</a>
+</li>
+<li>switchtec_event_special
+: <a class="el" href="switchtec_8h.html#a9fd654937f9ec374cab855724d4f3c43">switchtec.h</a>
+</li>
+<li>switchtec_event_type
+: <a class="el" href="switchtec_8h.html#a9e263d19c6eede5f6c2adcce66b25b66">switchtec.h</a>
+</li>
+<li>switchtec_fw_dlstatus
+: <a class="el" href="switchtec_8h.html#adbbb02343d5f3ff817e3ffce069ceed8">switchtec.h</a>
+</li>
+<li>switchtec_fw_ro
+: <a class="el" href="switchtec_8h.html#a3f828a38e4ac2c589b4e5960f01d3210">switchtec.h</a>
+</li>
+<li>switchtec_gen
+: <a class="el" href="switchtec_8h.html#a542c208ef61a0813c8a05a873da28dea">switchtec.h</a>
+</li>
+<li>switchtec_log_def_type
+: <a class="el" href="switchtec_8h.html#a6eaf036b8025f34293e15748b39f8388">switchtec.h</a>
+</li>
+<li>switchtec_log_parse_type
+: <a class="el" href="switchtec_8h.html#a1bc95d266e51c190105896853dee2069">switchtec.h</a>
+</li>
+<li>switchtec_log_type
+: <a class="el" href="switchtec_8h.html#a9f51cee462f5939dc94a9b16e06d416b">switchtec.h</a>
+</li>
+<li>switchtec_rev
+: <a class="el" href="switchtec_8h.html#a417427a41a86b5494abe6ad13d851e16">switchtec.h</a>
+</li>
+<li>switchtec_variant
+: <a class="el" href="switchtec_8h.html#a78bdfdb71970346b3e241fd0c4b2d6ea">switchtec.h</a>
+</li>
+</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

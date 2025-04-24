@@ -1,0 +1,9 @@
+digraph "switchtec_flash_info_gen4"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="switchtec_flash_info_gen4",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" img0\ncfg1\nimg1\nkeyman0\nkeyman1\nnvlog\nbl20\nbl21\nmap0\nvendor\n..." ,fontname="Helvetica"];
+  Node2 [label="switchtec_flash_info\l_gen4::switchtec_flash\l_part_info_gen4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__flash__info__gen4_1_1switchtec__flash__part__info__gen4.html",tooltip=" "];
+}

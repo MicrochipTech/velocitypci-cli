@@ -1,0 +1,9 @@
+digraph "switchtec_bwcntr_res"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="switchtec_bwcntr_res",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Bandwidth counter result struct."];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" ingress\negress" ,fontname="Helvetica"];
+  Node2 [label="switchtec_bwcntr_res\l::switchtec_bwcntr_dir",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structswitchtec__bwcntr__res_1_1switchtec__bwcntr__dir.html",tooltip=" "];
+}
