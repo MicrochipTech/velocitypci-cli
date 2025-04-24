@@ -58,14 +58,6 @@ pacman -S --needed base-devel mingw-w64-i686-toolchain mingw-w64-x86_64-toolchai
 3. Close the MSYS2 shell, open an MINGW64 shell, checkout the project
 and follow the above installation instructions as usual.
 
-## Demos
-
-### CLI Demo
-[![asciicast](https://asciinema.org/a/98042.png)](https://asciinema.org/a/98042)
-
-### Firmware Demo
-[![asciicast](https://asciinema.org/a/96442.png)](https://asciinema.org/a/96442)
-
 ## Appendix
 
 ### Configuration Files
