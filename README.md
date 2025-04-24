@@ -20,10 +20,10 @@ Currently the following features are supported:
 * A simple ncurses GUI that shows salient information for the switch
 * Display and configure manufacturing settings
 
-Detailed documentation for the project can be found on the [github pages] site.
+Detailed documentation for the project can be found on the [Github Pages] site.
 
 [switchtec-kernel]: https://github.com/Microsemi/switchtec-kernel
-[github pages]: https://microchiptech.github.io/velocitypci-cli/
+[Github Pages]: https://microchiptech.github.io/velocitypci-cli/
 
 ## Dependencies
 
