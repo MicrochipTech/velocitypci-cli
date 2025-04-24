@@ -28,7 +28,7 @@
  */
 
 /**
- * @defgroup ini Functions
+ * @defgroup ini Ini2bin Utility Functions
  * @brief ini2bin API functions
  *
  * These are functions used for converting INI file to BIN for OTP configuration record

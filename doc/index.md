@@ -1,10 +1,10 @@
 Introduction {#mainpage}
 =================================
 
-This is the documentation for the Switchtec Userspace project. The userspace
+This is the documentation for the VelocityPCI Userspace project. The userspace
 project consists of a command line interface (CLI) program which provides a
 simple way to perform the most common maintenance operations. The CLI makes
-use of the userspace library (libswitchtec) which is also included in
+use of the userspace library which is also included in
 this project and provides an API interface for all the commands the CLI can do
 as well as interfaces for writing custom or other unimplemented commands.
 The library communicates with the kernel space drivers ([switchtec-kernel] for
@@ -32,11 +32,11 @@ will always have direct access to the GAS.
 [switchtec-kernel]: https://github.com/Microsemi/switchtec-kernel
 
 
-Switchtec Library
+VelocityPCI Library
 ===================
 
 To get started using the library you may refer to the examples provided
-in the examples folder of the switchtec-user repository. The APIs are also
+in the examples folder of the velocitypci-cli repository. The APIs are also
 documented herein. Basic functions to open a handle to a device and perform
 custom MRPC commands are documented in the [Device API]. Additional APIs
 for other functionality can be browsed in the [Modules] section.
