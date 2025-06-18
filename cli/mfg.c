@@ -2334,7 +2334,11 @@ static int sjtag_unlock(int argc, char **argv)
 
         ret = switchtec_sjtag_status_get(cfg.dev, &status);
         if (ret)
-            switchtec_perror("mfg sjtag-sts-get");
+		{
+			switchtec_perror("Failed to the retrive the SJTAG Status from the device");
+			ret = -1;
+			break;
+		}
 
         if(true == cfg.verbose)
         {
@@ -2352,12 +2356,14 @@ static int sjtag_unlock(int argc, char **argv)
         }
         else
         {
-            if (cfg.sjtag_debug_token_file) {
+            if (cfg.sjtag_debug_token_file)
+			{
                 ret = switchtec_read_sjtag_debug_token_file(cfg.sjtag_debug_token, &debug_token);
                 fclose(cfg.sjtag_debug_token);
-                if (ret) {
-                    printf("Invalid SJTAG Debug Token File\n");
-                    ret = -6;
+                if (ret)
+				{
+                    switchtec_perror("Invalid SJTAG Debug Token File");
+                    ret = -1;
                     break;
                 }
             }
@@ -2365,9 +2371,19 @@ static int sjtag_unlock(int argc, char **argv)
             {
                 ret = switchtec_sjtag_get_uuid_idcode(cfg.dev, uuid.uuid, sjtag_unlock.idcode);
                 if (ret)
-                    switchtec_perror("mfg sjtag-get-uuid");
+				{
+					switchtec_perror("Failed to retrive the UUID/IDCODE from the device");
+                    ret = -1;
+					break;
+				}
 
                 ret = switchtec_sn_ver_get(cfg.dev, &sn_info);
+				if (ret)
+				{
+					switchtec_perror("Failed to retrive the SUV from the device");
+					ret = -1;
+					break;
+				}
 
                 ret = sjtag_debug_token_gen(sjtag_unlock.idcode, uuid.uuid, (uint8_t *)&sn_info.ver_sec_unlock, debug_token.debug_token, cfg.verbose);
                 if(ret)
@@ -2375,17 +2391,20 @@ static int sjtag_unlock(int argc, char **argv)
                     ret = -1;
                     break;
                 }
-                debug_token_bin_file = fopen("sjtag_debug_token.bin", "wb");
 
-                if (NULL == debug_token_bin_file) {
-                    perror("Error opening file");
+                debug_token_bin_file = fopen("sjtag_debug_token.bin", "wb");
+                if (NULL == debug_token_bin_file)
+				{
+					switchtec_perror("Error opening file");
+					ret = -1;
+					break;
                 }
 
                 fwrite(debug_token.debug_token, sizeof(uint8_t), SJTAG_DEBUG_TOKEN_LEN, debug_token_bin_file);
                 fclose(debug_token_bin_file);
                 if(getcwd(dir_path, sizeof(dir_path)) == NULL)
 				{
-					printf("Error getting the current working directory. sjtag_debug_token.bin was saved in the current directory");
+					printf("Error getting the current working directory. sjtag_debug_token.bin was saved in the current directory\n");
 				}
 				else
 				{
@@ -2395,7 +2414,11 @@ static int sjtag_unlock(int argc, char **argv)
 
             ret = switchtec_sjtag_get_nonce(cfg.dev, &nonce);
             if (ret)
-                switchtec_perror("mfg sjtag-get-uuid-nonce");
+			{
+				switchtec_perror("Failed to retrive the Nonce from the device");
+				ret = -1;
+				break;
+			}
 
             sjtag_hr_calc(debug_token.debug_token, nonce.nonce, sjtag_hr, cfg.verbose);
 
