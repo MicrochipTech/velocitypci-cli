@@ -1005,7 +1005,6 @@ int sjtag_debug_token_gen(uint8_t *idcode_ptr, uint8_t *uuid_ptr, uint8_t *suv_p
     int socket_server;
     struct sockaddr_in server_address;
     uint8_t sjtag_hmac_msg[SJTAG_HMAC_MSG_LEN] = {0};
-    uint8_t sjtag_uuid_send[SJTAG_UUID_LEN] = {0};
     uint8_t sjtag_idcode_send[SJTAG_IDCODE_LEN] = {0};
     const uint8_t unlock_str[SJTAG_UNLOCK_STR_LEN] = {'S','T','M','F','D','_','S','J','T','A','G','_','U','N','L','O','C','K'};
     uint8_t cmd_header[SJTAG_SERVER_HEADER_LEN];
@@ -1067,21 +1066,17 @@ int sjtag_debug_token_gen(uint8_t *idcode_ptr, uint8_t *uuid_ptr, uint8_t *suv_p
         }
 
         if(true == verbose)
-            printf("UUID: ");
-
-        for(int i=0; i<SJTAG_UUID_LEN; i++)
-        {
-            sjtag_uuid_send[i] = uuid_ptr[9 - i];
-            if(true == verbose)
-            {
-                printf("%x", sjtag_uuid_send[i]);
-            }
-        }
-        if(true == verbose)
-            printf("\n");
+		{
+			printf("UUID: ");
+			for(int i=0; i<SJTAG_UUID_LEN; i++)
+			{
+				printf("%x", uuid_ptr[i]);
+			}
+			printf("\n");
+		}
 
         /* Send the UUID to the server */
-        if(send(socket_server, sjtag_uuid_send, SJTAG_UUID_LEN, 0) < 0)
+        if(send(socket_server, uuid_ptr, SJTAG_UUID_LEN, 0) < 0)
         {
             printf("Unable to send the UUID to the Plugin server!\n");
             ret = -1;
