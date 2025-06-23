@@ -2402,14 +2402,8 @@ static int sjtag_unlock(int argc, char **argv)
 
                 fwrite(debug_token.debug_token, sizeof(uint8_t), SJTAG_DEBUG_TOKEN_LEN, debug_token_bin_file);
                 fclose(debug_token_bin_file);
-                if(getcwd(dir_path, sizeof(dir_path)) == NULL)
-				{
-					printf("Error getting the current working directory. sjtag_debug_token.bin was saved in the current directory\n");
-				}
-				else
-				{
-					printf("Generated SJTAG Debug Token Path: %s/sjtag_debug_token.bin\n", dir_path);
-				}
+				getcwd(dir_path, sizeof(dir_path));
+				printf("Generated SJTAG Debug Token Path: %s/sjtag_debug_token.bin\n", dir_path);
             }
 
             ret = switchtec_sjtag_get_nonce(cfg.dev, &nonce);
