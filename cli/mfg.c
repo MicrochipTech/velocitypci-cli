@@ -2335,7 +2335,7 @@ static int sjtag_unlock(int argc, char **argv)
         ret = switchtec_sjtag_status_get(cfg.dev, &status);
         if (ret)
 		{
-			switchtec_perror("Failed to the retrive the SJTAG Status from the device");
+			switchtec_perror("Failed to retrive the SJTAG Status from the device");
 			ret = -1;
 			break;
 		}
@@ -2345,7 +2345,7 @@ static int sjtag_unlock(int argc, char **argv)
             printf("SJTAG Mode: %x\n", (status.data & 0x03));
         }
 
-        /* For Open mode - Unlock status(status.data[3]) should 1 */
+        /* For Open mode - Unlock status(status.data[2]) should 1 */
         if ((((status.data & 0x03) == 0x00) || ((status.data & 0x04) == 0x04)) && (false == cfg.force_hr))
         {
             printf("SJTAG is in Open State\n");
