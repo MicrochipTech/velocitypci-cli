@@ -293,22 +293,9 @@ void handle_address_change(DWORD dwCurrAddress, DWORD dwPrevAddress, BOOL *bVali
 }
 
 void handle_xdata_mode_switch(BYTE byCurrXMode, BYTE *byPrevXMode, BOOL *bValidDataOffset, BYTE *byDataLength, WORD *wDataLengthOffset, BYTE *m_pBinConfig, WORD *m_wDataOffset) {
-    if (byCurrXMode == XMODE_WRITE_BYTE)
-    {
-        if (*bValidDataOffset)
-        {
-            // Complete the data record before switching XDATA mode
-            m_pBinConfig[*wDataLengthOffset] = *byDataLength;
-            *bValidDataOffset = FALSE;
-        }
-        // Switch to new xdata write/set/clear mode
-        m_pBinConfig[(*m_wDataOffset)++] = CUSTOM_COMMAND;
-        m_pBinConfig[(*m_wDataOffset)++] = byCurrXMode;
-
-        *byPrevXMode = byCurrXMode;
-    }
-
-    // Take care of xdata mode switching
+	/* Update the xdata mode only if the current mode is not same
+	 * of the previous mode */
+	// Take care of xdata mode switching
     if (byCurrXMode != *byPrevXMode)
     {
         if (*bValidDataOffset)
@@ -447,7 +434,9 @@ int switchtec_convert_ini2bin(FILE *szINIFileName, char *pclog ,BYTE *m_pBinConf
     char szKeyList[KEY_BUF_SIZE];
     WORD m_wDataOffset = 0;
     char szKeyEntry[KEY_BUF_SIZE];
-    BYTE byPrevXMode = XMODE_WRITE_BYTE; // By default xdata_write mode
+	/* xdata mode is added to the binary only on byPrevXMode != byCurrXMode.
+	 * So, initializing the Previous xdata mode to SET_XMODE_NONE */
+    BYTE byPrevXMode = SET_XMODE_NONE;
     BYTE byCurrXMode = SET_XMODE_NONE;
     unsigned int nTemp = 0;
     DWORD dwCurrAddress = 0, dwPrevAddress = 0;
