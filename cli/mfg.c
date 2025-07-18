@@ -1599,7 +1599,7 @@ static int otp_config_read(int argc, char **argv)
 			.cfg_type=CFG_SHORT,
 			.value_addr=&cfg.config_start_address,
 			.argument_type=required_argument,
-			.help="Start Address from the OTP to read Config data\n"},
+			.help="Start Address from the OTP to read Config data\n Config region starts from 0x1800\n"},
 		{"len", 'l', "Config Length",
 			.cfg_type=CFG_SHORT,
 			.value_addr=&cfg.config_length,
