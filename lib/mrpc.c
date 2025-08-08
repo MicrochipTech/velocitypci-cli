@@ -97,6 +97,7 @@ const struct switchtec_mrpc switchtec_mrpc_table[MRPC_MAX_ID] = {
 	M(EP_RESOURCE_ACCESS,		"Endpoint Device CSR and MS Raw Access"),
 	M(EP_TUNNEL_CFG,		"Endpoint Device Tunnel Configuration"),
 	M(NVME_ADMIN_PASSTHRU,		"NVMe Admin Passthrough"),
+	M(PHY_DEBUG_DUMP,		"Dump PHY Registers"),
 	M(I2C_TWI_PING,			"I2C/TWI Ping"),
 	M(SECURITY_CONFIG_GET,		"Secure Configuration Get"),
 	M(SECURITY_CONFIG_SET,		"Secure Configuration Set"),
