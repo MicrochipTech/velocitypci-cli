@@ -109,9 +109,8 @@ const struct switchtec_mrpc switchtec_mrpc_table[MRPC_MAX_ID] = {
 	M(SN_VER_GET,			"Chip Serial Number and Secure Versions"),
 	M(DBG_UNLOCK,			"Resource Unlock"),
 	M(BOOTUP_RESUME,		"Bootup Resume"),
-	M(SECURITY_CONFIG_GET_GEN5,	"Secure Configuration Get (Gen5)"),
-	M(SECURITY_CONFIG_SET_GEN5,	"Secure Configuration Set (Gen5)"),
 	M(OTP_PROG_GEN_HDLR,			"OTP Program Generic Handler"),
 	M(OTP_CONTROL_STATUS_GEN_HDLR,	"OTP Control/Status Generic Handler"),
 	M(OTP_SJTAG_INFO,		"OTP SJTAG Info Set"),
+	M(SJTAG_UNLOCK,			"SJTAG Unlock"),
 };
