@@ -138,9 +138,14 @@ static int ping(int argc, char **argv)
 	int ret;
 	static struct {
 		struct switchtec_dev *dev;
-	} cfg = {};
+		bool extended_cmd;
+	} cfg = {
+	.extended_cmd = false};
+
 	const struct argconfig_options opts[] = {
 		DEVICE_OPTION_MFG,
+		{"extended_cmd", 'x', "", CFG_NONE, &cfg.extended_cmd, no_argument,
+		"print extended ping command information"},
 		{NULL}
 	};
 	struct ping_dev_info ping_info;
@@ -178,8 +183,11 @@ static int ping(int argc, char **argv)
 		printf("Strap status\n-------------\n");
 		printf("SPI QUAD MODE:\t\t\t%s\n",          PCI100X_STRAP_STAT(ping_info.strap_stat , SPI_QUAD_MODE));
 		printf("INLINE ECC MODE:\t\t%s\n",          PCI100X_STRAP_STAT(ping_info.strap_stat , INLINE_ECC_MODE));
-		printf("SPI 3B/4B MODE:\t\t\t%s\n",         PCI100X_STRAP_STAT(ping_info.strap_stat , SPI_3B_4B_MODE));
-		printf("XIP MODE:\t\t\t%s\n",               PCI100X_STRAP_STAT(ping_info.strap_stat , XIP_MODE));
+		if (true == cfg.extended_cmd)
+		{
+			printf("SPI 3B/4B MODE:\t\t\t%s\n",         PCI100X_STRAP_STAT(ping_info.strap_stat , SPI_3B_4B_MODE));
+			printf("XIP MODE:\t\t\t%s\n",               PCI100X_STRAP_STAT(ping_info.strap_stat , XIP_MODE));
+		}
 		printf("WATCHDOG:\t\t\t%s\n",               PCI100X_STRAP_STAT(ping_info.strap_stat , WATCHDOG_EN));
 		printf("TWI RECOVERY ADDRESS BIT0:\t%s\n",  PCI100X_STRAP_STAT(ping_info.strap_stat , TWI_RCVRY_ADDR0));
 		printf("TWI RECOVERY ADDRESS BIT1:\t%s\n",  PCI100X_STRAP_STAT(ping_info.strap_stat , TWI_RCVRY_ADDR1));
