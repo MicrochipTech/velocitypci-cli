@@ -1112,8 +1112,8 @@ static int write_parsed_log(struct log_a_data log_data[],
 	bool is_bl1;
 	struct module_log_defs *mod_defs;
 
-	if (entry_idx == 0) {
-		if (log_type == SWITCHTEC_LOG_PARSE_TYPE_APP)
+	if (entry_idx == 0){ 
+		if (log_type == SWITCHTEC_LOG_PARSE_TYPE_APP || log_type == SWITCHTEC_LOG_PARSE_TYPE_FTDC)
 			fputs("   #|Timestamp                |Module       |Severity |Event ID |Event\n",
 		      	      log_file);
 		else
@@ -1138,7 +1138,7 @@ static int write_parsed_log(struct log_a_data log_data[],
 		hours = time % 24;
 		days = time / 24;
 
-		if (log_type == SWITCHTEC_LOG_PARSE_TYPE_APP) {
+		if (log_type == SWITCHTEC_LOG_PARSE_TYPE_APP || log_type == SWITCHTEC_LOG_PARSE_TYPE_FTDC) {
 			/*
 			 * app log: module ID and log severity are in the 3rd
 			 * DWord
@@ -1199,7 +1199,7 @@ static int write_parsed_log(struct log_a_data log_data[],
 		if (ret < 0)
 			goto ret_print_error;
 
-		if (log_type == SWITCHTEC_LOG_PARSE_TYPE_APP) {
+		if (log_type == SWITCHTEC_LOG_PARSE_TYPE_APP || log_type == SWITCHTEC_LOG_PARSE_TYPE_FTDC) {
 			/* print the module name and log severity */
 			if (fprintf(log_file, "%-12s |%-8s |0x%04x   |",
 			    mod_defs->mod_name, log_sev_strs[log_sev],
@@ -1232,6 +1232,23 @@ ret_print_error:
 	return -1;
 }
 
+static int append_ftdc_log_header(int fd, uint32_t sdk_def_version,
+								uint32_t fw_def_version)
+{
+	int ret;
+	char hdr_str_fmt[] = "##########################################\n"
+			     "## Parsed with FTDC log file from definition:\n"
+			     "## FW def version %08x\n"
+			     "## SDK def version %08x\n"
+			     "##########################################\n\n";
+	char hdr_str[512];
+
+	snprintf(hdr_str, 512, hdr_str_fmt, fw_def_version, sdk_def_version);
+	ret = write(fd, hdr_str, strlen(hdr_str));
+
+	return ret;
+}
+
 static int parse_def_header(FILE *log_def_file, uint32_t *fw_version,
 			    uint32_t *sdk_version)
 {
@@ -1239,7 +1256,7 @@ static int parse_def_header(FILE *log_def_file, uint32_t *fw_version,
 	int i;
 
 	*fw_version = 0;
-	*sdk_version = 0;
+	
 	while (fgets(line, sizeof(line), log_def_file)) {
 		if (line[0] != '#')
 			continue;
@@ -1464,6 +1481,42 @@ static int log_c_to_file(struct switchtec_dev *dev, int sub_cmd_id, int fd)
 	return 0;
 }
 
+static int log_d_to_file(struct switchtec_dev *dev, int sub_cmd_id, int fd)
+{
+	int ret;
+	int read = 0;
+
+	struct log_ftdc_retr_result res;
+	struct log_ftdc_retr cmd = {
+		.sub_cmd_id = sub_cmd_id,
+		.reserved = 0,
+		.req_seq = 0,
+	};
+	uint32_t length = sizeof(res.data);
+
+	cmd.req_seq = 0;
+	res.data[1] = 0;
+
+	printf("calling ftdc MRPC command\n");
+	while ( !(res.data[1]) ) {
+		ret = switchtec_cmd(dev, MRPC_FTDC_LOG_DUMP, &cmd, sizeof(cmd),
+				    &res, sizeof(res));
+		printf("ftdc ret %d\n", ret);
+		if (ret)
+			return -1;
+
+		ret = write(fd, res.data, (res.data[0]+1)*4);
+		if (ret < 0)
+			return ret;
+
+		read += length;
+		cmd.req_seq++;
+
+	}
+
+	return 0;
+}
+
 static int log_ram_flash_to_file(struct switchtec_dev *dev,
 				 int gen5_cmd, int gen4_cmd, int gen4_cmd_lgcy,
 				 int fd, FILE *log_def_file,
@@ -1522,6 +1575,8 @@ int switchtec_log_to_file(struct switchtec_dev *dev,
 					     MRPC_FWLOGRD_FLASH_WITH_FLAG,
 					     MRPC_FWLOGRD_FLASH,
 					     fd, log_def_file, info);
+	case SWITCHTEC_LOG_FTDC:
+		return log_d_to_file(dev, MRPC_FWLOGRD_RAM, fd);
 	case SWITCHTEC_LOG_MEMLOG:
 		return log_b_to_file(dev, MRPC_FWLOGRD_MEMLOG, fd);
 	case SWITCHTEC_LOG_REGS:
@@ -1605,8 +1660,9 @@ int switchtec_parse_log(FILE *bin_log_file, FILE *log_def_file,
 		memset(info, 0, sizeof(*info));
 
 	if ((log_type != SWITCHTEC_LOG_PARSE_TYPE_APP) &&
-	    (log_type != SWITCHTEC_LOG_PARSE_TYPE_MAILBOX)) {
-		errno = EINVAL;
+	(log_type != SWITCHTEC_LOG_PARSE_TYPE_MAILBOX) &&
+	(log_type != SWITCHTEC_LOG_PARSE_TYPE_FTDC)) {
+			errno = EINVAL;
 		return -errno;
 	}
 
@@ -1614,6 +1670,15 @@ int switchtec_parse_log(FILE *bin_log_file, FILE *log_def_file,
 			       &sdk_version_log);
 	if (ret)
 		return ret;
+	
+	if (log_type != SWITCHTEC_LOG_PARSE_TYPE_FTDC)
+	{
+		ret = parse_log_header(bin_log_file, &fw_version_log,
+			&sdk_version_log);
+		if (ret)
+			return ret;
+	}
+	
 	ret = parse_def_header(log_def_file, &fw_version_def,
 			       &sdk_version_def);
 	if (ret)
@@ -1632,13 +1697,17 @@ int switchtec_parse_log(FILE *bin_log_file, FILE *log_def_file,
 		info->log_sdk_version = sdk_version_log;
 	}
 	/* read the log definition file into defs */
-	if (log_type == SWITCHTEC_LOG_PARSE_TYPE_APP)
+	if (log_type == SWITCHTEC_LOG_PARSE_TYPE_APP || log_type == SWITCHTEC_LOG_PARSE_TYPE_FTDC)
 		ret = read_app_log_defs(log_def_file, &defs);
 	else
 		ret = read_mailbox_log_defs(log_def_file, &defs);
 
-	ret = append_log_header(fileno(parsed_log_file), sdk_version_log,
-				fw_version_log, 0);
+	if (log_type != SWITCHTEC_LOG_PARSE_TYPE_FTDC)
+		ret = append_log_header(fileno(parsed_log_file), sdk_version_log,
+					fw_version_log, 0);
+	else
+		ret = append_ftdc_log_header(fileno(parsed_log_file), sdk_version_def,
+					fw_version_def);
 	if (ret < 0)
 		return ret;
 
