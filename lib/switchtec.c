@@ -1497,11 +1497,9 @@ static int log_d_to_file(struct switchtec_dev *dev, int sub_cmd_id, int fd)
 	cmd.req_seq = 0;
 	res.data[1] = 0;
 
-	printf("calling ftdc MRPC command\n");
 	while ( !(res.data[1]) ) {
 		ret = switchtec_cmd(dev, MRPC_FTDC_LOG_DUMP, &cmd, sizeof(cmd),
 				    &res, sizeof(res));
-		printf("ftdc ret %d\n", ret);
 		if (ret)
 			return -1;
 

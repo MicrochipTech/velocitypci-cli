@@ -119,6 +119,7 @@ struct switchtec_uart{
 #define UART_MAX_READ_BYTES			1024
 #define RETRY_NUM				3
 #define SWITCHTEC_UART_BAUDRATE			(B230400)
+#define SWITCHTEC_UART_STOP_BITS		(2)
 
 static int send_cmd(int fd, const char *fmt, int write_bytes, ...)
 {
@@ -461,7 +462,7 @@ static const struct switchtec_ops uart_ops = {
 	.write_from_gas = uart_write_from_gas,
 };
 
-static int set_uart_attribs(int fd, int speed, int parity)
+static int set_uart_attribs(int fd, int speed, int parity, int stop_bits)
 {
 	int ret;
 	struct termios uart_attribs;
@@ -482,7 +483,10 @@ static int set_uart_attribs(int fd, int speed, int parity)
 	uart_attribs.c_cflag |= (CLOCAL | CREAD);
 	uart_attribs.c_cflag &= ~(PARENB | PARODD);
 	uart_attribs.c_cflag |= parity;
-	uart_attribs.c_cflag |= CSTOPB;
+	if(stop_bits == 1)
+		uart_attribs.c_cflag &= ~CSTOPB;
+	else if (stop_bits == 2)
+		uart_attribs.c_cflag |= CSTOPB;
 	uart_attribs.c_cflag &= ~CRTSCTS;
 	uart_attribs.c_cc[VMIN] = 0;
 	uart_attribs.c_cc[VTIME] = 50;
@@ -511,7 +515,7 @@ struct switchtec_dev *switchtec_open_uart(int fd)
 	if (ret)
 		goto err_close_free;
 
-	ret = set_uart_attribs(udev->fd, SWITCHTEC_UART_BAUDRATE, 0);
+	ret = set_uart_attribs(udev->fd, SWITCHTEC_UART_BAUDRATE, 0, SWITCHTEC_UART_STOP_BITS);
 	if (ret)
 		goto err_close_free;
 
