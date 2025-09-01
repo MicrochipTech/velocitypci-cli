@@ -482,7 +482,7 @@ static int set_uart_attribs(int fd, int speed, int parity)
 	uart_attribs.c_cflag |= (CLOCAL | CREAD);
 	uart_attribs.c_cflag &= ~(PARENB | PARODD);
 	uart_attribs.c_cflag |= parity;
-	uart_attribs.c_cflag &= ~CSTOPB;
+	uart_attribs.c_cflag |= CSTOPB;
 	uart_attribs.c_cflag &= ~CRTSCTS;
 	uart_attribs.c_cc[VMIN] = 0;
 	uart_attribs.c_cc[VTIME] = 50;
