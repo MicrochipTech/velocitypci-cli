@@ -205,8 +205,6 @@ struct switchtec_diag_port_eye_start {
     	int8_t v_sweep_at_x1;
     	/*Defines the vertical sweep at x2 for six point capture*/
     	int8_t v_sweep_at_x2;
-    	/*Defines the L2R tolerancy count for EOM*/
-    	uint32_t eom_l2r_tolerance;
     	/*Defines the Time in recovery before link down value for EOM*/
     	uint32_t eom_time_in_recov_in_us;
     	/*defines the error method 0-parity error method, 1-l2r error method*/

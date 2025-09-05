@@ -179,7 +179,6 @@ int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane)
 		.y_step = 1,
 		.v_sweep_at_x1 = -3,
 		.v_sweep_at_x2 = 3,
-		.eom_l2r_tolerance = 0,
 		.eom_time_in_recov_in_us = 0,
 		.eom_error_method = 1,	
 	};

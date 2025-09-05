@@ -1157,9 +1157,6 @@ int eye_observe_dev(struct switchtec_dev *dev, int port_id,
 		switchtec_perror("eye_start");
 	}
 
-	printf("EOM Started - Link rate %d\n", status.link_rate);
-	*gen = status.link_rate;
-
 	ret = switchtec_diag_eye_fetch(dev, &lane);
 
 	return 0;
