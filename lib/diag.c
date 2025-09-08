@@ -193,12 +193,14 @@ int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane)
 	return ret;
 }
 
-
 const int8_t* diag_eom_status_string[] = {
     "Success",
+	"Failed to Start",
+	"Invalid Parameters",
+	"Previous Command Not Finished",
     "In progress",
-    "Invalid Parameters",
-    "Previous Command Not Finished",
+    "Not Running",
+    "Failed to cancel",
     "Speed is not Gen3 or Gen4",
     "Margin Code Out of Range",
     "Waiting for Hardware"
@@ -231,7 +233,7 @@ retry:
 	if (ret)
 		return ret;
 
-	if (out.status == 1) {
+	if (out.status == 4) {
 		usleep(5000);
 		goto retry;
 	}
