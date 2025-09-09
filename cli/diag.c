@@ -37,6 +37,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 struct diag_common_cfg {
 	struct switchtec_dev *dev;
@@ -1085,14 +1086,24 @@ int eye_observe_dev(struct switchtec_dev *dev, int port_id,
 			       int lane_id, int *gen)
 {
 	int ret;
-	
+	struct switchtec_diag_port_eye_data data_out;
+	unsigned int eye_data[6];
+
 	ret = switchtec_diag_eye_start(dev, lane_id);
 	if (ret) {
 		switchtec_perror("eye_start");
 	}
 
-	ret = switchtec_diag_eye_fetch(dev);
+	ret = switchtec_diag_eye_fetch(dev, &data_out);
 
+	data_out.eye_left = abs(data_out.eye_left);
+	data_out.eye_right = abs(data_out.eye_right);
+	data_out.eye_top_x1 = abs(data_out.eye_top_x1);
+	data_out.eye_bottom_x1 = abs(data_out.eye_bottom_x1);
+
+	printf("%d %d %d %d\n", data_out.eye_left, data_out.eye_right, data_out.eye_top_x1, data_out.eye_bottom_x1);	
+	memcpy(&eye_data[0], &data_out, sizeof(struct switchtec_diag_port_eye_data));
+	graph_draw_eom_win(eye_data, 4,"Eye Observation Monitor","press q to quit");
 	return 0;
 }
 

@@ -216,12 +216,13 @@ const char* diag_eom_status_string[] = {
  * mode, otherwise data will be lost and the number of pixels fetched
  * will be greater than the space in the pixel buffer.
  */
-int switchtec_diag_eye_fetch(struct switchtec_dev *dev)
+int switchtec_diag_eye_fetch(struct switchtec_dev *dev, struct switchtec_diag_port_eye_data *data_out)
 {
 	struct switchtec_diag_port_eye_cmd in = {
 		.sub_cmd = MRPC_EYE_OBSERVE_FETCH,
 	};
 	struct switchtec_diag_port_eye_fetch out;
+	struct switchtec_diag_port_eye_data data;
 	int ret;
 
 retry:
@@ -242,9 +243,15 @@ retry:
 	else if(out.status == 0)
 	{
 		printf("Eye Left %d\n", out.eye_left);
-		printf("Eye Right %d\n", out.eye_right);
-		printf("Eye top %d\n", out.eye_top_x1);
-		printf("Eye Bottom %d\n", out.eye_bottom_x1);
+       	 	printf("Eye Right %d\n", out.eye_right);
+        	printf("Eye top %d\n", out.eye_top_x1);
+        	printf("Eye Bottom %d\n", out.eye_bottom_x1);
+		
+		data.eye_left = out.eye_left;	
+		data.eye_right = out.eye_right;	
+		data.eye_top_x1 = out.eye_top_x1;	
+		data.eye_bottom_x1 = out.eye_bottom_x1;	
+		memcpy(data_out, &data, sizeof(struct switchtec_diag_port_eye_fetch));
 	}
 	else
 	{

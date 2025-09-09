@@ -374,6 +374,95 @@ void graph_init(void)
 	curses_initialized = true;
 }
 
+void draw_eom_data(WINDOW *win, unsigned int *data, int count, int x_offset, int y_offset)
+{
+    for (int i = 0; i < count; ++i) {
+        int xl = data[i] + x_offset;
+        int xr = data[i] + x_offset;
+        int yt = data[i] + y_offset;
+        int yb = data[i] + y_offset;
+
+        // Draw points
+        mvwaddch(win, yt, xl, 'L'); // Left
+        mvwaddch(win, yt, xr, 'R'); // Right
+        mvwaddch(win, yt, xl, 'T'); // Top
+        mvwaddch(win, yb, xl, 'B'); // Bottom
+
+        // Draw horizontal line (left to right at eye_top)
+        for (int x = xl; x <= xr; ++x)
+            mvwaddch(win, yt, x, '-');
+
+        // Draw vertical line (top to bottom at eye_left)
+        for (int y = yt; y <= yb; ++y)
+            mvwaddch(win, y, xl, '|');
+    }
+    wrefresh(win);
+}
+
+int graph_draw_eom_win(unsigned int *data, int count, const char *title, char *status)
+{
+    WINDOW *datawin, *stwin = NULL;
+    const int x_off = 7, y_off = 4;
+    int s_off;
+    int c;
+	printf("%d %d %d %d\n", data[0], data[1], data[2], data[3]);
+    if (!isatty(STDOUT_FILENO)) {
+        // Fallback to text output if not a terminal
+        return 0;
+    }
+
+    if (!curses_initialized) {
+        initscr();
+        curses_initialized = true;
+    }
+
+    noecho();
+    cbreak();
+    curs_set(0);
+    keypad(stdscr, true);
+    start_color();
+
+    if (status) {
+        s_off = 2;
+        stwin = newwin(2, 0, LINES - 2, 0);
+        if (!stwin) {
+            perror("Unable to create window");
+            return 1;
+        }
+    } else {
+        s_off = 0;
+    }
+
+    datawin = newwin(LINES - y_off - s_off, COLS - x_off, y_off, x_off);
+    if (!datawin) {
+        perror("Unable to create window");
+        return 1;
+    }
+
+    // Main loop
+    while (1) {
+        werase(datawin);
+        box(datawin, 0, 0);
+        draw_eom_data(datawin, data, count, 0, 0);
+
+        if (stwin) {
+            werase(stwin);
+            mvwprintw(stwin, 0, 0, "%s", status);
+            wrefresh(stwin);
+        }
+
+        c = getch();
+        if (c == 'q' || c == 'x')
+            break;
+    }
+
+    if (stwin)
+        delwin(stwin);
+    delwin(datawin);
+    endwin();
+    return 0;
+}
+
 #else /* defined(HAVE_LIBCURSES) || defined(HAVE_LIBNCURSES) */
 
 int graph_draw_win(struct range *X, struct range *Y, int *data, int *shades,

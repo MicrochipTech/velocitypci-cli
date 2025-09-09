@@ -69,4 +69,6 @@ int graph_draw_win(struct range *X, struct range *Y, int *data, int *shades,
 		   const char *title, char x_title, char y_title, char *status,
 		   graph_anim_fn *anim, void *opaque);
 
+int graph_draw_eom_win(unsigned int *data, int count, const char *title, char *status);
+
 #endif
