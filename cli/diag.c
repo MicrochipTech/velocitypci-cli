@@ -161,14 +161,6 @@ static int ltssm_log(int argc, char **argv) {
 	return ret;
 }
 
-static const struct argconfig_choice eye_modes[] = {
-	{"RAW", SWITCHTEC_DIAG_EYE_RAW,
-	 "raw data mode (slow, more accurate)"},
-	{"RATIO", SWITCHTEC_DIAG_EYE_RATIO,
-	 "ratio data mode (faster, less accurate)"},
-	{}
-};
-
 enum output_format {
 	FMT_CSV,
 	FMT_TEXT,
@@ -314,64 +306,7 @@ out_err:
 	return NULL;
 }
 
-static void print_eye_csv(FILE *f, struct range *X, struct range *Y,
-			  double *pixels, const char *title, int interval)
-{
-	size_t stride = RANGE_CNT(X);
-	int x, y, i, j = 0;
 
-	fprintf(f, "%s\n", title);
-	fprintf(f, "interval_ms, %d\n", interval);
-
-	for_range(x, X)
-		fprintf(f, ", %d", x);
-	fprintf(f, "\n");
-
-	for_range(y, Y) {
-		fprintf(f, "%d", y);
-		i = 0;
-		for_range(x, X)  {
-			fprintf(f, ", %e", pixels[j * stride + i]);
-			i++;
-		}
-		fprintf(f, "\n");
-		j++;
-	}
-}
-
-static void eye_set_title(char *title, int port, int lane, int gen)
-{
-	sprintf(title, "Eye Observation, Port %d, Lane %d, Gen %d",
-		port, lane, gen);
-}
-
-static void write_eye_csv_files(int port_id, int lane_id, int num_lanes,
-				int interval_ms, int gen, struct range *X,
-				struct range *Y, double *pixels)
-{
-	int stride = RANGE_CNT(X) * RANGE_CNT(Y);
-	char title[128], fname[128];
-	FILE *f;
-	int l;
-
-	for (l = 0; l < num_lanes; l++) {
-		eye_set_title(title, port_id, lane_id + l, gen);
-
-		snprintf(fname, sizeof(fname), "eye_port%d_lane%d.csv",
-			 port_id, lane_id + l);
-		f = fopen(fname, "w");
-		if (!f) {
-			fprintf(stderr, "Unable to write CSV file '%s': %m\n",
-				fname);
-			continue;
-		}
-
-		print_eye_csv(f, X, Y, &pixels[l * stride], title, interval_ms);
-		fclose(f);
-
-		fprintf(stderr, "Wrote %s\n", fname);
-	}
-}
 
 static void eye_graph_data(struct range *X, struct range *Y, double *pixels,
 			   int *data, int *shades)
@@ -1149,15 +1084,14 @@ out:
 int eye_observe_dev(struct switchtec_dev *dev, int port_id,
 			       int lane_id, int *gen)
 {
-	struct switchtec_status status;
-	int i, ret, first_lane, lane;
+	int ret;
 	
 	ret = switchtec_diag_eye_start(dev, lane_id);
 	if (ret) {
 		switchtec_perror("eye_start");
 	}
 
-	ret = switchtec_diag_eye_fetch(dev, &lane);
+	ret = switchtec_diag_eye_fetch(dev);
 
 	return 0;
 }
@@ -1213,66 +1147,32 @@ static int eye(int argc, char **argv)
           int fmt;
           int port_id;
           int lane_id;
-          int num_lanes;
-          int mode;
-          struct range x_range, y_range;
-          int step_interval;
-          FILE *plot_file;
-          const char *plot_filename;
-          FILE *crosshair_file;
-          const char *crosshair_filename;
+	  int t_step, v_step;
   } cfg = {
           .fmt = FMT_DEFAULT,
           .port_id = -1,
           .lane_id = 0,
-          .num_lanes = 1,
-          .mode = SWITCHTEC_DIAG_EYE_RAW,
-          .x_range.start = 0,
-          .x_range.end = 63,
-          .x_range.step = 1,
-          .y_range.start = -255,
-          .y_range.end = 255,
-          .y_range.step = 5,
-          .step_interval = 1,
+          .t_step = 1,
+          .v_step = 1,
   };
   const struct argconfig_options opts[] = {
           DEVICE_OPTION_OPTIONAL,
-          {"crosshair", 'C', "FILE", CFG_FILE_R, &cfg.crosshair_file,
-           required_argument,
-           "optionally, superimpose a crosshair CSV onto the result"},
           {"format", 'f', "FMT", CFG_CHOICES, &cfg.fmt, required_argument,
            "output format (default: " FMT_DEFAULT_STR ")",
            .choices=output_fmt_choices},
           {"lane", 'l', "LANE_ID", CFG_NONNEGATIVE, &cfg.lane_id,
            required_argument, "lane id within the port to observe"},
-          {"mode", 'm', "MODE", CFG_CHOICES, &cfg.mode,
-           required_argument, "data mode for the capture",
-           .choices=eye_modes},
-          {"num-lanes", 'n', "NUM", CFG_POSITIVE, &cfg.num_lanes,
-           required_argument,
-           "number of lanes to capture, if greater than one, format must be csv (default: 1)"},
           {"port", 'p', "PORT_ID", CFG_NONNEGATIVE, &cfg.port_id,
            required_argument, "physical port ID to observe"},
-          {"plot", 'P', "FILE", CFG_FILE_R, &cfg.plot_file,
-           required_argument, "plot a CSV file from an earlier capture"},
-          {"t-start", 't', "NUM", CFG_NONNEGATIVE, &cfg.x_range.start,
-           required_argument, "start time (0 to 63)"},
-          {"t-end", 'T', "NUM", CFG_NONNEGATIVE, &cfg.x_range.end,
-           required_argument, "end time (t-start to 63)"},
-          {"t-step", 's', "NUM", CFG_NONNEGATIVE, &cfg.x_range.step,
+          {"t-step", 's', "NUM", CFG_NONNEGATIVE, &cfg.t_step,
            required_argument, "time step (default 1)"},
-          {"v-start", 'v', "NUM", CFG_INT, &cfg.y_range.start,
-           required_argument, "start voltage (-255 to 255)"},
-          {"v-end", 'V', "NUM", CFG_INT, &cfg.y_range.end,
-           required_argument, "end voltage (v-start to 255)"},
-          {"v-step", 'S', "NUM", CFG_NONNEGATIVE, &cfg.y_range.step,
+          {"v-step", 'S', "NUM", CFG_NONNEGATIVE, &cfg.v_step,
            required_argument, "voltage step (default: 5)"},
-          {"interval", 'i', "NUM", CFG_NONNEGATIVE, &cfg.step_interval,
-           required_argument, "step interval in ms (default: 1ms)"},
           {NULL}};
 
 	argconfig_parse(argc, argv, CMD_DESC_EYE, opts, &cfg,
                        sizeof(cfg));
+	
 	ret = eye_observe_dev(cfg.dev, cfg.port_id, cfg.lane_id, &gen);
 
 	return ret;

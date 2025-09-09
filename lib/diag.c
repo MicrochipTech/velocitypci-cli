@@ -193,25 +193,22 @@ int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane)
 	return ret;
 }
 
-const int8_t* diag_eom_status_string[] = {
-    "Success",
+const char* diag_eom_status_string[] = {
+    	"Success",
 	"Failed to Start",
 	"Invalid Parameters",
 	"Previous Command Not Finished",
-    "In progress",
-    "Not Running",
-    "Failed to cancel",
-    "Speed is not Gen3 or Gen4",
-    "Margin Code Out of Range",
-    "Waiting for Hardware"
+    	"In progress",
+    	"Not Running",
+    	"Failed to cancel",
+    	"Speed is not Gen3 or Gen4",
+    	"Margin Code Out of Range",
+    	"Waiting for Hardware"
 };
 
 /**
  * @brief Start a PCIe Eye Capture
  * @param[in]  dev	       Switchtec device handle
- * @param[out] pixels          Resulting pixel data
- * @param[in]  pixel_cnt       Space in pixel array
- * @param[out] lane_id         The lane for the resulting pixels
  *
  * @return number of pixels fetched on success, error code on failure
  *
@@ -219,7 +216,7 @@ const int8_t* diag_eom_status_string[] = {
  * mode, otherwise data will be lost and the number of pixels fetched
  * will be greater than the space in the pixel buffer.
  */
-int switchtec_diag_eye_fetch(struct switchtec_dev *dev, int *lane_id)
+int switchtec_diag_eye_fetch(struct switchtec_dev *dev)
 {
 	struct switchtec_diag_port_eye_cmd in = {
 		.sub_cmd = MRPC_EYE_OBSERVE_FETCH,
@@ -232,6 +229,11 @@ retry:
 			    sizeof(out));
 	if (ret)
 		return ret;
+
+	if(out.status > 9)
+	{
+		return ret;
+	}
 
 	if (out.status == 4) {
 		usleep(5000);

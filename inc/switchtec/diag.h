@@ -191,7 +191,9 @@ struct switchtec_diag_pat_gen_out {
 struct switchtec_diag_port_eye_start {
 	uint8_t sub_cmd;
 	uint8_t resvd1[3];
+	/*defines the lane ID to run */
 	uint8_t lane_id;
+	/*Target BER type */
      	uint8_t target_ber_type;
     	/*Defines the maximum numbers of errors*/
     	uint8_t max_allowed_ber_errors;
