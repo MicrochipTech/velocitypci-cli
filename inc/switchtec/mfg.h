@@ -113,14 +113,6 @@
 #define STOP						0xFF
 #define SET_XMODE_NONE				0x55
 
-typedef unsigned long DWORD_PTR, *PDWORD_PTR;
-
-#define LOBYTE(w)           ((BYTE)(((DWORD_PTR)(w)) & 0xff))
-#define HIBYTE(w)           ((BYTE)((((DWORD_PTR)(w)) >> 8) & 0xff))
-#define LOWORD(l)           ((WORD)(((DWORD_PTR)(l)) & 0xffff))
-#define HIWORD(l)           ((WORD)((((DWORD_PTR)(l)) >> 16) & 0xffff))
-
-
 typedef unsigned long       DWORD;
 typedef int                 BOOL;
 typedef unsigned char       BYTE;
