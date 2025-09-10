@@ -231,17 +231,16 @@ retry:
 	if (ret)
 		return ret;
 
-	printf("status %d\n", out.status);
-	if(out.status > 9)
+	if(out.status > EOM_WAITING_FOR_HARDWARE)
 	{
 		return ret;
 	}
 
-	if (out.status == 4) {
+	if (out.status == EOM_IN_PROGRESS) {
 		usleep(5000);
 		goto retry;
 	}
-	else if(out.status == 0)
+	else if(out.status == EOM_SUCCESS)
 	{
 		printf("Eye Left %d\n", out.eye_left);
        	 	printf("Eye Right %d\n", out.eye_right);

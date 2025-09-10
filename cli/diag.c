@@ -933,7 +933,7 @@ static int crosshair(int argc, char **argv)
 		.y_range.step = 5,
 	};
 	const struct argconfig_options opts[] = {
-		DEVICE_OPTION_OPTIONAL,
+		DEVICE_OPTION,
 		{"all", 'a', "", CFG_NONE, &cfg.all, no_argument,
 		 "capture all lanes, format must be csv"},
 		{"crosshair", 'C', "FILE", CFG_FILE_R, &cfg.crosshair_file,
@@ -1094,7 +1094,6 @@ int eye_observe_dev(struct switchtec_dev *dev, unsigned int error_threshold,
 		switchtec_perror("eye_start");
 	}
 
-	printf("started\n");
 	ret = switchtec_diag_eye_fetch(dev, &data_out);
 
 	memcpy(&eye_data[0], &data_out, sizeof(struct switchtec_diag_port_eye_data));
@@ -1127,7 +1126,7 @@ static int eye(int argc, char **argv)
           .v_step = 1,
   };
   const struct argconfig_options opts[] = {
-          DEVICE_OPTION_OPTIONAL,
+          DEVICE_OPTION,
           {"format", 'f', "FMT", CFG_CHOICES, &cfg.fmt, required_argument,
            "output format (default: " FMT_DEFAULT_STR ")",
            .choices=output_fmt_choices},
@@ -1143,8 +1142,8 @@ static int eye(int argc, char **argv)
 
 	argconfig_parse(argc, argv, CMD_DESC_EYE, opts, &cfg,
                        sizeof(cfg));
-	
-	ret = eye_observe_dev(cfg.dev, cfg.lane_id, cfg.error_threshold, &gen);
+
+	ret = eye_observe_dev(cfg.dev, cfg.error_threshold, cfg.lane_id, &gen);
 
 	return ret;
 }

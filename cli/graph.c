@@ -381,7 +381,6 @@ void get_screen_coords(int x, int y, int *sx, int *sy) {
 
 void plot_point(int x, int y) 
 {
-    printf("X %d Y %d\n", x, y);
     mvprintw(y/Y_SCALE, x*X_SCALE, "O (%d,%d)", x-Y_PRINT_OFFSET, y-X_PRINT_OFFSET);
 }
 

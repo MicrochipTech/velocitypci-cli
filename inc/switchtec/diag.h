@@ -279,5 +279,30 @@ struct switchtec_diag_cross_hair_get {
 	};
 };
 
+typedef enum {
+    /* command error code for Start, fetch and cancel */
+    EOM_SUCCESS,                  /* EOM general result, means no error */
+
+    /* Error codes for EOM Start sub command */
+    EOM_FAILED_TO_START,          /* EOM Failed to Start*/
+    EOM_INVALID_PARAMETER,        /* EOM parameter error */
+    EOM_PREV_CMD_NOT_FINISHED,    /* EOM cmd error, the previous cmd has not finished */
+
+    /* Error codes for EOM Fetch Sub command */
+    EOM_IN_PROGRESS,              /* EOM in progress, but no output data yet */
+    EOM_NOT_RUNNING,              /*EOM Not running*/
+
+    /* Error codes for EOM Cancel sub command*/
+    EOM_FAILED_TO_CANCEL,         /*EOM Failed to cancel*/
+
+    /* error codes for EOM Running state machine*/
+    EOM_SPEED_IS_NOT_GEN3_OR_4,   /* EOM Speed is not Gen3 or 4*/
+    EOM_MARGIN_CODE_OUT_OF_RANGE, /* EOM Margin code out of range*/
+    EOM_WAITING_FOR_HARDWARE,     /* EOM waiting for hardware*/
+
+    /*Invalid error code*/
+    EOM_ERROR = 0xFF,
+} mrpc_stat_eom_enum;
+
 #endif
 /**@}*/
