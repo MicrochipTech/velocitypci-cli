@@ -1082,69 +1082,29 @@ out:
 	return ret;
 }
 
-int eye_observe_dev(struct switchtec_dev *dev, int port_id,
+int eye_observe_dev(struct switchtec_dev *dev, unsigned int error_threshold,
 			       int lane_id, int *gen)
 {
 	int ret;
 	struct switchtec_diag_port_eye_data data_out;
-	unsigned int eye_data[6];
+	int eye_data[4];
 
-	ret = switchtec_diag_eye_start(dev, lane_id);
+	ret = switchtec_diag_eye_start(dev, lane_id, error_threshold);
 	if (ret) {
 		switchtec_perror("eye_start");
 	}
 
+	printf("started\n");
 	ret = switchtec_diag_eye_fetch(dev, &data_out);
 
-	data_out.eye_left = abs(data_out.eye_left);
-	data_out.eye_right = abs(data_out.eye_right);
-	data_out.eye_top_x1 = abs(data_out.eye_top_x1);
-	data_out.eye_bottom_x1 = abs(data_out.eye_bottom_x1);
-
-	printf("%d %d %d %d\n", data_out.eye_left, data_out.eye_right, data_out.eye_top_x1, data_out.eye_bottom_x1);	
 	memcpy(&eye_data[0], &data_out, sizeof(struct switchtec_diag_port_eye_data));
-	graph_draw_eom_win(eye_data, 4,"Eye Observation Monitor","press q to quit");
+	
+	if (!ret)
+	{
+		eye_plot_graph(eye_data);
+	}
+	
 	return 0;
-}
-
-static int eye_graph(enum output_format fmt, struct range *X, struct range *Y,
-		     double *pixels, const char *title,
-		     struct switchtec_diag_cross_hair *ch)
-{
-	size_t pixel_cnt = RANGE_CNT(X) * RANGE_CNT(Y);
-	int data[pixel_cnt], shades[pixel_cnt];
-	const struct crosshair_chars *chars;
-	struct crosshair_chars chars_curses;
-	char status[50], *status_ptr = NULL;
-
-	eye_graph_data(X, Y, pixels, data, shades);
-
-	if (ch) {
-		if (fmt == FMT_CURSES) {
-			graph_init();
-			chars_curses.hline = GRAPH_HLINE;
-			chars_curses.vline = GRAPH_VLINE;
-			chars_curses.plus = GRAPH_PLUS;
-			chars = &chars_curses;
-		} else {
-			chars = crosshair_text_chars();
-		}
-
-		crosshair_plot(X, Y, data, shades, ch, chars);
-
-		sprintf(status, " W2H=%d", crosshair_w2h(ch));
-		status_ptr = status;
-	}
-
-	if (fmt == FMT_TEXT) {
-		graph_draw_text(X, Y, data, title, 'T', 'V');
-		if (status_ptr)
-			printf("\n      %s\n", status_ptr);
-		return 0;
-	}
-
-	return graph_draw_win(X, Y, data, shades, title, 'T', 'V',
-			      status_ptr, NULL, NULL);
 }
 
 #define CMD_DESC_EYE "Capture PCIe Eye Errors"
@@ -1156,14 +1116,14 @@ static int eye(int argc, char **argv)
 	static struct {
           struct switchtec_dev *dev;
           int fmt;
-          int port_id;
           int lane_id;
+	  unsigned int error_threshold;
 	  int t_step, v_step;
   } cfg = {
           .fmt = FMT_DEFAULT,
-          .port_id = -1,
           .lane_id = 0,
           .t_step = 1,
+	  .error_threshold = 4,
           .v_step = 1,
   };
   const struct argconfig_options opts[] = {
@@ -1173,8 +1133,8 @@ static int eye(int argc, char **argv)
            .choices=output_fmt_choices},
           {"lane", 'l', "LANE_ID", CFG_NONNEGATIVE, &cfg.lane_id,
            required_argument, "lane id within the port to observe"},
-          {"port", 'p', "PORT_ID", CFG_NONNEGATIVE, &cfg.port_id,
-           required_argument, "physical port ID to observe"},
+	  {"error threshold", 't',"ERROR THRESHOLD", CFG_NONNEGATIVE, &cfg.error_threshold,
+	   optional_argument, "Maximum allowed errors"},
           {"t-step", 's', "NUM", CFG_NONNEGATIVE, &cfg.t_step,
            required_argument, "time step (default 1)"},
           {"v-step", 'S', "NUM", CFG_NONNEGATIVE, &cfg.v_step,
@@ -1184,7 +1144,7 @@ static int eye(int argc, char **argv)
 	argconfig_parse(argc, argv, CMD_DESC_EYE, opts, &cfg,
                        sizeof(cfg));
 	
-	ret = eye_observe_dev(cfg.dev, cfg.port_id, cfg.lane_id, &gen);
+	ret = eye_observe_dev(cfg.dev, cfg.lane_id, cfg.error_threshold, &gen);
 
 	return ret;
 }

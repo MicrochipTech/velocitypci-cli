@@ -374,95 +374,57 @@ void graph_init(void)
 	curses_initialized = true;
 }
 
-void draw_eom_data(WINDOW *win, unsigned int *data, int count, int x_offset, int y_offset)
-{
-    for (int i = 0; i < count; ++i) {
-        int xl = data[i] + x_offset;
-        int xr = data[i] + x_offset;
-        int yt = data[i] + y_offset;
-        int yb = data[i] + y_offset;
-
-        // Draw points
-        mvwaddch(win, yt, xl, 'L'); // Left
-        mvwaddch(win, yt, xr, 'R'); // Right
-        mvwaddch(win, yt, xl, 'T'); // Top
-        mvwaddch(win, yb, xl, 'B'); // Bottom
-
-        // Draw horizontal line (left to right at eye_top)
-        for (int x = xl; x <= xr; ++x)
-            mvwaddch(win, yt, x, '-');
-
-        // Draw vertical line (top to bottom at eye_left)
-        for (int y = yt; y <= yb; ++y)
-            mvwaddch(win, y, xl, '|');
-    }
-    wrefresh(win);
+void get_screen_coords(int x, int y, int *sx, int *sy) {
+    *sx = x*X_SCALE + 5;
+    *sy = y/Y_SCALE;
 }
 
-int graph_draw_eom_win(unsigned int *data, int count, const char *title, char *status)
+void plot_point(int x, int y) 
 {
-    WINDOW *datawin, *stwin = NULL;
-    const int x_off = 7, y_off = 4;
-    int s_off;
-    int c;
-	printf("%d %d %d %d\n", data[0], data[1], data[2], data[3]);
-    if (!isatty(STDOUT_FILENO)) {
-        // Fallback to text output if not a terminal
-        return 0;
-    }
+    printf("X %d Y %d\n", x, y);
+    mvprintw(y/Y_SCALE, x*X_SCALE, "O (%d,%d)", x-Y_PRINT_OFFSET, y-X_PRINT_OFFSET);
+}
 
-    if (!curses_initialized) {
-        initscr();
-        curses_initialized = true;
-    }
-
+int eye_plot_graph(int *data)
+{
+    initscr();
     noecho();
-    cbreak();
-    curs_set(0);
-    keypad(stdscr, true);
-    start_color();
-
-    if (status) {
-        s_off = 2;
-        stwin = newwin(2, 0, LINES - 2, 0);
-        if (!stwin) {
-            perror("Unable to create window");
-            return 1;
-        }
-    } else {
-        s_off = 0;
+    curs_set(FALSE);
+    // Draw axes
+    for (int x = 0; x <= PLOT_WIDTH; ++x)
+        mvaddch(0, (x*X_SCALE) + 5, '-'); // X-axis at the top
+    for (int y = 0; y <= PLOT_HEIGHT; ++y)
+        mvaddch(y/Y_SCALE, 5, '|'); // Y-axis at the left
+    // Draw scale on X-axis
+    for (int x = 0; x <= PLOT_WIDTH; x += 5)
+    {
+        mvaddch(0, (x*X_SCALE) + 5, '+');
+        mvprintw(1, (x*X_SCALE) + 5, "%d", x);
+    }
+    // Draw scale on Y-axis
+    for (int y = 0; y <= PLOT_HEIGHT; y += 10) {
+        mvaddch(y/Y_SCALE, 5, '+');
+        mvprintw(y/Y_SCALE, 0, "%2d", y);
     }
 
-    datawin = newwin(LINES - y_off - s_off, COLS - x_off, y_off, x_off);
-    if (!datawin) {
-        perror("Unable to create window");
-        return 1;
-    }
+    //Adjusting the eye points to plot from 0 to 42 for x-axis and 0 t0 100 for Y-axis
+    //as ncurses library did not support negative ploting
+    data[0] = data[0] + X_LAYOUT_SHIFT;
+    data[1] = data[1] + X_LAYOUT_SHIFT;
+    data[2] = data[2] + Y_LAYOUT_SHIFT;
+    data[3] = data[3] + Y_LAYOUT_SHIFT;
+    
+    // Plot some points (example)
+    plot_point(data[0] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);   // (10,5)
+    plot_point(data[1] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);  // (20,10)
+    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[2] + X_PRINT_OFFSET);  // (30,15)
+    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[3] + X_PRINT_OFFSET);  // (35,18)
 
-    // Main loop
-    while (1) {
-        werase(datawin);
-        box(datawin, 0, 0);
-        draw_eom_data(datawin, data, count, 0, 0);
-
-        if (stwin) {
-            werase(stwin);
-            mvwprintw(stwin, 0, 0, "%s", status);
-            wrefresh(stwin);
-        }
-
-        c = getch();
-        if (c == 'q' || c == 'x')
-            break;
-    }
-
-    if (stwin)
-        delwin(stwin);
-    delwin(datawin);
+    refresh();
+    getch();
     endwin();
     return 0;
 }
-
 #else /* defined(HAVE_LIBCURSES) || defined(HAVE_LIBNCURSES) */
 
 int graph_draw_win(struct range *X, struct range *Y, int *data, int *shades,

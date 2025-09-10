@@ -1242,7 +1242,7 @@ int switchtec_diag_cross_hair_get(struct switchtec_dev *dev, int start_lane_id,
 
 int switchtec_diag_eye_set_mode(struct switchtec_dev *dev,
 				enum switchtec_diag_eye_data_mode mode);
-int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane_id);
+int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane_id, unsigned int error_threshold);
 int switchtec_diag_eye_fetch(struct switchtec_dev *dev, struct switchtec_diag_port_eye_data *data_out);
 int switchtec_diag_eye_cancel(struct switchtec_dev *dev);
 

@@ -165,7 +165,7 @@ static int switchtec_diag_eye_cmd(struct switchtec_dev *dev, void *in,
  *
  * @return 0 on success, error code on failure
  */
-int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane)
+int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane, unsigned int error_threshold)
 {
 	int err;
 	int ret;
@@ -173,7 +173,7 @@ int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane)
 		.sub_cmd = MRPC_EYE_OBSERVE_START,
 		.lane_id = lane,
 		.target_ber_type = 0,
-		.max_allowed_ber_errors = 4,
+		.max_allowed_ber_errors = error_threshold,
 		.confidence_lvl = 95,
 		.x_step = 1,
 		.y_step = 1,
@@ -231,6 +231,7 @@ retry:
 	if (ret)
 		return ret;
 
+	printf("status %d\n", out.status);
 	if(out.status > 9)
 	{
 		return ret;
@@ -255,7 +256,8 @@ retry:
 	}
 	else
 	{
-		printf("EOM Status %s\n", diag_eom_status_string[out.status]);	
+		printf("EOM Status %s\n", diag_eom_status_string[out.status]);
+		return -1;	
 	}
 
 	return 0;
