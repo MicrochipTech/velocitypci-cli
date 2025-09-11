@@ -40,6 +40,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
+#include "diag.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -1241,11 +1242,8 @@ int switchtec_diag_cross_hair_get(struct switchtec_dev *dev, int start_lane_id,
 
 int switchtec_diag_eye_set_mode(struct switchtec_dev *dev,
 				enum switchtec_diag_eye_data_mode mode);
-int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane_mask[4],
-			     struct range *x_range, struct range *y_range,
-			     int step_interval);
-int switchtec_diag_eye_fetch(struct switchtec_dev *dev, double *pixels,
-			     size_t pixel_cnt, int *lane_id);
+int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane_id, unsigned int error_threshold);
+int switchtec_diag_eye_fetch(struct switchtec_dev *dev, struct switchtec_diag_port_eye_data *data_out);
 int switchtec_diag_eye_cancel(struct switchtec_dev *dev);
 
 int switchtec_diag_loopback_set(struct switchtec_dev *dev, int port_id,

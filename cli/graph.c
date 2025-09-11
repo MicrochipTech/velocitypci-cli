@@ -134,7 +134,7 @@ static void draw_status(WINDOW *win, int x_off, int x_cnt, const char *status)
 	mvwprintw(win, 0, 0, "     ");
 	for (i = 0; i < x_cnt * 2 + x_off; i++)
 		mvwaddch(win, 1, i, ' ');
-	mvwprintw(win, 1, x_off, status);
+	mvwprintw(win, 1, x_off, "%s",status);
 	wrefresh(win);
 }
 
@@ -374,6 +374,56 @@ void graph_init(void)
 	curses_initialized = true;
 }
 
+void get_screen_coords(int x, int y, int *sx, int *sy) {
+    *sx = x*X_SCALE + 5;
+    *sy = y/Y_SCALE;
+}
+
+void plot_point(int x, int y) 
+{
+    mvprintw(y/Y_SCALE, x*X_SCALE, "O (%d,%d)", x-Y_PRINT_OFFSET, y-X_PRINT_OFFSET);
+}
+
+int eye_plot_graph(int *data)
+{
+    initscr();
+    noecho();
+    curs_set(FALSE);
+    // Draw axes
+    for (int x = 0; x <= PLOT_WIDTH; ++x)
+        mvaddch(0, (x*X_SCALE) + 5, '-'); // X-axis at the top
+    for (int y = 0; y <= PLOT_HEIGHT; ++y)
+        mvaddch(y/Y_SCALE, 5, '|'); // Y-axis at the left
+    // Draw scale on X-axis
+    for (int x = 0; x <= PLOT_WIDTH; x += 5)
+    {
+        mvaddch(0, (x*X_SCALE) + 5, '+');
+        mvprintw(1, (x*X_SCALE) + 5, "%d", x);
+    }
+    // Draw scale on Y-axis
+    for (int y = 0; y <= PLOT_HEIGHT; y += 10) {
+        mvaddch(y/Y_SCALE, 5, '+');
+        mvprintw(y/Y_SCALE, 0, "%2d", y);
+    }
+
+    //Adjusting the eye points to plot from 0 to 42 for x-axis and 0 t0 100 for Y-axis
+    //as ncurses library did not support negative ploting
+    data[0] = data[0] + X_LAYOUT_SHIFT;
+    data[1] = data[1] + X_LAYOUT_SHIFT;
+    data[2] = data[2] + Y_LAYOUT_SHIFT;
+    data[3] = data[3] + Y_LAYOUT_SHIFT;
+    
+    // Plot some points (example)
+    plot_point(data[0] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);   // (10,5)
+    plot_point(data[1] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);  // (20,10)
+    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[2] + X_PRINT_OFFSET);  // (30,15)
+    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[3] + X_PRINT_OFFSET);  // (35,18)
+
+    refresh();
+    getch();
+    endwin();
+    return 0;
+}
 #else /* defined(HAVE_LIBCURSES) || defined(HAVE_LIBNCURSES) */
 
 int graph_draw_win(struct range *X, struct range *Y, int *data, int *shades,

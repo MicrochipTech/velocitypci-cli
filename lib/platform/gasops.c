@@ -66,8 +66,8 @@ static const struct no_retry_struct gasop_noretry_cmds[] = {
 	[MRPC_SECURITY_CONFIG_SET_GEN5] = {1, 0, NULL},
 	[MRPC_FW_TX] = {1, 1, fw_toggle_noretry_subcmds},
 };
-static const int gasop_noretry_cmds_count = sizeof(gasop_noretry_cmds) /
-					    sizeof(char);
+static const int gasop_noretry_cmds_count = (sizeof(gasop_noretry_cmds)) /
+					    (sizeof(char));
 
 static inline bool gasop_is_no_retry_cmd(uint32_t cmd, int subcmd)
 {

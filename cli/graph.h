@@ -57,7 +57,22 @@
 #define GRAPH_PLUS	GRAPH_TEXT_PLUS
 #endif
 
+#define PLOT_WIDTH  42
+#define PLOT_HEIGHT 100// Map data coordinates to screen coordinates (top-left origin)
+#define Y_SCALE 2
+#define X_SCALE 4
+#define X_PRINT_OFFSET 1
+#define Y_PRINT_OFFSET 2
+#define X_LAYOUT_SHIFT 21
+#define Y_LAYOUT_SHIFT 50
+
 struct range;
+
+typedef struct {
+	int x;
+	int y;
+}point_t;
+
 
 typedef int graph_anim_fn(struct range *X, struct range *Y, int *data,
 		int *shades, char *status, bool *redraw, void *opaque);
@@ -68,5 +83,7 @@ void graph_draw_text(struct range *X, struct range *Y, int *data,
 int graph_draw_win(struct range *X, struct range *Y, int *data, int *shades,
 		   const char *title, char x_title, char y_title, char *status,
 		   graph_anim_fn *anim, void *opaque);
+
+int eye_plot_graph(int *data);
 
 #endif

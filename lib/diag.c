@@ -159,54 +159,28 @@ static int switchtec_diag_eye_cmd(struct switchtec_dev *dev, void *in,
 }
 
 /**
- * @brief Set the data mode for the next Eye Capture
- * @param[in]  dev	       Switchtec device handle
- * @param[in]  mode	       Mode to use (raw or ratio)
- *
- * @return 0 on success, error code on failure
- */
-int switchtec_diag_eye_set_mode(struct switchtec_dev *dev,
-				enum switchtec_diag_eye_data_mode mode)
-{
-	struct switchtec_diag_port_eye_cmd in = {
-		.sub_cmd = MRPC_EYE_OBSERVE_SET_DATA_MODE,
-		.data_mode = mode,
-	};
-
-	return switchtec_diag_eye_cmd(dev, &in, sizeof(in));
-}
-
-/**
  * @brief Start a PCIe Eye Capture
  * @param[in]  dev	       Switchtec device handle
- * @param[in]  lane_mask       Bitmap of the lanes to capture
- * @param[in]  x_range         Time range: start should be between 0 and 63,
- *			       end between start and 63.
- * @param[in]  y_range         Voltage range: start should be between -255 and 255,
- *			       end between start and 255.
- * @param[in]  step_interval   Sampling time in milliseconds for each step
+ * @param[in]  lane_id         Lane ID to capture
  *
  * @return 0 on success, error code on failure
  */
-int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane_mask[4],
-			     struct range *x_range, struct range *y_range,
-			     int step_interval)
+int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane, unsigned int error_threshold)
 {
 	int err;
 	int ret;
 	struct switchtec_diag_port_eye_start in = {
 		.sub_cmd = MRPC_EYE_OBSERVE_START,
-		.lane_mask[0] = lane_mask[0],
-		.lane_mask[1] = lane_mask[1],
-		.lane_mask[2] = lane_mask[2],
-		.lane_mask[3] = lane_mask[3],
-		.x_start = x_range->start,
-		.y_start = y_range->start,
-		.x_end = x_range->end,
-		.y_end = y_range->end,
-		.x_step = x_range->step,
-		.y_step = y_range->step,
-		.step_interval = step_interval,
+		.lane_id = lane,
+		.target_ber_type = 0,
+		.max_allowed_ber_errors = error_threshold,
+		.confidence_lvl = 95,
+		.x_step = 1,
+		.y_step = 1,
+		.v_sweep_at_x1 = -3,
+		.v_sweep_at_x2 = 3,
+		.eom_time_in_recov_in_us = 0,
+		.eom_error_method = 1,	
 	};
 
 	ret = switchtec_diag_eye_cmd(dev, &in, sizeof(in));
@@ -219,23 +193,22 @@ int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane_mask[4],
 	return ret;
 }
 
-static uint64_t hi_lo_to_uint64(uint32_t lo, uint32_t hi)
-{
-	uint64_t ret;
-
-	ret = le32toh(hi);
-	ret <<= 32;
-	ret |= le32toh(lo);
-
-	return ret;
-}
+const char* diag_eom_status_string[] = {
+    	"Success",
+	"Failed to Start",
+	"Invalid Parameters",
+	"Previous Command Not Finished",
+    	"In progress",
+    	"Not Running",
+    	"Failed to cancel",
+    	"Speed is not Gen3 or Gen4",
+    	"Margin Code Out of Range",
+    	"Waiting for Hardware"
+};
 
 /**
  * @brief Start a PCIe Eye Capture
  * @param[in]  dev	       Switchtec device handle
- * @param[out] pixels          Resulting pixel data
- * @param[in]  pixel_cnt       Space in pixel array
- * @param[out] lane_id         The lane for the resulting pixels
  *
  * @return number of pixels fetched on success, error code on failure
  *
@@ -243,15 +216,14 @@ static uint64_t hi_lo_to_uint64(uint32_t lo, uint32_t hi)
  * mode, otherwise data will be lost and the number of pixels fetched
  * will be greater than the space in the pixel buffer.
  */
-int switchtec_diag_eye_fetch(struct switchtec_dev *dev, double *pixels,
-			     size_t pixel_cnt, int *lane_id)
+int switchtec_diag_eye_fetch(struct switchtec_dev *dev, struct switchtec_diag_port_eye_data *data_out)
 {
 	struct switchtec_diag_port_eye_cmd in = {
 		.sub_cmd = MRPC_EYE_OBSERVE_FETCH,
 	};
 	struct switchtec_diag_port_eye_fetch out;
-	uint64_t samples, errors;
-	int i, ret, data_count;
+	struct switchtec_diag_port_eye_data data;
+	int ret;
 
 retry:
 	ret = switchtec_cmd(dev, MRPC_EYE_OBSERVE, &in, sizeof(in), &out,
@@ -259,42 +231,35 @@ retry:
 	if (ret)
 		return ret;
 
-	if (out.status == 1) {
+	if(out.status > EOM_WAITING_FOR_HARDWARE)
+	{
+		return ret;
+	}
+
+	if (out.status == EOM_IN_PROGRESS) {
 		usleep(5000);
 		goto retry;
 	}
-
-	ret = switchtec_diag_eye_status(out.status);
-	if (ret)
-		return ret;
-
-	for (i = 0; i < 4; i++) {
-		*lane_id = ffs(out.lane_mask[i]);
-		if (*lane_id)
-			break;
+	else if(out.status == EOM_SUCCESS)
+	{
+		printf("Eye Left %d\n", out.eye_left);
+       	 	printf("Eye Right %d\n", out.eye_right);
+        	printf("Eye top %d\n", out.eye_top_x1);
+        	printf("Eye Bottom %d\n", out.eye_bottom_x1);
+		
+		data.eye_left = out.eye_left;	
+		data.eye_right = out.eye_right;	
+		data.eye_top_x1 = out.eye_top_x1;	
+		data.eye_bottom_x1 = out.eye_bottom_x1;	
+		memcpy(data_out, &data, sizeof(struct switchtec_diag_port_eye_data));
+	}
+	else
+	{
+		printf("EOM Status %s\n", diag_eom_status_string[out.status]);
+		return -1;	
 	}
 
-	data_count = out.data_count_lo | ((int)out.data_count_hi << 8);
-
-	for (i = 0; i < data_count && i < pixel_cnt; i++) {
-		switch (out.data_mode) {
-		case SWITCHTEC_DIAG_EYE_RAW:
-			errors = hi_lo_to_uint64(out.raw[i].error_cnt_lo,
-						 out.raw[i].error_cnt_hi);
-			samples = hi_lo_to_uint64(out.raw[i].sample_cnt_lo,
-						  out.raw[i].sample_cnt_hi);
-			if (samples)
-				pixels[i] = (double)errors / samples;
-			else
-				pixels[i] = nan("");
-			break;
-		case SWITCHTEC_DIAG_EYE_RATIO:
-			pixels[i] = le32toh(out.ratio[i].ratio) / 65536.;
-			break;
-		}
-	}
-
-	return data_count;
+	return 0;
 }
 
 /**
