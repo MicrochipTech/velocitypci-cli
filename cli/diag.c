@@ -901,206 +901,84 @@ static int load_crosshair_csv(FILE *f, struct switchtec_diag_cross_hair *ch,
 
 static int crosshair(int argc, char **argv)
 {
-	struct switchtec_diag_cross_hair ch[SWITCHTEC_MAX_LANES] = {};
-	struct switchtec_diag_cross_hair *ch_ptr = NULL;
-	struct switchtec_status status;
-	double *pixels = NULL;
-	char title[128], subtitle[50];
-	int eye_interval = 1;
 	int ret, lane = -1;
 
 	static struct {
-		int all;
-		int fmt;
-		struct switchtec_dev *dev;
-		int port_id;
-		int lane_id;
-		struct range x_range;
-		struct range y_range;
-		FILE *plot_file;
-		const char *plot_filename;
-		FILE *crosshair_file;
-		const char *crosshair_filename;
-	} cfg = {
-		.fmt = FMT_DEFAULT,
-		.port_id = -1,
-		.lane_id = 0,
-		.x_range.start = 0,
-		.x_range.end = 63,
-		.x_range.step = 1,
-		.y_range.start = -255,
-		.y_range.end = 255,
-		.y_range.step = 5,
-	};
-	const struct argconfig_options opts[] = {
-		DEVICE_OPTION,
-		{"all", 'a', "", CFG_NONE, &cfg.all, no_argument,
-		 "capture all lanes, format must be csv"},
-		{"crosshair", 'C', "FILE", CFG_FILE_R, &cfg.crosshair_file,
-		 required_argument,
-		 "load crosshair data from a previously saved file"},
-		{"format", 'f', "FMT", CFG_CHOICES, &cfg.fmt, required_argument,
-		 "output format (default: " FMT_DEFAULT_STR ")",
-		 .choices=output_fmt_choices},
-		{"lane", 'l', "LANE_ID", CFG_NONNEGATIVE, &cfg.lane_id,
-		 required_argument, "lane id within the port to observe"},
-		{"port", 'p', "PORT_ID", CFG_NONNEGATIVE, &cfg.port_id,
-		 required_argument, "physical port ID to observe"},
-		{"plot", 'P', "FILE", CFG_FILE_R, &cfg.plot_file,
-		 required_argument,
-		 "optionally, plot a CSV file from an eye capture as the background"},
-		{"t-start", 't', "NUM", CFG_NONNEGATIVE, &cfg.x_range.start,
-		 required_argument, "start time (0 to 63)"},
-		{"t-end", 'T', "NUM", CFG_NONNEGATIVE, &cfg.x_range.end,
-		 required_argument, "end time (t-start to 63)"},
-		{"t-step", 's', "NUM", CFG_NONNEGATIVE, &cfg.x_range.step,
-		 required_argument, "time step (default 1)"},
-		{"v-start", 'v', "NUM", CFG_INT, &cfg.y_range.start,
-		 required_argument, "start voltage (-255 to 255)"},
-		{"v-end", 'V', "NUM", CFG_INT, &cfg.y_range.end,
-		 required_argument, "end voltage (v-start to 255)"},
-		{"v-step", 'S', "NUM", CFG_NONNEGATIVE, &cfg.y_range.step,
-		 required_argument, "voltage step (default: 5)"},
-		{NULL}};
+          struct switchtec_dev *dev;
+          int fmt;
+          int lane_id;
+          unsigned int error_threshold;
+          int t_step, v_step;
+  	} cfg = {
+          .fmt = FMT_DEFAULT,
+          .lane_id = 0,
+          .t_step = 1,
+          .error_threshold = 4,
+          .v_step = 1,
+  	};
+  	const struct argconfig_options opts[] = {
+          DEVICE_OPTION,
+          {"format", 'f', "FMT", CFG_CHOICES, &cfg.fmt, required_argument,
+           "output format (default: " FMT_DEFAULT_STR ")",
+           .choices=output_fmt_choices},
+          {"lane", 'l', "LANE_ID", CFG_NONNEGATIVE, &cfg.lane_id,
+           required_argument, "lane id within the port to observe"},
+          {"error threshold", 't',"ERROR THRESHOLD", CFG_NONNEGATIVE, &cfg.error_threshold,
+           optional_argument, "Maximum allowed errors"},
+          {"t-step", 's', "NUM", CFG_NONNEGATIVE, &cfg.t_step,
+           required_argument, "time step (default 1)"},
+          {"v-step", 'S', "NUM", CFG_NONNEGATIVE, &cfg.v_step,
+           required_argument, "voltage step (default: 5)"},
+          {NULL}};
 
 	argconfig_parse(argc, argv, CMD_DESC_CROSS_HAIR, opts, &cfg,
 			sizeof(cfg));
 
-	if (cfg.plot_file) {
-		pixels = load_eye_csv(cfg.plot_file, &cfg.x_range,
-				&cfg.y_range, subtitle, sizeof(subtitle),
-				&eye_interval);
-		if (!pixels) {
-			fprintf(stderr, "Unable to parse CSV file: %s\n",
-				cfg.plot_filename);
-			return -1;
-		}
-	}
+	ret = eye_observe_dev(cfg.dev, cfg.error_threshold, cfg.lane_id, &gen, SWTEC_EOM_6P_CAPTURE);
 
-	if (cfg.crosshair_file) {
-		ret = load_crosshair_csv(cfg.crosshair_file, ch, subtitle,
-					 sizeof(subtitle));
-		if (ret) {
-			fprintf(stderr, "Unable to parse crosshair CSV file: %s\n",
-				cfg.crosshair_filename);
-			return -1;
-		}
-
-		ch_ptr = ch;
-
-		if (pixels)
-			snprintf(title, sizeof(title) - 1, "%s (%s / %s)",
-				 subtitle, cfg.crosshair_filename,
-				 cfg.plot_filename);
-		else
-			snprintf(title, sizeof(title) - 1, "%s (%s)",
-				 subtitle, cfg.crosshair_filename);
-
-	} else {
-		if (!cfg.dev) {
-			fprintf(stderr,
-				"Must specify a switchtec device if not using -C\n");
-			return -1;
-		}
-
-		if (cfg.all) {
-			if (cfg.lane_id) {
-				fprintf(stderr,
-					"Must not specify both --all/-a and --lane/-l\n");
-				return -1;
-			}
-
-			if (cfg.fmt != FMT_CSV) {
-				fprintf(stderr,
-					"Must use --format=CSV with --all/-a\n");
-				return -1;
-			}
-		} else if (cfg.port_id < 0) {
-			fprintf(stderr, "Must specify a port ID with --port/-p\n");
-			return -1;
-		}
-
-		if (!cfg.all) {
-			lane = switchtec_calc_lane_id(cfg.dev, cfg.port_id,
-						      cfg.lane_id, &status);
-			if (lane < 0) {
-				switchtec_perror("Invalid lane");
-				return -1;
-			}
-
-			crosshair_set_title(subtitle, cfg.port_id, cfg.lane_id,
-					    status.link_rate);
-
-		} else {
-			lane = SWITCHTEC_DIAG_CROSS_HAIR_ALL_LANES;
-			snprintf(subtitle, sizeof(subtitle) - 1,
-				 "Crosshair - All Lanes");
-		}
-
-		if (pixels)
-			snprintf(title, sizeof(title) - 1, "%s (%s)",
-				 subtitle, cfg.plot_filename);
-		else
-			snprintf(title, sizeof(title) - 1, "%s", subtitle);
-
-		switchtec_diag_cross_hair_disable(cfg.dev);
-
-		ret = switchtec_diag_cross_hair_enable(cfg.dev, lane);
-		if (ret) {
-			switchtec_perror("Unable to enable cross hair");
-			goto out;
-		}
-
-		if (cfg.fmt != FMT_CURSES) {
-			ret = crosshair_capture(cfg.dev, lane, ch, title);
-			if (ret)
-				return ret;
-		}
-	}
-
-	switch (cfg.fmt) {
-	case FMT_CURSES:
-		ret = crosshair_graph(cfg.dev, ch_ptr, &cfg.x_range,
-				      &cfg.y_range, lane, pixels, title,
-				      eye_interval);
-		break;
-	case FMT_TEXT:
-		ret = crosshair_text(ch, &cfg.x_range, &cfg.y_range,
-				     pixels, title,
-				     eye_interval);
-		break;
-	case FMT_CSV:
-		if (cfg.all)
-			crosshair_write_all_csv(cfg.dev, ch);
-		else
-			crosshair_write_csv(subtitle, ch);
-		break;
-	}
-
-out:
-	free(pixels);
 	return ret;
 }
 
 int eye_observe_dev(struct switchtec_dev *dev, unsigned int error_threshold,
-			       int lane_id, int *gen)
+			       int lane_id, int *gen, BOOL eye_capture_type)
 {
 	int ret;
 	struct switchtec_diag_port_eye_data data_out;
+	struct switchtec_diag_port_6p_eye_data 6p_data_out;
 	int eye_data[4];
+	int eye_6p_data[6];
 
-	ret = switchtec_diag_eye_start(dev, lane_id, error_threshold);
-	if (ret) {
-		switchtec_perror("eye_start");
-	}
-
-	ret = switchtec_diag_eye_fetch(dev, &data_out);
-
-	memcpy(&eye_data[0], &data_out, sizeof(struct switchtec_diag_port_eye_data));
-	
-	if (!ret)
+	if (eye_capture_type == SWTEC_EOM_4P_CAPTURE)
 	{
-		eye_plot_graph(eye_data);
+		ret = switchtec_diag_eye_start(dev, lane_id, error_threshold);
+		if (ret) {
+			switchtec_perror("eye_start");
+		}
+
+		ret = switchtec_diag_eye_fetch(dev, &data_out);
+
+		memcpy(&eye_data[0], &data_out, sizeof(struct switchtec_diag_port_eye_data));
+	
+		if (!ret)
+		{
+			eye_plot_graph(eye_data);
+		}
+	}
+	else
+	{
+		ret = switchtec_diag_eye_6p_start(dev, lane_id, error_threshold);
+                if (ret) {
+                        switchtec_perror("eye_start");
+                }
+
+                ret = switchtec_diag_eye_6p_data_fetch(dev, &data_out);
+
+                memcpy(&eye_6p_data[0], &data_out, sizeof(struct switchtec_diag_port_6p_eye_data));
+
+                if (!ret)
+                {
+                        eye_plot_graph(eye_data);
+                }
 	}
 	
 	return 0;

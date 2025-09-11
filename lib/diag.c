@@ -143,6 +143,34 @@ static int switchtec_diag_eye_status(int status)
 	}
 }
 
+int switchtec_diag_eye_6p_start(struct switchtec_dev *dev, int lane, unsigned int error_threshold)
+{
+        int err;
+        int ret;
+        struct switchtec_diag_port_eye_start in = {
+                .sub_cmd = MRPC_EYE_OBSERVE_6PT_START,
+                .lane_id = lane,
+                .target_ber_type = 0,
+                .max_allowed_ber_errors = error_threshold,
+                .confidence_lvl = 95,
+                .x_step = 1,
+                .y_step = 1,
+                .v_sweep_at_x1 = -3,
+                .v_sweep_at_x2 = 3,
+                .eom_time_in_recov_in_us = 0,
+                .eom_error_method = 1,
+        };
+
+        ret = switchtec_diag_eye_cmd(dev, &in, sizeof(in));
+
+        /* Add delay so hardware has enough time to start */
+        err = errno;
+        usleep(200000);
+        errno = err;
+
+        return ret;
+}
+
 static int switchtec_diag_eye_cmd(struct switchtec_dev *dev, void *in,
 				  size_t size)
 {
@@ -177,8 +205,8 @@ int switchtec_diag_eye_start(struct switchtec_dev *dev, int lane, unsigned int e
 		.confidence_lvl = 95,
 		.x_step = 1,
 		.y_step = 1,
-		.v_sweep_at_x1 = -3,
-		.v_sweep_at_x2 = 3,
+		.v_sweep_at_x1 = 0,
+		.v_sweep_at_x2 = 0,
 		.eom_time_in_recov_in_us = 0,
 		.eom_error_method = 1,	
 	};
@@ -205,6 +233,58 @@ const char* diag_eom_status_string[] = {
     	"Margin Code Out of Range",
     	"Waiting for Hardware"
 };
+
+int switchtec_diag_eye_6p_data_fetch(struct switchtec_dev *dev, struct switchtec_diag_port_6p_eye_data *data_out)
+{
+	struct switchtec_diag_port_eye_cmd in = {
+		.sub_cmd = MRPC_EYE_OBSERVE_6PT_FETCH,
+	};
+	struct switchtec_diag_port_eye_fetch out;
+	struct switchtec_diag_port_6p_eye_data data;
+	int ret;
+
+retry:
+	ret = switchtec_cmd(dev, MRPC_EYE_OBSERVE, &in, sizeof(in), &out,
+			    sizeof(out));
+	if (ret)
+		return ret;
+
+	if(out.status > EOM_WAITING_FOR_HARDWARE)
+	{
+		return ret;
+	}
+
+	if (out.status == EOM_IN_PROGRESS) {
+		usleep(5000);
+		goto retry;
+	}
+	else if(out.status == EOM_SUCCESS)
+	{
+		printf("Eye Left %d\n", out.eye_left);
+       	 	printf("Eye Right %d\n", out.eye_right);
+        	printf("Eye top @X1 %d\n", out.eye_top_x1);
+        	printf("Eye Bottom @X1 %d\n", out.eye_bottom_x1);
+		printf("Eye top @X2 %d\n", out.eye_top_x2);
+		printf("Eye Bottom @X2 %d\n", out.eye_bottom_x2);
+		
+		data.eye_left = out.eye_left;	
+		data.eye_right = out.eye_right;	
+		data.eye_top_x1 = out.eye_top_x1;	
+		data.eye_bottom_x1 = out.eye_bottom_x1;
+		data.eye_top_x2 = out.eye_top_x2;
+		data.eye_bottom_x2 = out.eye_bottom_x2;	
+		memcpy(data_out, &data, sizeof(struct switchtec_diag_port_6p_eye_data));
+	}
+	else
+	{
+		printf("EOM Status %s\n", diag_eom_status_string[out.status]);
+		return -1;	
+	}
+
+	return 0;
+}
+
+
 
 /**
  * @brief Start a PCIe Eye Capture

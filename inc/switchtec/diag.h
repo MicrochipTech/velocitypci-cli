@@ -234,6 +234,15 @@ struct switchtec_diag_port_eye_fetch {
 	int32_t eye_bottom_x2;
 };
 
+struct switchtec_diag_port_6p_eye_data {
+	int32_t eye_left;
+        int32_t eye_right;
+        int32_t eye_top_x1;
+        int32_t eye_bottom_x1;	
+	int32_t eye_top_x2;
+	int32_t eye_bottom_x2;
+};
+
 struct switchtec_diag_port_eye_data {
 	int32_t eye_left;
         int32_t eye_right;
