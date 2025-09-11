@@ -247,8 +247,8 @@ int switchtec_fw_write_fd(struct switchtec_dev *dev, int img_fd,
 			  int dont_activate, int force,
 			  void (*progress_callback)(int cur, int tot))
 {
-	enum switchtec_fw_dlstatus status;
-	enum mrpc_bg_status bgstatus;
+	enum switchtec_fw_dlstatus status = SWITCHTEC_DLSTAT_ERROR_PROGRAM;
+	enum mrpc_bg_status bgstatus = MRPC_BG_STAT_ERROR;
 	ssize_t image_size, offset = 0;
 	int ret;
 	struct cmd_fwdl cmd = {};
@@ -367,8 +367,8 @@ int switchtec_fw_write_file(struct switchtec_dev *dev, FILE *fimg,
 			    int dont_activate, int force,
 			    void (*progress_callback)(int cur, int tot))
 {
-	enum switchtec_fw_dlstatus status;
-	enum mrpc_bg_status bgstatus;
+	enum switchtec_fw_dlstatus status = SWITCHTEC_DLSTAT_ERROR_PROGRAM;
+	enum mrpc_bg_status bgstatus = MRPC_BG_STAT_ERROR;
 	ssize_t image_size, offset = 0;
 	int ret;
 	struct cmd_fwdl cmd = {};

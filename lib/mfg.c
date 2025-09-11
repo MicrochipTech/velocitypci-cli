@@ -56,6 +56,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <openssl/sha.h>
+#ifndef _WIN32
+#include <arpa/inet.h>
+#endif
 #include <iconv.h>
 
 #include "lib/crc.h"
