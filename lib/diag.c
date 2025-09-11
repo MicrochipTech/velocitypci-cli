@@ -251,7 +251,7 @@ retry:
 		data.eye_right = out.eye_right;	
 		data.eye_top_x1 = out.eye_top_x1;	
 		data.eye_bottom_x1 = out.eye_bottom_x1;	
-		memcpy(data_out, &data, sizeof(struct switchtec_diag_port_eye_fetch));
+		memcpy(data_out, &data, sizeof(struct switchtec_diag_port_eye_data));
 	}
 	else
 	{
