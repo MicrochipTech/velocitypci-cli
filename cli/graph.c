@@ -384,7 +384,7 @@ void plot_point(int x, int y)
     mvprintw(y/Y_SCALE, x*X_SCALE, "O (%d,%d)", x-Y_PRINT_OFFSET, y-X_PRINT_OFFSET);
 }
 
-int eye_plot_graph(int *data, bool plot_6p_points)
+int eye_plot_graph(int *data, bool plot_6p_points, unsigned int w2h_score)
 {
     initscr();
     noecho();
@@ -405,6 +405,12 @@ int eye_plot_graph(int *data, bool plot_6p_points)
         mvaddch(y/Y_SCALE, 5, '+');
         mvprintw(y/Y_SCALE, 0, "%2d", y);
     }
+
+    char legend[32];
+    snprintf(legend, sizeof(legend), "W2H SCORE = %u", w2h_score);
+    
+    if (plot_6p_points == true)
+    	mvprintw(0, COLS - strlen(legend) - 1, "%s", legend);
 
     //Adjusting the eye points to plot from 0 to 42 for x-axis and 0 t0 100 for Y-axis
     //as ncurses library did not support negative ploting
@@ -435,8 +441,14 @@ int eye_plot_graph(int *data, bool plot_6p_points)
         plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[3] + X_PRINT_OFFSET);
     }
 
+    mvprintw(LINES - 1, 0, "Press 'q' to quit.");
     refresh();
-    getch();
+
+    int ch;
+    while ((ch = getch()) != 'q') {
+        // Standby, do nothing
+    }
+    
     endwin();
     return 0;
 }

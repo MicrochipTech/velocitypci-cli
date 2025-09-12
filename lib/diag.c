@@ -256,7 +256,7 @@ retry:
 	}
 
 	if (out.status == EOM_IN_PROGRESS) {
-		usleep(5000);
+		usleep(500000);
 		goto retry;
 	}
 	else if(out.status == EOM_SUCCESS)
@@ -318,7 +318,7 @@ retry:
 	}
 
 	if (out.status == EOM_IN_PROGRESS) {
-		usleep(5000);
+		usleep(500000);
 		goto retry;
 	}
 	else if(out.status == EOM_SUCCESS)

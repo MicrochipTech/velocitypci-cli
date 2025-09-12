@@ -202,6 +202,7 @@ int eye_observe_dev(struct switchtec_dev *dev, unsigned int error_threshold,
 	struct switchtec_diag_port_6p_eye_data data_6p_out;
 	int eye_data[4];
 	int eye_6p_data[6];
+	unsigned int w2h_score;
 
 	if (eye_capture_type == SWTEC_EOM_4P_CAPTURE)
 	{
@@ -216,7 +217,7 @@ int eye_observe_dev(struct switchtec_dev *dev, unsigned int error_threshold,
 	
 		if (!ret)
 		{
-			eye_plot_graph(eye_data, false);
+			eye_plot_graph(eye_data, false, 0);
 		}
 	}
 	else
@@ -232,8 +233,9 @@ int eye_observe_dev(struct switchtec_dev *dev, unsigned int error_threshold,
 
                 if (!ret)
                 {
-			printf("W2H Score for Lane %d is %d\n", lane_id, calculate_w2h_score(&data_6p_out));
-                        eye_plot_graph(eye_6p_data, true);
+			w2h_score = calculate_w2h_score(&data_6p_out);
+			printf("W2H Score for Lane %d is %d\n", lane_id, w2h_score);
+                        eye_plot_graph(eye_6p_data, true, w2h_score);
                 }
 	}
 	
