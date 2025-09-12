@@ -384,7 +384,7 @@ void plot_point(int x, int y)
     mvprintw(y/Y_SCALE, x*X_SCALE, "O (%d,%d)", x-Y_PRINT_OFFSET, y-X_PRINT_OFFSET);
 }
 
-int eye_plot_graph(int *data)
+int eye_plot_graph(int *data, bool plot_6p_points)
 {
     initscr();
     noecho();
@@ -413,11 +413,27 @@ int eye_plot_graph(int *data)
     data[2] = data[2] + Y_LAYOUT_SHIFT;
     data[3] = data[3] + Y_LAYOUT_SHIFT;
     
-    // Plot some points (example)
-    plot_point(data[0] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);   // (10,5)
-    plot_point(data[1] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);  // (20,10)
-    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[2] + X_PRINT_OFFSET);  // (30,15)
-    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[3] + X_PRINT_OFFSET);  // (35,18)
+    if(plot_6p_points == true)
+    {
+	data[4] = data[4] + Y_LAYOUT_SHIFT;
+	data[5] = data[5] + Y_LAYOUT_SHIFT;
+    }
+
+    plot_point(data[0] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);
+    plot_point(data[1] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);
+    
+    if(plot_6p_points == true)
+    {
+    	plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) - 3, data[2] + X_PRINT_OFFSET);
+    	plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) - 3, data[3] + X_PRINT_OFFSET);
+    	plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) + 3, data[4] + X_PRINT_OFFSET);
+    	plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) + 3, data[5] + X_PRINT_OFFSET);
+    }
+    else
+    {
+	plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[2] + X_PRINT_OFFSET);
+        plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[3] + X_PRINT_OFFSET);
+    }
 
     refresh();
     getch();

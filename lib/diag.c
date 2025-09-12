@@ -143,6 +143,21 @@ static int switchtec_diag_eye_status(int status)
 	}
 }
 
+static int switchtec_diag_eye_cmd(struct switchtec_dev *dev, void *in,
+				  size_t size)
+{
+	struct switchtec_diag_port_eye_cmd out;
+	int ret;
+
+	ret = switchtec_cmd(dev, MRPC_EYE_OBSERVE, in, size, &out,
+			    sizeof(out));
+
+	if (ret)
+		return ret;
+
+	return switchtec_diag_eye_status(out.status);
+}
+
 int switchtec_diag_eye_6p_start(struct switchtec_dev *dev, int lane, unsigned int error_threshold)
 {
         int err;
@@ -171,20 +186,6 @@ int switchtec_diag_eye_6p_start(struct switchtec_dev *dev, int lane, unsigned in
         return ret;
 }
 
-static int switchtec_diag_eye_cmd(struct switchtec_dev *dev, void *in,
-				  size_t size)
-{
-	struct switchtec_diag_port_eye_cmd out;
-	int ret;
-
-	ret = switchtec_cmd(dev, MRPC_EYE_OBSERVE, in, size, &out,
-			    sizeof(out));
-
-	if (ret)
-		return ret;
-
-	return switchtec_diag_eye_status(out.status);
-}
 
 /**
  * @brief Start a PCIe Eye Capture

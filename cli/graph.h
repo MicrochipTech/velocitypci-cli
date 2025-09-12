@@ -84,6 +84,6 @@ int graph_draw_win(struct range *X, struct range *Y, int *data, int *shades,
 		   const char *title, char x_title, char y_title, char *status,
 		   graph_anim_fn *anim, void *opaque);
 
-int eye_plot_graph(int *data);
+int eye_plot_graph(int *data, bool plot_6p_points);
 
 #endif

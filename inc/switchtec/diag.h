@@ -52,6 +52,11 @@ enum {
 	DIAG_PORT_EQ_STATUS_OP_PER_LANE = 1,
 };
 
+enum {
+	SWTEC_EOM_4P_CAPTURE = 0,
+	SWTEC_EOM_6P_CAPTURE = 1,
+};
+
 struct switchtec_diag_port_eq_status_in {
 	uint8_t sub_cmd;
 	uint8_t op_type;
