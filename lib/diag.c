@@ -250,8 +250,7 @@ retry:
 	if (ret)
 		return ret;
 
-	if(out.status > EOM_WAITING_FOR_HARDWARE)
-	{
+	if(out.status > EOM_WAITING_FOR_HARDWARE) {
 		return ret;
 	}
 
@@ -259,8 +258,7 @@ retry:
 		usleep(500000);
 		goto retry;
 	}
-	else if(out.status == EOM_SUCCESS)
-	{
+	else if(out.status == EOM_SUCCESS) {
 		printf("Eye Left %d\n", out.eye_left);
 		printf("Eye Right %d\n", out.eye_right);
 		printf("Eye top @X1 %d\n", out.eye_top_x1);
@@ -276,8 +274,7 @@ retry:
 		data.eye_bottom_x2 = out.eye_bottom_x2;	
 		memcpy(data_out, &data, sizeof(struct switchtec_diag_port_6p_eye_data));
 	}
-	else
-	{
+	else {
 		printf("EOM Status %s\n", diag_eom_status_string[out.status]);
 		return -1;	
 	}
@@ -312,8 +309,7 @@ retry:
 	if (ret)
 		return ret;
 
-	if(out.status > EOM_WAITING_FOR_HARDWARE)
-	{
+	if(out.status > EOM_WAITING_FOR_HARDWARE) {
 		return ret;
 	}
 
@@ -321,21 +317,19 @@ retry:
 		usleep(500000);
 		goto retry;
 	}
-	else if(out.status == EOM_SUCCESS)
-	{
-		printf("Eye Left %d\n", out.eye_left);
-       	 	printf("Eye Right %d\n", out.eye_right);
-        	printf("Eye top %d\n", out.eye_top_x1);
-        	printf("Eye Bottom %d\n", out.eye_bottom_x1);
+	else if(out.status == EOM_SUCCESS) {
+                printf("Eye Left %d\n", out.eye_left);
+                printf("Eye Right %d\n", out.eye_right);
+                printf("Eye top %d\n", out.eye_top_x1);
+                printf("Eye Bottom %d\n", out.eye_bottom_x1);
 		
-		data.eye_left = out.eye_left;	
-		data.eye_right = out.eye_right;	
-		data.eye_top_x1 = out.eye_top_x1;	
-		data.eye_bottom_x1 = out.eye_bottom_x1;	
-		memcpy(data_out, &data, sizeof(struct switchtec_diag_port_eye_data));
+                data.eye_left = out.eye_left;	
+                data.eye_right = out.eye_right;	
+                data.eye_top_x1 = out.eye_top_x1;	
+                data.eye_bottom_x1 = out.eye_bottom_x1;	
+                memcpy(data_out, &data, sizeof(struct switchtec_diag_port_eye_data));
 	}
-	else
-	{
+	else {
 		printf("EOM Status %s\n", diag_eom_status_string[out.status]);
 		return -1;	
 	}

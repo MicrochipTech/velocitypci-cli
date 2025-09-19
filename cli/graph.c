@@ -395,8 +395,7 @@ int eye_plot_graph(int *data, bool plot_6p_points, unsigned int w2h_score)
     for (int y = 0; y <= PLOT_HEIGHT; ++y)
         mvaddch(y/Y_SCALE, 5, '|'); // Y-axis at the left
     // Draw scale on X-axis
-    for (int x = 0; x <= PLOT_WIDTH; x += 5)
-    {
+    for (int x = 0; x <= PLOT_WIDTH; x += 5) {
         mvaddch(0, (x*X_SCALE) + 5, '+');
         mvprintw(1, (x*X_SCALE) + 5, "%d", x);
     }
@@ -409,8 +408,7 @@ int eye_plot_graph(int *data, bool plot_6p_points, unsigned int w2h_score)
     char legend[32];
     snprintf(legend, sizeof(legend), "W2H SCORE = %u", w2h_score);
     
-    if (plot_6p_points == true)
-    {
+    if (plot_6p_points == true) {
 	    mvprintw(0, COLS - strlen(legend) - 1, "%s", legend);
     }
 
@@ -421,8 +419,7 @@ int eye_plot_graph(int *data, bool plot_6p_points, unsigned int w2h_score)
     data[2] = data[2] + Y_LAYOUT_SHIFT;
     data[3] = data[3] + Y_LAYOUT_SHIFT;
     
-    if(plot_6p_points == true)
-    {
+    if(plot_6p_points == true) {
 	    data[4] = data[4] + Y_LAYOUT_SHIFT;
 	    data[5] = data[5] + Y_LAYOUT_SHIFT;
     }
@@ -430,15 +427,13 @@ int eye_plot_graph(int *data, bool plot_6p_points, unsigned int w2h_score)
     plot_point(data[0] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);
     plot_point(data[1] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);
     
-    if(plot_6p_points == true)
-    {
+    if(plot_6p_points == true) {
 	    plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) - 3, data[2] + X_PRINT_OFFSET);
 	    plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) - 3, data[3] + X_PRINT_OFFSET);
 	    plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) + 3, data[4] + X_PRINT_OFFSET);
 	    plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) + 3, data[5] + X_PRINT_OFFSET);
     }
-    else
-    {
+    else {
 	    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[2] + X_PRINT_OFFSET);
 	    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[3] + X_PRINT_OFFSET);
     }
