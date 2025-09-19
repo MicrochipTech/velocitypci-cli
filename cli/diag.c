@@ -256,19 +256,19 @@ static int w2h(int argc, char **argv)
           .v_step = 1,
   	};
   	const struct argconfig_options opts[] = {
-          DEVICE_OPTION,
-          {"format", 'f', "FMT", CFG_CHOICES, &cfg.fmt, required_argument,
-           "output format (default: " FMT_DEFAULT_STR ")",
-           .choices=output_fmt_choices},
-          {"lane", 'l', "LANE_ID", CFG_NONNEGATIVE, &cfg.lane_id,
-           required_argument, "lane id within the port to observe"},
-          {"error threshold", 't',"ERROR THRESHOLD", CFG_NONNEGATIVE, &cfg.error_threshold,
-           optional_argument, "Maximum allowed errors"},
-          {"t-step", 's', "NUM", CFG_NONNEGATIVE, &cfg.t_step,
-           required_argument, "time step (default 1)"},
-          {"v-step", 'S', "NUM", CFG_NONNEGATIVE, &cfg.v_step,
-           required_argument, "voltage step (default: 5)"},
-          {NULL}};
+		DEVICE_OPTION,
+		{"format", 'f', "FMT", CFG_CHOICES, &cfg.fmt, required_argument,
+		"output format (default: " FMT_DEFAULT_STR ")",
+		.choices=output_fmt_choices},
+		{"lane", 'l', "LANE_ID", CFG_NONNEGATIVE, &cfg.lane_id,
+		required_argument, "lane id within the port to observe"},
+		{"error threshold", 't',"ERROR THRESHOLD", CFG_NONNEGATIVE, &cfg.error_threshold,
+		optional_argument, "Maximum allowed errors"},
+		{"t-step", 's', "NUM", CFG_NONNEGATIVE, &cfg.t_step,
+		required_argument, "time step (default 1)"},
+		{"v-step", 'S', "NUM", CFG_NONNEGATIVE, &cfg.v_step,
+		required_argument, "voltage step (default: 5)"},
+		{NULL}};
 
 	argconfig_parse(argc, argv, CMD_DESC_EYE_W2H, opts, &cfg,
 			sizeof(cfg));
@@ -298,19 +298,19 @@ static int eye(int argc, char **argv)
           .v_step = 1,
   };
   const struct argconfig_options opts[] = {
-          DEVICE_OPTION,
-          {"format", 'f', "FMT", CFG_CHOICES, &cfg.fmt, required_argument,
-           "output format (default: " FMT_DEFAULT_STR ")",
-           .choices=output_fmt_choices},
-          {"lane", 'l', "LANE_ID", CFG_NONNEGATIVE, &cfg.lane_id,
-           required_argument, "lane id within the port to observe"},
-	  {"error threshold", 't',"ERROR THRESHOLD", CFG_NONNEGATIVE, &cfg.error_threshold,
-	   optional_argument, "Maximum allowed errors"},
-          {"t-step", 's', "NUM", CFG_NONNEGATIVE, &cfg.t_step,
-           required_argument, "time step (default 1)"},
-          {"v-step", 'S', "NUM", CFG_NONNEGATIVE, &cfg.v_step,
-           required_argument, "voltage step (default: 5)"},
-          {NULL}};
+	DEVICE_OPTION,
+	{"format", 'f', "FMT", CFG_CHOICES, &cfg.fmt, required_argument,
+	"output format (default: " FMT_DEFAULT_STR ")",
+	.choices=output_fmt_choices},
+	{"lane", 'l', "LANE_ID", CFG_NONNEGATIVE, &cfg.lane_id,
+	required_argument, "lane id within the port to observe"},
+	{"error threshold", 't',"ERROR THRESHOLD", CFG_NONNEGATIVE, &cfg.error_threshold,
+	optional_argument, "Maximum allowed errors"},
+	{"t-step", 's', "NUM", CFG_NONNEGATIVE, &cfg.t_step,
+	required_argument, "time step (default 1)"},
+	{"v-step", 'S', "NUM", CFG_NONNEGATIVE, &cfg.v_step,
+	required_argument, "voltage step (default: 5)"},
+	{NULL}};
 
 	argconfig_parse(argc, argv, CMD_DESC_EYE, opts, &cfg,
                        sizeof(cfg));
