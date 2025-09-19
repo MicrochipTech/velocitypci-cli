@@ -410,7 +410,9 @@ int eye_plot_graph(int *data, bool plot_6p_points, unsigned int w2h_score)
     snprintf(legend, sizeof(legend), "W2H SCORE = %u", w2h_score);
     
     if (plot_6p_points == true)
-    	mvprintw(0, COLS - strlen(legend) - 1, "%s", legend);
+    {
+	    mvprintw(0, COLS - strlen(legend) - 1, "%s", legend);
+    }
 
     //Adjusting the eye points to plot from 0 to 42 for x-axis and 0 t0 100 for Y-axis
     //as ncurses library did not support negative ploting
@@ -421,8 +423,8 @@ int eye_plot_graph(int *data, bool plot_6p_points, unsigned int w2h_score)
     
     if(plot_6p_points == true)
     {
-	data[4] = data[4] + Y_LAYOUT_SHIFT;
-	data[5] = data[5] + Y_LAYOUT_SHIFT;
+	    data[4] = data[4] + Y_LAYOUT_SHIFT;
+	    data[5] = data[5] + Y_LAYOUT_SHIFT;
     }
 
     plot_point(data[0] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);
@@ -430,15 +432,15 @@ int eye_plot_graph(int *data, bool plot_6p_points, unsigned int w2h_score)
     
     if(plot_6p_points == true)
     {
-    	plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) - 3, data[2] + X_PRINT_OFFSET);
-    	plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) - 3, data[3] + X_PRINT_OFFSET);
-    	plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) + 3, data[4] + X_PRINT_OFFSET);
-    	plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) + 3, data[5] + X_PRINT_OFFSET);
+	    plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) - 3, data[2] + X_PRINT_OFFSET);
+	    plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) - 3, data[3] + X_PRINT_OFFSET);
+	    plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) + 3, data[4] + X_PRINT_OFFSET);
+	    plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) + 3, data[5] + X_PRINT_OFFSET);
     }
     else
     {
-	plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[2] + X_PRINT_OFFSET);
-        plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[3] + X_PRINT_OFFSET);
+	    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[2] + X_PRINT_OFFSET);
+	    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[3] + X_PRINT_OFFSET);
     }
 
     mvprintw(LINES - 1, 0, "Press 'q' to quit.");

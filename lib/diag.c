@@ -262,9 +262,9 @@ retry:
 	else if(out.status == EOM_SUCCESS)
 	{
 		printf("Eye Left %d\n", out.eye_left);
-       	 	printf("Eye Right %d\n", out.eye_right);
-        	printf("Eye top @X1 %d\n", out.eye_top_x1);
-        	printf("Eye Bottom @X1 %d\n", out.eye_bottom_x1);
+		printf("Eye Right %d\n", out.eye_right);
+		printf("Eye top @X1 %d\n", out.eye_top_x1);
+		printf("Eye Bottom @X1 %d\n", out.eye_bottom_x1);
 		printf("Eye top @X2 %d\n", out.eye_top_x2);
 		printf("Eye Bottom @X2 %d\n", out.eye_bottom_x2);
 		
