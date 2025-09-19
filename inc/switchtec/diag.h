@@ -52,6 +52,11 @@ enum {
 	DIAG_PORT_EQ_STATUS_OP_PER_LANE = 1,
 };
 
+enum {
+	SWTEC_EOM_4P_CAPTURE = 0,
+	SWTEC_EOM_6P_CAPTURE = 1,
+};
+
 struct switchtec_diag_port_eq_status_in {
 	uint8_t sub_cmd;
 	uint8_t op_type;
@@ -194,24 +199,24 @@ struct switchtec_diag_port_eye_start {
 	/*defines the lane ID to run */
 	uint8_t lane_id;
 	/*Target BER type */
-     	uint8_t target_ber_type;
-    	/*Defines the maximum numbers of errors*/
-    	uint8_t max_allowed_ber_errors;
-    	/*Defines the confidence Level*/
-    	uint8_t confidence_lvl;
-    	/*defines the horizontal step size*/
-    	int8_t x_step;
-    	/*defines the vertical step size*/
-    	int8_t y_step;
-    	/*Defines the vertical sweep at x1 for six point capture*/
-    	int8_t v_sweep_at_x1;
-    	/*Defines the vertical sweep at x2 for six point capture*/
-    	int8_t v_sweep_at_x2;
-    	/*Defines the Time in recovery before link down value for EOM*/
-    	uint32_t eom_time_in_recov_in_us;
-    	/*defines the error method 0-parity error method, 1-l2r error method*/
-    	uint8_t eom_error_method;
-    	uint8_t reserved[3];
+	uint8_t target_ber_type;
+	/*Defines the maximum numbers of errors*/
+	uint8_t max_allowed_ber_errors;
+	/*Defines the confidence Level*/
+	uint8_t confidence_lvl;
+	/*defines the horizontal step size*/
+	int8_t x_step;
+	/*defines the vertical step size*/
+	int8_t y_step;
+	/*Defines the vertical sweep at x1 for six point capture*/
+	int8_t v_sweep_at_x1;
+	/*Defines the vertical sweep at x2 for six point capture*/
+	int8_t v_sweep_at_x2;
+	/*Defines the Time in recovery before link down value for EOM*/
+	uint32_t eom_time_in_recov_in_us;
+	/*defines the error method 0-parity error method, 1-l2r error method*/
+	uint8_t eom_error_method;
+	uint8_t reserved[3];
 };
 
 struct switchtec_diag_port_eye_cmd {
@@ -234,11 +239,20 @@ struct switchtec_diag_port_eye_fetch {
 	int32_t eye_bottom_x2;
 };
 
+struct switchtec_diag_port_6p_eye_data {
+	int32_t eye_left;
+	int32_t eye_right;
+	int32_t eye_top_x1;
+	int32_t eye_bottom_x1;
+	int32_t eye_top_x2;
+	int32_t eye_bottom_x2;
+};
+
 struct switchtec_diag_port_eye_data {
 	int32_t eye_left;
-        int32_t eye_right;
-        int32_t eye_top_x1;
-        int32_t eye_bottom_x1;
+	int32_t eye_right;
+	int32_t eye_top_x1;
+	int32_t eye_bottom_x1;
 };
 #pragma pack(pop)
 

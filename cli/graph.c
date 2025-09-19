@@ -384,7 +384,7 @@ void plot_point(int x, int y)
     mvprintw(y/Y_SCALE, x*X_SCALE, "O (%d,%d)", x-Y_PRINT_OFFSET, y-X_PRINT_OFFSET);
 }
 
-int eye_plot_graph(int *data)
+int eye_plot_graph(int *data, bool plot_6p_points, unsigned int w2h_score)
 {
     initscr();
     noecho();
@@ -395,8 +395,7 @@ int eye_plot_graph(int *data)
     for (int y = 0; y <= PLOT_HEIGHT; ++y)
         mvaddch(y/Y_SCALE, 5, '|'); // Y-axis at the left
     // Draw scale on X-axis
-    for (int x = 0; x <= PLOT_WIDTH; x += 5)
-    {
+    for (int x = 0; x <= PLOT_WIDTH; x += 5) {
         mvaddch(0, (x*X_SCALE) + 5, '+');
         mvprintw(1, (x*X_SCALE) + 5, "%d", x);
     }
@@ -406,6 +405,13 @@ int eye_plot_graph(int *data)
         mvprintw(y/Y_SCALE, 0, "%2d", y);
     }
 
+    char legend[32];
+    snprintf(legend, sizeof(legend), "W2H SCORE = %u", w2h_score);
+    
+    if (plot_6p_points == true) {
+		mvprintw(0, COLS - strlen(legend) - 1, "%s", legend);
+    }
+
     //Adjusting the eye points to plot from 0 to 42 for x-axis and 0 t0 100 for Y-axis
     //as ncurses library did not support negative ploting
     data[0] = data[0] + X_LAYOUT_SHIFT;
@@ -413,14 +419,33 @@ int eye_plot_graph(int *data)
     data[2] = data[2] + Y_LAYOUT_SHIFT;
     data[3] = data[3] + Y_LAYOUT_SHIFT;
     
-    // Plot some points (example)
-    plot_point(data[0] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);   // (10,5)
-    plot_point(data[1] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);  // (20,10)
-    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[2] + X_PRINT_OFFSET);  // (30,15)
-    plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[3] + X_PRINT_OFFSET);  // (35,18)
+    if(plot_6p_points == true) {
+		data[4] = data[4] + Y_LAYOUT_SHIFT;
+		data[5] = data[5] + Y_LAYOUT_SHIFT;
+    }
 
+    plot_point(data[0] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);
+    plot_point(data[1] + Y_PRINT_OFFSET, Y_LAYOUT_SHIFT + X_PRINT_OFFSET);
+    
+    if(plot_6p_points == true) {
+		plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) - 3, data[2] + X_PRINT_OFFSET);
+		plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) - 3, data[3] + X_PRINT_OFFSET);
+		plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) + 3, data[4] + X_PRINT_OFFSET);
+		plot_point((X_LAYOUT_SHIFT + Y_PRINT_OFFSET) + 3, data[5] + X_PRINT_OFFSET);
+    }
+    else {
+		plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[2] + X_PRINT_OFFSET);
+		plot_point(X_LAYOUT_SHIFT + Y_PRINT_OFFSET, data[3] + X_PRINT_OFFSET);
+    }
+
+    mvprintw(LINES - 1, 0, "Press 'q' to quit.");
     refresh();
-    getch();
+
+    int ch;
+    while ((ch = getch()) != 'q') {
+        // Standby, do nothing
+    }
+    
     endwin();
     return 0;
 }
