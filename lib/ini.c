@@ -437,7 +437,10 @@ int switchtec_convert_ini2bin(FILE *szINIFileName, char *pclog ,BYTE *m_pBinConf
     BYTE byPrevXMode = SET_XMODE_NONE;
     BYTE byCurrXMode = SET_XMODE_NONE;
     unsigned int nTemp = 0;
-    DWORD dwCurrAddress = 0, dwPrevAddress = 0;
+	// This fix is required for appending - 0x80(SET_XDATA_ADDRESS) in binary due to the following condition,
+	// if ((dwCurrAddress < dwPrevAddress) || (wTemp > 0x7D))
+	// SO, dwCurrAddress, dwPrevAddress need to be initialied to 0Xffffffff
+    DWORD dwCurrAddress = 0xFFFFFFFF, dwPrevAddress = 0xFFFFFFFF;
     BYTE byPatchCount = 0;
     BOOL bValidDataOffset = FALSE;
     WORD wDataLengthOffset = 0;
