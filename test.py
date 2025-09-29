@@ -1,6 +1,10 @@
 import subprocess
 import re
 
+def strip_ansi(text):
+    ansi_escape = re.compile(r'\x1B[@-_][0-?]*[ -/]*[@-~]')
+    return ansi_escape.sub('', text)
+
 def run_cmd(cmd):
     try:
         result = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
@@ -47,11 +51,13 @@ def anchorify(title):
 
 def add_section(md_lines, toc_entries, title, content, level=2):
     anchor = anchorify(title)
+    clean_content = strip_ansi(content)
     md_lines.append(f"{'#' * level} {title}\n<a name=\"{anchor}\"></a>\n")
     md_lines.append("```text")
-    md_lines.append(content.strip())
+    md_lines.append(clean_content.strip())
     md_lines.append("```\n")
     toc_entries.append((level, title, anchor))
+
 
 def process_subcommands(md_lines, toc_entries, base_cmd, help_output, level=3, parent_cmds=None, is_extension=False):
     if parent_cmds is None:
@@ -64,10 +70,10 @@ def process_subcommands(md_lines, toc_entries, base_cmd, help_output, level=3, p
             # For extensions, use ./switchtec <ext> help <subcmd>
             if is_extension:
                 sub_help_cmd = f"{base_cmd} help {subcmd}"
-                section_title = f"{base_cmd} help {subcmd}"
+                section_title = f"{base_cmd.split()[-1]} {subcmd}"  # e.g., mfg ping
             else:
                 sub_help_cmd = f"{base_cmd} {subcmd} help"
-                section_title = f"{base_cmd} {subcmd}"
+                section_title = subcmd  # e.g., list, info
             sub_help_output = run_cmd(sub_help_cmd)
             add_section(md_lines, toc_entries, section_title, sub_help_output, level=level)
             # Only recurse if this subcommand actually has further subcommands
@@ -91,9 +97,9 @@ def main():
 
     # Always add top-level help and version sections
     help_output = run_cmd('./switchtec help')
-    add_section(md_lines, toc_entries, 'switchtec help', help_output, level=2)
+    add_section(md_lines, toc_entries, 'help', help_output, level=2)
     version_output = run_cmd('./switchtec version')
-    add_section(md_lines, toc_entries, 'switchtec version', version_output, level=2)
+    add_section(md_lines, toc_entries, 'version', version_output, level=2)
 
     # Parse main commands and extensions
     main_commands = parse_commands(help_output)
@@ -104,14 +110,14 @@ def main():
         if cmd in ['help', 'version']:
             continue
         cmd_help_output = run_cmd(f'./switchtec help {cmd}')
-        add_section(md_lines, toc_entries, f'./switchtec {cmd}', cmd_help_output, level=2)
-        process_subcommands(md_lines, toc_entries, f'./switchtec {cmd}', cmd_help_output, level=3, parent_cmds={cmd}, is_extension=False)
+        add_section(md_lines, toc_entries, cmd, cmd_help_output, level=2)
+        process_subcommands(md_lines, toc_entries, cmd, cmd_help_output, level=3, parent_cmds={cmd}, is_extension=False)
 
     # Document extensions
     for ext in extensions:
         ext_help_output = run_cmd(f'./switchtec {ext} help')
-        add_section(md_lines, toc_entries, f'./switchtec {ext}', ext_help_output, level=2)
-        process_subcommands(md_lines, toc_entries, f'./switchtec {ext}', ext_help_output, level=3, parent_cmds={ext}, is_extension=True)
+        add_section(md_lines, toc_entries, ext, ext_help_output, level=2)
+        process_subcommands(md_lines, toc_entries, ext, ext_help_output, level=3, parent_cmds={ext}, is_extension=True)
 
     # Generate TOC and prepend to md_lines
     toc_lines = generate_toc(toc_entries)
@@ -124,3 +130,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

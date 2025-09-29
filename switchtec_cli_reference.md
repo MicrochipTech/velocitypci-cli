@@ -2,92 +2,92 @@
 
 ## Table of Contents
 
-- [switchtec help](#switchtec-help)
-- [switchtec version](#switchtec-version)
-- [./switchtec list](#switchtec-list)
-- [./switchtec info](#switchtec-info)
-- [./switchtec gui](#switchtec-gui)
-- [./switchtec status](#switchtec-status)
-- [./switchtec bw](#switchtec-bw)
-- [./switchtec latency](#switchtec-latency)
-- [./switchtec events](#switchtec-events)
-- [./switchtec event-wait](#switchtec-event-wait)
-- [./switchtec log-dump](#switchtec-log-dump)
-- [./switchtec log-parse](#switchtec-log-parse)
-- [./switchtec test](#switchtec-test)
-- [./switchtec temp](#switchtec-temp)
-- [./switchtec port-bind-info](#switchtec-port-bind-info)
-- [./switchtec port-bind](#switchtec-port-bind)
-- [./switchtec port-unbind](#switchtec-port-unbind)
-- [./switchtec hard-reset](#switchtec-hard-reset)
-- [./switchtec fw-update](#switchtec-fw-update)
-- [./switchtec fw-info](#switchtec-fw-info)
-- [./switchtec fw-toggle](#switchtec-fw-toggle)
-- [./switchtec fw-read](#switchtec-fw-read)
-- [./switchtec fw-img-info](#switchtec-fw-img-info)
-- [./switchtec evcntr](#switchtec-evcntr)
-- [./switchtec evcntr-setup](#switchtec-evcntr-setup)
-- [./switchtec evcntr-show](#switchtec-evcntr-show)
-- [./switchtec evcntr-del](#switchtec-evcntr-del)
-- [./switchtec evcntr-wait](#switchtec-evcntr-wait)
-- [./switchtec diag](#switchtec-diag)
-  - [./switchtec diag help w2h](#switchtec-diag-help-w2h)
-  - [./switchtec diag help eye](#switchtec-diag-help-eye)
-  - [./switchtec diag help list-mrpc](#switchtec-diag-help-list-mrpc)
-  - [./switchtec diag help loopback](#switchtec-diag-help-loopback)
-  - [./switchtec diag help pattern](#switchtec-diag-help-pattern)
-  - [./switchtec diag help port-eq-txcoeff](#switchtec-diag-help-port-eq-txcoeff)
-  - [./switchtec diag help port-eq-txfslf](#switchtec-diag-help-port-eq-txfslf)
-  - [./switchtec diag help port-eq-txtable](#switchtec-diag-help-port-eq-txtable)
-  - [./switchtec diag help rcvr-extended](#switchtec-diag-help-rcvr-extended)
-  - [./switchtec diag help rcvr-obj](#switchtec-diag-help-rcvr-obj)
-  - [./switchtec diag help ltssm-log](#switchtec-diag-help-ltssm-log)
-- [./switchtec gas](#switchtec-gas)
-  - [./switchtec gas help dump](#switchtec-gas-help-dump)
-  - [./switchtec gas help read](#switchtec-gas-help-read)
-  - [./switchtec gas help write](#switchtec-gas-help-write)
-- [./switchtec mfg](#switchtec-mfg)
-  - [./switchtec mfg help ping](#switchtec-mfg-help-ping)
-  - [./switchtec mfg help info](#switchtec-mfg-help-info)
-  - [./switchtec mfg help secure-version-get](#switchtec-mfg-help-secure-version-get)
-  - [./switchtec mfg help mailbox](#switchtec-mfg-help-mailbox)
-  - [./switchtec mfg help image-list](#switchtec-mfg-help-image-list)
-  - [./switchtec mfg help image-select](#switchtec-mfg-help-image-select)
-  - [./switchtec mfg help fw-transfer](#switchtec-mfg-help-fw-transfer)
-  - [./switchtec mfg help fw-execute](#switchtec-mfg-help-fw-execute)
-  - [./switchtec mfg help boot-resume](#switchtec-mfg-help-boot-resume)
-  - [./switchtec mfg help state-set](#switchtec-mfg-help-state-set)
-  - [./switchtec mfg help config-set](#switchtec-mfg-help-config-set)
-  - [./switchtec mfg help kmsk-entry-add](#switchtec-mfg-help-kmsk-entry-add)
-  - [./switchtec mfg help debug-unlock](#switchtec-mfg-help-debug-unlock)
-  - [./switchtec mfg help debug-lock-update](#switchtec-mfg-help-debug-lock-update)
-  - [./switchtec mfg help debug-unlock-token](#switchtec-mfg-help-debug-unlock-token)
-  - [./switchtec mfg help die-trace-prog](#switchtec-mfg-help-die-trace-prog)
-  - [./switchtec mfg help chip-serial-prog](#switchtec-mfg-help-chip-serial-prog)
-  - [./switchtec mfg help sku-set](#switchtec-mfg-help-sku-set)
-  - [./switchtec mfg help sku-get](#switchtec-mfg-help-sku-get)
-  - [./switchtec mfg help otp-write-prot](#switchtec-mfg-help-otp-write-prot)
-  - [./switchtec mfg help sjtag-mode-set](#switchtec-mfg-help-sjtag-mode-set)
-  - [./switchtec mfg help sjtag-uuid-set](#switchtec-mfg-help-sjtag-uuid-set)
-  - [./switchtec mfg help sjtag-key-set](#switchtec-mfg-help-sjtag-key-set)
-  - [./switchtec mfg help sjtag-key-verify](#switchtec-mfg-help-sjtag-key-verify)
-  - [./switchtec mfg help sjtag-key-lock](#switchtec-mfg-help-sjtag-key-lock)
-  - [./switchtec mfg help selftest-pol-set](#switchtec-mfg-help-selftest-pol-set)
-  - [./switchtec mfg help otp-prog-mode-set](#switchtec-mfg-help-otp-prog-mode-set)
-  - [./switchtec mfg help otp-smprg-set](#switchtec-mfg-help-otp-smprg-set)
-  - [./switchtec mfg help otp-mode-status-get](#switchtec-mfg-help-otp-mode-status-get)
-  - [./switchtec mfg help otp-cust-id-prog](#switchtec-mfg-help-otp-cust-id-prog)
-  - [./switchtec mfg help otp-config-read](#switchtec-mfg-help-otp-config-read)
-  - [./switchtec mfg help otp-config-prog](#switchtec-mfg-help-otp-config-prog)
-  - [./switchtec mfg help sjtag-unlock](#switchtec-mfg-help-sjtag-unlock)
-  - [./switchtec mfg help otp-ini2bin](#switchtec-mfg-help-otp-ini2bin)
+- [help](#help)
+- [version](#version)
+- [list](#list)
+- [info](#info)
+- [gui](#gui)
+- [status](#status)
+- [bw](#bw)
+- [latency](#latency)
+- [events](#events)
+- [event-wait](#event-wait)
+- [log-dump](#log-dump)
+- [log-parse](#log-parse)
+- [test](#test)
+- [temp](#temp)
+- [port-bind-info](#port-bind-info)
+- [port-bind](#port-bind)
+- [port-unbind](#port-unbind)
+- [hard-reset](#hard-reset)
+- [fw-update](#fw-update)
+- [fw-info](#fw-info)
+- [fw-toggle](#fw-toggle)
+- [fw-read](#fw-read)
+- [fw-img-info](#fw-img-info)
+- [evcntr](#evcntr)
+- [evcntr-setup](#evcntr-setup)
+- [evcntr-show](#evcntr-show)
+- [evcntr-del](#evcntr-del)
+- [evcntr-wait](#evcntr-wait)
+- [diag](#diag)
+  - [diag w2h](#diag-w2h)
+  - [diag eye](#diag-eye)
+  - [diag list-mrpc](#diag-list-mrpc)
+  - [diag loopback](#diag-loopback)
+  - [diag pattern](#diag-pattern)
+  - [diag port-eq-txcoeff](#diag-port-eq-txcoeff)
+  - [diag port-eq-txfslf](#diag-port-eq-txfslf)
+  - [diag port-eq-txtable](#diag-port-eq-txtable)
+  - [diag rcvr-extended](#diag-rcvr-extended)
+  - [diag rcvr-obj](#diag-rcvr-obj)
+  - [diag ltssm-log](#diag-ltssm-log)
+- [gas](#gas)
+  - [gas dump](#gas-dump)
+  - [gas read](#gas-read)
+  - [gas write](#gas-write)
+- [mfg](#mfg)
+  - [mfg ping](#mfg-ping)
+  - [mfg info](#mfg-info)
+  - [mfg secure-version-get](#mfg-secure-version-get)
+  - [mfg mailbox](#mfg-mailbox)
+  - [mfg image-list](#mfg-image-list)
+  - [mfg image-select](#mfg-image-select)
+  - [mfg fw-transfer](#mfg-fw-transfer)
+  - [mfg fw-execute](#mfg-fw-execute)
+  - [mfg boot-resume](#mfg-boot-resume)
+  - [mfg state-set](#mfg-state-set)
+  - [mfg config-set](#mfg-config-set)
+  - [mfg kmsk-entry-add](#mfg-kmsk-entry-add)
+  - [mfg debug-unlock](#mfg-debug-unlock)
+  - [mfg debug-lock-update](#mfg-debug-lock-update)
+  - [mfg debug-unlock-token](#mfg-debug-unlock-token)
+  - [mfg die-trace-prog](#mfg-die-trace-prog)
+  - [mfg chip-serial-prog](#mfg-chip-serial-prog)
+  - [mfg sku-set](#mfg-sku-set)
+  - [mfg sku-get](#mfg-sku-get)
+  - [mfg otp-write-prot](#mfg-otp-write-prot)
+  - [mfg sjtag-mode-set](#mfg-sjtag-mode-set)
+  - [mfg sjtag-uuid-set](#mfg-sjtag-uuid-set)
+  - [mfg sjtag-key-set](#mfg-sjtag-key-set)
+  - [mfg sjtag-key-verify](#mfg-sjtag-key-verify)
+  - [mfg sjtag-key-lock](#mfg-sjtag-key-lock)
+  - [mfg selftest-pol-set](#mfg-selftest-pol-set)
+  - [mfg otp-prog-mode-set](#mfg-otp-prog-mode-set)
+  - [mfg otp-smprg-set](#mfg-otp-smprg-set)
+  - [mfg otp-mode-status-get](#mfg-otp-mode-status-get)
+  - [mfg otp-cust-id-prog](#mfg-otp-cust-id-prog)
+  - [mfg otp-config-read](#mfg-otp-config-read)
+  - [mfg otp-config-prog](#mfg-otp-config-prog)
+  - [mfg sjtag-unlock](#mfg-sjtag-unlock)
+  - [mfg otp-ini2bin](#mfg-otp-ini2bin)
 
-## switchtec help
-<a name="switchtec-help"></a>
+## help
+<a name="help"></a>
 
 ```text
 switchtec-5.7
-[1mUsage:[0m ./switchtec <command> [<device>] [OPTIONS]
+Usage: ./switchtec <command> [<device>] [OPTIONS]
 
 The <device> must be a Switchtec device (ex: /dev/switchtec0)
 
@@ -131,37 +131,37 @@ The following are all installed extensions:
 See './switchtec <extension> help' for more information on a extension
 ```
 
-## switchtec version
-<a name="switchtec-version"></a>
+## version
+<a name="version"></a>
 
 ```text
 switchtec cli version 5.7
 ```
 
-## ./switchtec list
-<a name="switchtec-list"></a>
+## list
+<a name="list"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec list [OPTIONS]
+Usage: ./switchtec help./switchtec list [OPTIONS]
 
 list all Switchtec devices on this machine
 
 
-[1mOptions:[0m
+Options:
   [  --verbose, -v ]                    --- print additional device
                                             information
 ```
 
-## ./switchtec info
-<a name="switchtec-info"></a>
+## info
+<a name="info"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec info <device>
+Usage: ./switchtec help./switchtec info <device> [OPTIONS]
 
 display switch information
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -174,21 +174,26 @@ display switch information
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
+
+
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
 ```
 
-## ./switchtec gui
-<a name="switchtec-gui"></a>
+## gui
+<a name="gui"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec gui <device> [OPTIONS]
+Usage: ./switchtec help./switchtec gui <device> [OPTIONS]
 
 display a simple ncurses GUI
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -201,12 +206,14 @@ display a simple ncurses GUI
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --all_ports, -a ]                  --- show all ports (including downed
                                             links)
   [  --reset, -r ]                      --- reset byte counters
@@ -216,21 +223,21 @@ display a simple ncurses GUI
                                             forever)
   [  --bw_type=<TYPE>, -b <TYPE> ]      --- GUI bandwidth type
 
-[1mChoices for TYPE:[0m
+Choices for TYPE:
     RAW                                 --- get the raw bandwidth
     PAYLOAD                             --- get the payload bandwidth
 ```
 
-## ./switchtec status
-<a name="switchtec-status"></a>
+## status
+<a name="status"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec status <device> [OPTIONS]
+Usage: ./switchtec help./switchtec status <device> [OPTIONS]
 
 display switch port status information
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -243,32 +250,34 @@ display switch port status information
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --format=<FMT>, -f <FMT> ]         --- output format (default: normal)
   [  --reset, -r ]                      --- reset byte counters
   [  --verbose, -v ]                    --- print additional information
                                             (only with 'normal' format)
 
-[1mChoices for FMT:[0m
+Choices for FMT:
     normal                              --- Human Readable Output
     table                               --- Tabular Output
 ```
 
-## ./switchtec bw
-<a name="switchtec-bw"></a>
+## bw
+<a name="bw"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec bw <device> [OPTIONS]
+Usage: ./switchtec help./switchtec bw <device> [OPTIONS]
 
 measure the traffic bandwidth through each port
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -281,32 +290,34 @@ measure the traffic bandwidth through each port
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --time=<NUM>, -t <NUM> ]           --- measurement time in seconds
   [  --verbose, -v ]                    --- print posted, non-posted and
                                             completion results
   [  --bw_type=<TYPE>, -b <TYPE> ]      --- bandwidth type
 
-[1mChoices for TYPE:[0m
+Choices for TYPE:
     RAW                                 --- get the raw bandwidth
     PAYLOAD                             --- get the payload bandwidth
 ```
 
-## ./switchtec latency
-<a name="switchtec-latency"></a>
+## latency
+<a name="latency"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec latency <device> --egress=<NUM> [OPTIONS]
+Usage: ./switchtec help./switchtec latency <device> --egress=<NUM> [OPTIONS]
 
 measure the latency of a port
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -319,12 +330,14 @@ measure the latency of a port
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --time=<NUM>, -t <NUM> ]           --- measurement time in seconds
   [  --egress=<NUM>, -e <NUM> ]         --- physical port ID for the egress
                                             side
@@ -332,16 +345,16 @@ measure the latency of a port
                                             side (default: use all ports)
 ```
 
-## ./switchtec events
-<a name="switchtec-events"></a>
+## events
+<a name="events"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec events <device> [OPTIONS]
+Usage: ./switchtec help./switchtec events <device> [OPTIONS]
 
 display events that have occurred
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -354,18 +367,20 @@ display events that have occurred
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --all, -a ]                        --- show events in all partitions
   [  --reset, -r ]                      --- clear all events
   [  --event=<EVENT>, -e <EVENT> ]      --- clear all events of a specified
                                             type
 
-[1mChoices for EVENT:[0m
+Choices for EVENT:
     STACK_ERROR                         --- Stack Error
     PPU_ERROR                           --- PPU Error
     ISP_ERROR                           --- ISP Error
@@ -403,16 +418,16 @@ display events that have occurred
     LINK_STATE                          --- Link State Change Event
 ```
 
-## ./switchtec event-wait
-<a name="switchtec-event-wait"></a>
+## event-wait
+<a name="event-wait"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec event-wait <device> [OPTIONS]
+Usage: ./switchtec help./switchtec event-wait <device> [OPTIONS]
 
 wait for an event to occur
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -425,19 +440,21 @@ wait for an event to occur
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --event=<EVENT>, -e <EVENT> ]      --- event to wait on
   [  --partition=<NUM>, -p <NUM> ]      --- partition ID for the event
   [  --port=<NUM>, -q <NUM> ]           --- logical port ID for the event
   [  --timeout=<MS>, -t <MS> ]          --- timeout in milliseconds (-1 =
                                             forever)
 
-[1mChoices for EVENT:[0m
+Choices for EVENT:
     STACK_ERROR                         --- Stack Error
     PPU_ERROR                           --- PPU Error
     ISP_ERROR                           --- ISP Error
@@ -475,16 +492,16 @@ wait for an event to occur
     LINK_STATE                          --- Link State Change Event
 ```
 
-## ./switchtec log-dump
-<a name="switchtec-log-dump"></a>
+## log-dump
+<a name="log-dump"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec log-dump <device> [<output_file>] [OPTIONS]
+Usage: ./switchtec help./switchtec log-dump <device> [<output_file>] [OPTIONS]
 
 dump the firmware log to a file
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -498,19 +515,21 @@ dump the firmware log to a file
   [<output_file>]                       --- log output file
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --log_def=<DEF_FILE>, -d <DEF_FILE> ] --- parse log output using specified
                                             log definition file (app log
                                             only)
   [  --type=<TYPE>, -t <TYPE> ]         --- log type to dump
   [  --format=<FORMAT>, -f <FORMAT> ]   --- output log file format
 
-[1mChoices for TYPE:[0m
+Choices for TYPE:
     RAM                                 --- dump the app log from RAM
     FLASH                               --- dump the app log from flash
     FTDC                                --- dump the FTDC firmware log
@@ -533,27 +552,27 @@ dump the firmware log to a file
                                             the last fatal error handling
                                             dump
 
-[1mChoices for FORMAT:[0m
+Choices for FORMAT:
     BIN                                 --- output binary log data (default)
     TXT                                 --- output text log data
 ```
 
-## ./switchtec log-parse
-<a name="switchtec-log-parse"></a>
+## log-parse
+<a name="log-parse"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec log-parse <log_input> <log_def> [<parsed_output>] [OPTIONS]
+Usage: ./switchtec help./switchtec log-parse <log_input> <log_def> [<parsed_output>] [OPTIONS]
 
 parse a binary app log or mailbox log to a text file
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <log_input>                          --- binary app log input file
    <log_def>                            --- log definition file
   [<parsed_output>]                     --- parsed output file
 
 
-[1mOptions:[0m
+Options:
   [  --type=<TYPE>, -t <TYPE> ]         --- log type to parse (default: APP)
   [  --device_gen=<GEN>, -g <GEN> ]     --- device generation (Only needed
                                             when parsing earlier log files
@@ -561,28 +580,28 @@ parse a binary app log or mailbox log to a text file
                                             generation information. Default:
                                             UNKNOWN)
 
-[1mChoices for TYPE:[0m
+Choices for TYPE:
     APP                                 --- app log
     MAILBOX                             --- mailbox log
     FTDC                                --- ftdc
 
-[1mChoices for GEN:[0m
+Choices for GEN:
     GEN3                                --- GEN3
     GEN4                                --- GEN4
     GEN5                                --- GEN5
     UNKNOWN                             --- UNKNOWN
 ```
 
-## ./switchtec test
-<a name="switchtec-test"></a>
+## test
+<a name="test"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec test <device>
+Usage: ./switchtec help./switchtec test <device> [OPTIONS]
 
 test if the Switchtec interface is working
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -595,21 +614,26 @@ test if the Switchtec interface is working
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
+
+
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
 ```
 
-## ./switchtec temp
-<a name="switchtec-temp"></a>
+## temp
+<a name="temp"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec temp <device>
+Usage: ./switchtec help./switchtec temp <device> [OPTIONS]
 
 display the die temperature
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -622,21 +646,26 @@ display the die temperature
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
+
+
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
 ```
 
-## ./switchtec port-bind-info
-<a name="switchtec-port-bind-info"></a>
+## port-bind-info
+<a name="port-bind-info"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec port-bind-info <device> [OPTIONS]
+Usage: ./switchtec help./switchtec port-bind-info <device> [OPTIONS]
 
 display physical port binding information
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -649,25 +678,27 @@ display physical port binding information
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --physical=<>, -f <> ]             --- physical port ID
 ```
 
-## ./switchtec port-bind
-<a name="switchtec-port-bind"></a>
+## port-bind
+<a name="port-bind"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec port-bind <device> [OPTIONS]
+Usage: ./switchtec help./switchtec port-bind <device> [OPTIONS]
 
 bind a logical port to a physical port
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -680,27 +711,29 @@ bind a logical port to a physical port
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --partition=<>, -p <> ]            --- partition ID
   [  --logical=<>, -l <> ]              --- logical port ID
   [  --physical=<>, -f <> ]             --- physical port ID
 ```
 
-## ./switchtec port-unbind
-<a name="switchtec-port-unbind"></a>
+## port-unbind
+<a name="port-unbind"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec port-unbind <device> [OPTIONS]
+Usage: ./switchtec help./switchtec port-unbind <device> [OPTIONS]
 
 unbind a logical port from a physical port
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -713,26 +746,28 @@ unbind a logical port from a physical port
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --partition=<>, -p <> ]            --- partition ID
   [  --logical=<>, -l <> ]              --- logical port ID
 ```
 
-## ./switchtec hard-reset
-<a name="switchtec-hard-reset"></a>
+## hard-reset
+<a name="hard-reset"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec hard-reset <device> [OPTIONS]
+Usage: ./switchtec help./switchtec hard-reset <device> [OPTIONS]
 
 perform a hard reset of the switch
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -745,20 +780,22 @@ perform a hard reset of the switch
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --yes, -y ]                        --- assume yes when prompted
 ```
 
-## ./switchtec fw-update
-<a name="switchtec-fw-update"></a>
+## fw-update
+<a name="fw-update"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec fw-update <device> <img_file> [OPTIONS]
+Usage: ./switchtec help./switchtec fw-update <device> <img_file> [OPTIONS]
 
 upload a new firmware image to flash
 
@@ -785,7 +822,7 @@ device during normal operation.
 
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -799,12 +836,14 @@ device during normal operation.
    <img_file>                           --- image file to upload
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --yes, -y ]                        --- assume yes when prompted
   [  --dont-activate, -A ]              --- don't activate the new image, use
                                             fw-toggle to do so when it is
@@ -819,16 +858,16 @@ device during normal operation.
   [  --no-progress, -p ]                --- don't print progress to stdout
 ```
 
-## ./switchtec fw-info
-<a name="switchtec-fw-info"></a>
+## fw-info
+<a name="fw-info"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec fw-info <device>
+Usage: ./switchtec help./switchtec fw-info <device> [OPTIONS]
 
 return information on the currently flashed firmware
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -841,21 +880,26 @@ return information on the currently flashed firmware
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
+
+
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
 ```
 
-## ./switchtec fw-toggle
-<a name="switchtec-fw-toggle"></a>
+## fw-toggle
+<a name="fw-toggle"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec fw-toggle <device> [OPTIONS]
+Usage: ./switchtec help./switchtec fw-toggle <device> [OPTIONS]
 
 toggle the active and inactive firmware partitions
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -868,28 +912,30 @@ toggle the active and inactive firmware partitions
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --bl2, -b ]                        --- toggle BL2 firmware
   [  --key, -k ]                        --- toggle Key manifest
   [  --firmware, -f ]                   --- toggle IMG firmware
   [  --config, -c ]                     --- toggle CFG data
 ```
 
-## ./switchtec fw-read
-<a name="switchtec-fw-read"></a>
+## fw-read
+<a name="fw-read"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec fw-read <device> [<filename>] [OPTIONS]
+Usage: ./switchtec help./switchtec fw-read <device> [<filename>] [OPTIONS]
 
 read a firmware image from flash
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -904,12 +950,14 @@ read a firmware image from flash
                                             for
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --yes, -y ]                        --- assume yes when prompted
   [  --inactive, -i ]                   --- read the inactive partition
   [  --data, -d ]                       --- read the data/config partiton
@@ -923,30 +971,30 @@ read a firmware image from flash
   [  --no-progress, -p ]                --- don't print progress to stdout
 ```
 
-## ./switchtec fw-img-info
-<a name="switchtec-fw-img-info"></a>
+## fw-img-info
+<a name="fw-img-info"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec fw-img-info <img_file>
+Usage: ./switchtec help./switchtec fw-img-info <img_file>
 
 display information for a firmware image
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <img_file>                           --- image file to display information
                                             for
 ```
 
-## ./switchtec evcntr
-<a name="switchtec-evcntr"></a>
+## evcntr
+<a name="evcntr"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec evcntr <device> [OPTIONS]
+Usage: ./switchtec help./switchtec evcntr <device> [OPTIONS]
 
 display event counters
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -959,26 +1007,28 @@ display event counters
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --reset, -r ]                      --- reset counters back to zero
   [  --stack=<NUM>, -s <NUM> ]          --- stack to show the counters for
 ```
 
-## ./switchtec evcntr-setup
-<a name="switchtec-evcntr-setup"></a>
+## evcntr-setup
+<a name="evcntr-setup"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec evcntr-setup <device> --stack=<NUM> --event=<EVENT> [OPTIONS]
+Usage: ./switchtec help./switchtec evcntr-setup <device> --stack=<NUM> --event=<EVENT> [OPTIONS]
 
 configure an event counter
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -991,12 +1041,14 @@ configure an event counter
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --stack=<NUM>, -s <NUM> ]          --- stack to create the counter in
   [  --event=<EVENT>, -e <EVENT> ]      --- event to count on, may specify
                                             this argument multiple times to
@@ -1013,7 +1065,7 @@ configure an event counter
   [  --thresh=<NUM>, -t <NUM> ]         --- threshold to trigger an event
                                             notification
 
-[1mChoices for EVENT:[0m
+Choices for EVENT:
     ALL                                 --- all events
     ALL_TLPS                            --- all TLPs
     ALL_ERRORS                          --- all errors
@@ -1043,16 +1095,16 @@ configure an event counter
     NON_POSTED_TLP                      --- Non-Posted TLP
 ```
 
-## ./switchtec evcntr-show
-<a name="switchtec-evcntr-show"></a>
+## evcntr-show
+<a name="evcntr-show"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec evcntr-show <device> --stack=<NUM> --counter=<NUM> [OPTIONS]
+Usage: ./switchtec help./switchtec evcntr-show <device> --stack=<NUM> --counter=<NUM> [OPTIONS]
 
 display an event counter's configuration
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -1065,27 +1117,29 @@ display an event counter's configuration
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --stack=<NUM>, -s <NUM> ]          --- stack to show the configuration
                                             for
   [  --counter=<NUM>, -c <NUM> ]        --- counter index
 ```
 
-## ./switchtec evcntr-del
-<a name="switchtec-evcntr-del"></a>
+## evcntr-del
+<a name="evcntr-del"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec evcntr-del <device> --stack=<NUM> --counter=<NUM> [OPTIONS]
+Usage: ./switchtec help./switchtec evcntr-del <device> --stack=<NUM> --counter=<NUM> [OPTIONS]
 
 deconfigure an event counter
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -1098,27 +1152,29 @@ deconfigure an event counter
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --stack=<NUM>, -s <NUM> ]          --- stack to deconfigure the counter
                                             in
   [  --counter=<NUM>, -c <NUM> ]        --- counter index
 ```
 
-## ./switchtec evcntr-wait
-<a name="switchtec-evcntr-wait"></a>
+## evcntr-wait
+<a name="evcntr-wait"></a>
 
 ```text
-[1mUsage:[0m ./switchtec help./switchtec evcntr-wait <device> [OPTIONS]
+Usage: ./switchtec help./switchtec evcntr-wait <device> [OPTIONS]
 
 wait for an event counter to exceed its threshold
 
 
-[1mPositional Arguments:[0m
+Positional Arguments:
    <device>                             --- Switchtec device to operate on.
                                             Can be any of:
                                              * a device path
@@ -1131,22 +1187,24 @@ wait for an event counter to exceed its threshold
                                             
 
 
-[1mEnvironment Variables:[0m
+Environment Variables:
     SWITCHTEC_DEV                       --- if set, the value will be used
                                             for the <device> argument
 
 
-[1mOptions:[0m
+Options:
+  [  --pax=<arg>, -x <arg> ]            --- PAX ID within a PAX fabric. Only
+                                            valid on Switchtec PAX devices
   [  --timeout=<MS>, -t <MS> ]          --- timeout in milliseconds (-1 =
                                             forever)
 ```
 
-## ./switchtec diag
-<a name="switchtec-diag"></a>
+## diag
+<a name="diag"></a>
 
 ```text
 switchtec-5.7
-[1mUsage:[0m ./switchtec diag <command> [<device>] [OPTIONS]
+Usage: ./switchtec diag <command> [<device>] [OPTIONS]
 
 The <device> must be a Switchtec device (ex: /dev/switchtec0)
 
@@ -1172,428 +1230,89 @@ The following are all implemented sub-commands:
 See './switchtec diag help <command>' for more information on a specific command
 ```
 
-### ./switchtec diag help w2h
-<a name="switchtec-diag-help-w2h"></a>
+### diag w2h
+<a name="diag-w2h"></a>
 
 ```text
-[1mUsage:[0m ./switchtec diag help./switchtec diag w2h <device> [OPTIONS]
-
-Capture w2h Score
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --format=<FMT>, -f <FMT> ]         --- output format (default: curses)
-  [  --lane=<LANE_ID>, -l <LANE_ID> ]   --- lane id within the port to
-                                            observe
-  [  --error threshold[=<ERROR THRESHOLD>],
-      -t [<ERROR THRESHOLD>] ]          --- Maximum allowed errors
-  [  --t-step=<NUM>, -s <NUM> ]         --- time step (default 1)
-  [  --v-step=<NUM>, -S <NUM> ]         --- voltage step (default: 5)
-
-[1mChoices for FMT:[0m
-    curses                              --- Display data in a curses
-                                            scrollable window
-    text                                --- Display data in a simplified text
-                                            format
-    csv                                 --- Raw Data in CSV format
+/bin/sh: 1: diag: not found
 ```
 
-### ./switchtec diag help eye
-<a name="switchtec-diag-help-eye"></a>
+### diag eye
+<a name="diag-eye"></a>
 
 ```text
-[1mUsage:[0m ./switchtec diag help./switchtec diag eye <device> [OPTIONS]
-
-Capture eye data
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --format=<FMT>, -f <FMT> ]         --- output format (default: curses)
-  [  --lane=<LANE_ID>, -l <LANE_ID> ]   --- lane id within the port to
-                                            observe
-  [  --error threshold[=<ERROR THRESHOLD>],
-      -t [<ERROR THRESHOLD>] ]          --- Maximum allowed errors
-  [  --t-step=<NUM>, -s <NUM> ]         --- time step (default 1)
-  [  --v-step=<NUM>, -S <NUM> ]         --- voltage step (default: 5)
-
-[1mChoices for FMT:[0m
-    curses                              --- Display data in a curses
-                                            scrollable window
-    text                                --- Display data in a simplified text
-                                            format
-    csv                                 --- Raw Data in CSV format
+/bin/sh: 1: diag: not found
 ```
 
-### ./switchtec diag help list-mrpc
-<a name="switchtec-diag-help-list-mrpc"></a>
+### diag list-mrpc
+<a name="diag-list-mrpc"></a>
 
 ```text
-[1mUsage:[0m ./switchtec diag help./switchtec diag list-mrpc <device> [OPTIONS]
-
-List permissible MRPC commands
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --all, -a ]                        --- print all MRPC commands,
-                                            including ones that are unknown
+/bin/sh: 1: diag: not found
 ```
 
-### ./switchtec diag help loopback
-<a name="switchtec-diag-help-loopback"></a>
+### diag loopback
+<a name="diag-loopback"></a>
 
 ```text
-[1mUsage:[0m ./switchtec diag help./switchtec diag loopback <device> [OPTIONS]
-
-Enable Loopback on specified ports
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --port=<PORT_ID>, -p <PORT_ID> ]   --- physical port ID to set/get
-                                            loopback for
-  [  --disable, -d ]                    --- Disable all loopback modes
-  [  --ltssm, -l ]                      --- Enable LTSSM loopback mode
-  [  --rx-to-tx, -r ]                   --- Enable RX->TX loopback mode
-  [  --tx-to-rx, -t ]                   --- Enable TX->RX loopback mode
-  [  --speed=<GEN>, -s <GEN> ]          --- LTSSM Speed (if enabling the
-                                            LTSSM loopback mode), default:
-                                            GEN4
-
-[1mChoices for GEN:[0m
-    GEN1                                --- GEN1 LTSSM Speed
-    GEN2                                --- GEN2 LTSSM Speed
-    GEN3                                --- GEN3 LTSSM Speed
-    GEN4                                --- GEN4 LTSSM Speed
+/bin/sh: 1: diag: not found
 ```
 
-### ./switchtec diag help pattern
-<a name="switchtec-diag-help-pattern"></a>
+### diag pattern
+<a name="diag-pattern"></a>
 
 ```text
-[1mUsage:[0m ./switchtec diag help./switchtec diag pattern <device> [OPTIONS]
-
-Enable pattern generation and monitor
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --port=<PORT_ID>, -p <PORT_ID> ]   --- physical port ID to set/get
-                                            loopback for
-  [  --disable, -d ]                    --- Disable all generators and
-                                            monitors
-  [  --inject=<NUM>, -i <NUM> ]         --- Inject the specified number of
-                                            errors into all lanes of the TX
-                                            port
-  [  --generate, -g ]                   --- Enable Pattern Generator on
-                                            specified port
-  [  --monitor, -m ]                    --- Enable Pattern Monitor on
-                                            specified port
-  [  --pattern=<PATTERN>, -t <PATTERN> ] --- pattern to generate or monitor
-                                            for (default: PRBS31)
-
-[1mChoices for PATTERN:[0m
-    PRBS7                               --- PRBS 7
-    PRBS11                              --- PRBS 11
-    PRBS23                              --- PRBS 23
-    PRBS31                              --- PRBS 31
-    PRBS9                               --- PRBS 9
-    PRBS15                              --- PRBS 15
+/bin/sh: 1: diag: not found
 ```
 
-### ./switchtec diag help port-eq-txcoeff
-<a name="switchtec-diag-help-port-eq-txcoeff"></a>
+### diag port-eq-txcoeff
+<a name="diag-port-eq-txcoeff"></a>
 
 ```text
-[1mUsage:[0m ./switchtec diag help./switchtec diag port-eq-txcoeff <device> [OPTIONS]
-
-Dump port equalization coefficients
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --far-end, -f ]                    --- get the far-end coefficients
-                                            instead of the local ones
-  [  --port=<PORT_ID>, -p <PORT_ID> ]   --- physical port ID to dump data for
-  [  --prev, -P ]                       --- return the data for the previous
-                                            link
+/bin/sh: 1: diag: not found
 ```
 
-### ./switchtec diag help port-eq-txfslf
-<a name="switchtec-diag-help-port-eq-txfslf"></a>
+### diag port-eq-txfslf
+<a name="diag-port-eq-txfslf"></a>
 
 ```text
-[1mUsage:[0m ./switchtec diag help./switchtec diag port-eq-txfslf <device> [OPTIONS]
-
-Dump FS/LF output data
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --far-end, -f ]                    --- get the far-end coefficients
-                                            instead of the local ones
-  [  --port=<PORT_ID>, -p <PORT_ID> ]   --- physical port ID to dump data for
-  [  --prev, -P ]                       --- return the data for the previous
-                                            link
+/bin/sh: 1: diag: not found
 ```
 
-### ./switchtec diag help port-eq-txtable
-<a name="switchtec-diag-help-port-eq-txtable"></a>
+### diag port-eq-txtable
+<a name="diag-port-eq-txtable"></a>
 
 ```text
-[1mUsage:[0m ./switchtec diag help./switchtec diag port-eq-txtable <device> [OPTIONS]
-
-Dump far end port equalization table
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --port=<PORT_ID>, -p <PORT_ID> ]   --- physical port ID to dump data for
-  [  --prev, -P ]                       --- return the data for the previous
-                                            link
+/bin/sh: 1: diag: not found
 ```
 
-### ./switchtec diag help rcvr-extended
-<a name="switchtec-diag-help-rcvr-extended"></a>
+### diag rcvr-extended
+<a name="diag-rcvr-extended"></a>
 
 ```text
-[1mUsage:[0m ./switchtec diag help./switchtec diag rcvr-extended <device> [OPTIONS]
-
-Dump RX mode and DTCLK
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --port=<PORT_ID>, -p <PORT_ID> ]   --- physical port ID to dump data for
-  [  --prev, -P ]                       --- return the data for the previous
-                                            link
+/bin/sh: 1: diag: not found
 ```
 
-### ./switchtec diag help rcvr-obj
-<a name="switchtec-diag-help-rcvr-obj"></a>
+### diag rcvr-obj
+<a name="diag-rcvr-obj"></a>
 
 ```text
-[1mUsage:[0m ./switchtec diag help./switchtec diag rcvr-obj <device> [OPTIONS]
-
-Dump analog RX coefficients/adaptation objects
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --port=<PORT_ID>, -p <PORT_ID> ]   --- physical port ID to dump data for
-  [  --prev, -P ]                       --- return the data for the previous
-                                            link
+/bin/sh: 1: diag: not found
 ```
 
-### ./switchtec diag help ltssm-log
-<a name="switchtec-diag-help-ltssm-log"></a>
+### diag ltssm-log
+<a name="diag-ltssm-log"></a>
 
 ```text
-[1mUsage:[0m ./switchtec diag help./switchtec diag ltssm-log <device> [OPTIONS]
-
-Display LTSSM log
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --port=<PORT_ID>, -p <PORT_ID> ]   --- physical port ID to dump data for
+/bin/sh: 1: diag: not found
 ```
 
-## ./switchtec gas
-<a name="switchtec-gas"></a>
+## gas
+<a name="gas"></a>
 
 ```text
 switchtec-5.7
-[1mUsage:[0m ./switchtec gas <command> [<device>] [OPTIONS]
+Usage: ./switchtec gas <command> [<device>] [OPTIONS]
 
 The <device> must be a Switchtec device (ex: /dev/switchtec0)
 
@@ -1613,125 +1332,33 @@ The following are all implemented sub-commands:
 See './switchtec gas help <command>' for more information on a specific command
 ```
 
-### ./switchtec gas help dump
-<a name="switchtec-gas-help-dump"></a>
+### gas dump
+<a name="gas-dump"></a>
 
 ```text
-[1mUsage:[0m ./switchtec gas help./switchtec gas dump <device> [OPTIONS]
-
-dump all Global Address Space registers
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --count=<NUM>, -n <NUM> ]          --- number of bytes to dump (default
-                                            is the entire GAS space)
-  [  --text, -t ]                       --- force outputting data in text
-                                            format, default is to output in
-                                            text unless the output is a
-                                            pipe, in which case binary is
-                                            output
+/bin/sh: 1: gas: not found
 ```
 
-### ./switchtec gas help read
-<a name="switchtec-gas-help-read"></a>
+### gas read
+<a name="gas-read"></a>
 
 ```text
-[1mUsage:[0m ./switchtec gas help./switchtec gas read <device> [OPTIONS]
-
-read a register from the Global Address Space
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --addr=<ADDR>, -a <ADDR> ]         --- address to read
-  [  --bytes=<NUM>, -b <NUM> ]          --- number of bytes to read per
-                                            access (default 4)
-  [  --count=<NUM>, -n <NUM> ]          --- number of accesses to perform
-                                            (default 1)
-  [  --print=<STYLE>, -p <STYLE> ]      --- printing style
-
-[1mChoices for STYLE:[0m
-    hex                                 --- print in hexadecimal
-    dec                                 --- print in decimal
-    str                                 --- print as an ASCII string
+/bin/sh: 1: gas: not found
 ```
 
-### ./switchtec gas help write
-<a name="switchtec-gas-help-write"></a>
+### gas write
+<a name="gas-write"></a>
 
 ```text
-[1mUsage:[0m ./switchtec gas help./switchtec gas write <device> [OPTIONS]
-
-write a register in the Global Address Space
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                             * a UART path (/dev/ttyUSB0)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --addr=<ADDR>, -a <ADDR> ]         --- address to write
-  [  --bytes=<NUM>, -b <NUM> ]          --- number of bytes to write (default
-                                            4)
-  [  --value=<VAL>, -v <VAL> ]          --- value to write
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: gas: not found
 ```
 
-## ./switchtec mfg
-<a name="switchtec-mfg"></a>
+## mfg
+<a name="mfg"></a>
 
 ```text
 switchtec-5.7
-[1mUsage:[0m ./switchtec mfg <command> [<device>] [OPTIONS]
+Usage: ./switchtec mfg <command> [<device>] [OPTIONS]
 
 The <device> must be a Switchtec device (ex: /dev/switchtec0)
 
@@ -1780,1195 +1407,240 @@ The following are all implemented sub-commands:
 See './switchtec mfg help <command>' for more information on a specific command
 ```
 
-### ./switchtec mfg help ping
-<a name="switchtec-mfg-help-ping"></a>
+### mfg ping
+<a name="mfg-ping"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg ping <device> [OPTIONS]
-
-ping device and get current boot phase
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --extended_cmd, -x ]               --- print extended ping command
-                                            information
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help info
-<a name="switchtec-mfg-help-info"></a>
+### mfg info
+<a name="mfg-info"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg info <device> [OPTIONS]
-
-display security settings
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --verbose, -v ]                    --- print additional chip information
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help secure-version-get
-<a name="switchtec-mfg-help-secure-version-get"></a>
+### mfg secure-version-get
+<a name="mfg-secure-version-get"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg secure-version-get <device>
-
-display chip serial number, customer ID, secure versions of Key manifest,
-BL2, Main FW and SUV
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help mailbox
-<a name="switchtec-mfg-help-mailbox"></a>
+### mfg mailbox
+<a name="mfg-mailbox"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg mailbox <device> [<filename>]
-
-retrieve mailbox logs
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-  [<filename>]                          --- file to log mailbox data
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help image-list
-<a name="switchtec-mfg-help-image-list"></a>
+### mfg image-list
+<a name="mfg-image-list"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg image-list <device>
-
-display active image list (BL1 only)
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help image-select
-<a name="switchtec-mfg-help-image-select"></a>
+### mfg image-select
+<a name="mfg-image-select"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg image-select <device> [OPTIONS]
-
-select active image index (BL1 only)
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --bl2=<>, -b <> ]                  --- active image index for BL2
-  [  --firmware=<>, -m <> ]             --- active image index for FIRMWARE
-  [  --config=<>, -c <> ]               --- active image index for CONFIG
-  [  --keyman=<>, -k <> ]               --- active image index for KEY
-                                            MANIFEST
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help fw-transfer
-<a name="switchtec-mfg-help-fw-transfer"></a>
+### mfg fw-transfer
+<a name="mfg-fw-transfer"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg fw-transfer <device> <img_file> [OPTIONS]
-
-transfer a firmware image to device (BL1 only)
-
-This command only supports transferring a firmware image when the device is
-in the BL1 boot phase. Use 'fw-execute' after this command to excute the
-transferred image. Note that the image is stored in device RAM and is lost
-after device reboot.
-
-To update an image in the BL2 or MAIN boot phase, use the 'fw-update'
-command instead.
-
-NOTE - A device can be in one of these three boot phases: 
-BOOTLOADER1 (BL1): in this phase, a device runs a BL1 image that resides on
-the device's on-chip boot ROM. The BL1 image is implemented to facilitate
-device recovery -- it supports transferring and executing a BOOTLOADER2
-image. To enter the BL1 boot phase, set the device's BOOT_RECOVERY PIN 0 to
-LOW and reset the device.
-
-BOOTLOADER2 (BL2): in this phase, a device runs the BL2 image stored in
-flash or transferred during the BL1 boot phase. BL2 is the phase for device
-recovery -- it provides commands to update and activate device partitions.
-To enter the BL2 boot phase, set the device's BOOT_RECOVERY PIN[0] to HIGH
-and PIN[1] to LOW and reset the device.
-
-MAIN FIRMWARE (MAIN): this is the full-featured firmware that runs on your
-device during normal operation.
-
-
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-   <img_file>                           --- firmware image file to transfer
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --yes, -y ]                        --- assume yes when prompted
-  [  --force, -f ]                      --- force interrupting an existing
-                                            fw-update command in case
-                                            firmware is stuck in a busy
-                                            state
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help fw-execute
-<a name="switchtec-mfg-help-fw-execute"></a>
+### mfg fw-execute
+<a name="mfg-fw-execute"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg fw-execute <device> [OPTIONS]
-
-execute previously transferred firmware image (BL1 only)
-
-This command is only supported when the device is in the BL1 boot phase. The
-firmware image must have been transferred using the 'fw-transfer' command.
-After firmware initializes, it listens for activity from I2C, UART (XModem),
-or both interfaces for input. Once activity is detected from an interface,
-firmware falls into recovery mode on that interface. The interface to listen
-on can be specified using the 'bl2_recovery_mode' option. 
-
-To activate an image in the BL2 or MAIN boot phase, use the 'fw-toggle'
-command instead.
-
-NOTE - A device can be in one of these three boot phases: 
-BOOTLOADER1 (BL1): in this phase, a device runs a BL1 image that resides on
-the device's on-chip boot ROM. The BL1 image is implemented to facilitate
-device recovery -- it supports transferring and executing a BOOTLOADER2
-image. To enter the BL1 boot phase, set the device's BOOT_RECOVERY PIN 0 to
-LOW and reset the device.
-
-BOOTLOADER2 (BL2): in this phase, a device runs the BL2 image stored in
-flash or transferred during the BL1 boot phase. BL2 is the phase for device
-recovery -- it provides commands to update and activate device partitions.
-To enter the BL2 boot phase, set the device's BOOT_RECOVERY PIN[0] to HIGH
-and PIN[1] to LOW and reset the device.
-
-MAIN FIRMWARE (MAIN): this is the full-featured firmware that runs on your
-device during normal operation.
-
-
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --yes, -y ]                        --- assume yes when prompted
-  [  --bl2_recovery_mode=<MODE>,
-      -m <MODE> ]                       --- BL2 recovery mode
-
-[1mChoices for MODE:[0m
-    I2C                                 --- I2C
-    XMODEM                              --- XModem
-    BOTH                                --- both I2C and XModem (default)
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help boot-resume
-<a name="switchtec-mfg-help-boot-resume"></a>
+### mfg boot-resume
+<a name="mfg-boot-resume"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg boot-resume <device> [OPTIONS]
-
-resume device boot process (BL1 and BL2 only)
-
-A normal device boot process includes the BL1, BL2 and Main Firmware boot
-phases. In the case when the boot process is paused at the BL1 or BL2 phase
-(due to boot failure or BOOT_RECOVERY PIN[0:1] being set to LOW), sending
-this command requests the device to try resuming a normal boot
-process.
-
-NOTE: if your system does not support hotplug, your device might not be
-immediately accessible after a normal boot process. In this case, be sure to
-reboot your system after sending this command.
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help state-set
-<a name="switchtec-mfg-help-state-set"></a>
+### mfg state-set
+<a name="mfg-state-set"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg state-set <device> [OPTIONS]
-
-set device secure state (BL1 and Main Firmware only)
-
-This command can only be used when the device secure state is
-UNINITIALIZED_UNSECURED.
-
-NOTE - A device can be in one of these three secure states:
-
-UNINITIALIZED_UNSECURED: this is the default state when the chip is shipped.
-All security-related settings are 'uninitialized', and the chip is in the
-'unsecured' state. 
-INITIALIZED_UNSECURED: this is the state when security-related settings are
-'initialized', and the chip is set to the 'unsecured' state.
-
-INITIALIZED_SECURED: this is the state when security-related settings are
-'initialized', and the chip is set to the 'secured' state. 
-
-Use 'config-set' or other mfg commands to initialize security settings when
-the chip is in the UNINITIALIZED_UNSECURED state, then use this command to
-switch the chip to the INITIALIZED_SECURED or INITIALIZED_UNSECURED state.
-
-
-WARNING: ONCE THE CHIP STATE IS SUCCESSFULLY SET, IT CAN NO LONGER BE
-CHANGED. USE CAUTION WHEN ISSUING THIS COMMAND.
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --state=<state>, -t <state> ]      --- secure state
-  [  --yes, -y ]                        --- assume yes when prompted
-
-[1mChoices for state:[0m
-    INITIALIZED_UNSECURED               --- unsecured state
-    INITIALIZED_SECURED                 --- secured state
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help config-set
-<a name="switchtec-mfg-help-config-set"></a>
+### mfg config-set
+<a name="mfg-config-set"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg config-set <device> <setting_file> [OPTIONS]
-
-set device security settings (BL1 and Main Firmware only)
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-   <setting_file>                       --- security setting file
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help kmsk-entry-add
-<a name="switchtec-mfg-help-kmsk-entry-add"></a>
+### mfg kmsk-entry-add
+<a name="mfg-kmsk-entry-add"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg kmsk-entry-add <device> [OPTIONS]
-
-add a KSMK entry (BL1 and Main Firmware only)
-
-KMSK stands for Key Manifest Secure Key. It is a key used to verify the Key
-Manifest partition, which contains keys used to verify all other
-partitions.
-
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --pub_key_file=<arg>, -p <arg> ]   --- public key file
-  [  --signature_file=<arg>, -s <arg> ] --- signature file
-  [  --kmsk_entry_file=<arg>, -k <arg> ] --- KMSK entry file
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help debug-unlock
-<a name="switchtec-mfg-help-debug-unlock"></a>
+### mfg debug-unlock
+<a name="mfg-debug-unlock"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg debug-unlock <device> [OPTIONS]
-
-unlock firmware debug features
-
-This command unlocks the EJTAG port, Command Line Interface (CLI), MRPC
-command and Global Address Space (GAS) registers.
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --pub_key=<arg>, -p <arg> ]        --- public key file
-  [  --serial_number=<arg>, -n <arg> ]  --- device serial number
-  [  --unlock_version=<arg>, -v <arg> ] --- unlock version
-  [  --signature_file=<arg>, -s <arg> ] --- signature file
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help debug-lock-update
-<a name="switchtec-mfg-help-debug-lock-update"></a>
+### mfg debug-lock-update
+<a name="mfg-debug-lock-update"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg debug-lock-update <device> [OPTIONS]
-
-update debug feature secure unlock version
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --pub_key=<arg>, -p <arg> ]        --- public key file
-  [  --serial_number=<arg>, -n <arg> ]  --- device serial number
-  [  --new_unlock_version=<arg>,
-      -v <arg> ]                        --- new unlock version
-  [  --signature_file=<arg>, -s <arg> ] --- signature file
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help debug-unlock-token
-<a name="switchtec-mfg-help-debug-unlock-token"></a>
+### mfg debug-unlock-token
+<a name="mfg-debug-unlock-token"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg debug-unlock-token <device> [<token_file>]
-
-generate debug unlock token file for the device
-
-Use the generated token file on your security management system to generate
-the signature file required for command 'mfg debug-unlock'
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-  [<token_file>]                        --- debug unlock token file
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help die-trace-prog
-<a name="switchtec-mfg-help-die-trace-prog"></a>
+### mfg die-trace-prog
+<a name="mfg-die-trace-prog"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg die-trace-prog <device> [OPTIONS]
-
-program die trace into OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --die_trace=<die_trace>, -d <die_trace> ] --- Die Trace file.bin
-                                            Should contain Die Trace
-                                            settings
-                                            
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help chip-serial-prog
-<a name="switchtec-mfg-help-chip-serial-prog"></a>
+### mfg chip-serial-prog
+<a name="mfg-chip-serial-prog"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg chip-serial-prog <device> [OPTIONS]
-
-program chip serial number into OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --chip_serial_num=<chip_serial_num>,
-      -c <chip_serial_num> ]            --- Enter 4-byte Chip Serial Number
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help sku-set
-<a name="switchtec-mfg-help-sku-set"></a>
+### mfg sku-set
+<a name="mfg-sku-set"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg sku-set <device> [OPTIONS]
-
-write SKU info settings into OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --block_num=<block_num>, -b <block_num> ] --- Block Number
-                                            Valid Range : 0 - 3
-                                            
-  [  --sku_info=<sku_info>, -s <sku_info> ] --- Set SKU Info
-                                            Valid Range : 0 - 4
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help sku-get
-<a name="switchtec-mfg-help-sku-get"></a>
+### mfg sku-get
+<a name="mfg-sku-get"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg sku-get <device>
-
-read SKU info settings from OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help otp-write-prot
-<a name="switchtec-mfg-help-otp-write-prot"></a>
+### mfg otp-write-prot
+<a name="mfg-otp-write-prot"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg otp-write-prot <device> [OPTIONS]
-
-write protect OTP Regions
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --sku_info=<sku_info>, -s <sku_info> ] --- Enter 1 to Write Protect SKU Info
-                                            Region
-                                            
-  [  --otp_config=<otp_config>,
-      -c <otp_config> ]                 --- Enter 1 to Write Protect OTP
-                                            Config Region
-                                            
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help sjtag-mode-set
-<a name="switchtec-mfg-help-sjtag-mode-set"></a>
+### mfg sjtag-mode-set
+<a name="mfg-sjtag-mode-set"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg sjtag-mode-set <device> [OPTIONS]
-
-write SJTAG mode into OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --sjtag_mode=<sjtag_mode>,
-      -m <sjtag_mode> ]                 --- Specify SJTAG Mode
-                                            Supported SJTAG Modes are
-                                            * 0 - Open
-                                            * 1 - Secure Mode 1
-                                            * 2 - Secure Mode 2
-                                            * 3 - Closed
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help sjtag-uuid-set
-<a name="switchtec-mfg-help-sjtag-uuid-set"></a>
+### mfg sjtag-uuid-set
+<a name="mfg-sjtag-uuid-set"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg sjtag-uuid-set <device> [OPTIONS]
-
-write SJTAG UUID into OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --uuid_file=<arg>, -u <arg> ]      --- UUID Bin File(.bin)
-                                            Should contain 10 bytes of SJTAG
-                                            UUID to be set
-                                            
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help sjtag-key-set
-<a name="switchtec-mfg-help-sjtag-key-set"></a>
+### mfg sjtag-key-set
+<a name="mfg-sjtag-key-set"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg sjtag-key-set <device> [OPTIONS]
-
-write SJTAG key into OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --sjtag_key_file=<sjtag_key_file>,
-      -k <sjtag_key_file> ]             --- SJTAG Key Bin File(.bin)
-                                            Should contain 16 Bytes of SJTAG
-                                            Key to be set
-                                            
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help sjtag-key-verify
-<a name="switchtec-mfg-help-sjtag-key-verify"></a>
+### mfg sjtag-key-verify
+<a name="mfg-sjtag-key-verify"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg sjtag-key-verify <device> [OPTIONS]
-
-verify given SJTAG key and that of written in OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --sjtag_key_file=<sjtag_key_file>,
-      -k <sjtag_key_file> ]             --- SJTAG Key Bin File(.bin)
-                                            Should contain the SJTAG Key to
-                                            be verified with that in OTP
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help sjtag-key-lock
-<a name="switchtec-mfg-help-sjtag-key-lock"></a>
+### mfg sjtag-key-lock
+<a name="mfg-sjtag-key-lock"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg sjtag-key-lock <device> [OPTIONS]
-
-lock SJTAG key access
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help selftest-pol-set
-<a name="switchtec-mfg-help-selftest-pol-set"></a>
+### mfg selftest-pol-set
+<a name="mfg-selftest-pol-set"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg selftest-pol-set <device> [OPTIONS]
-
-set self test policy for cryptoblock
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --self_test_policy=<self_test_policy>,
-      -s <self_test_policy> ]           --- Self Test Policy Bin
-                                            File(.bin)
-                                            Should contain Self Test Policy
-                                            settings
-                                            
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help otp-prog-mode-set
-<a name="switchtec-mfg-help-otp-prog-mode-set"></a>
+### mfg otp-prog-mode-set
+<a name="mfg-otp-prog-mode-set"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg otp-prog-mode-set <device> [OPTIONS]
-
-set bit or byte programming mode for OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --bit_or_byte_mode=<bit_or_byte_mode>,
-      -m <bit_or_byte_mode> ]           --- Selects OTP bit or byte mode
-                                            * 0 - Enable Bit Mode
-                                            * 1 - Enable Byte Mode
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help otp-smprg-set
-<a name="switchtec-mfg-help-otp-smprg-set"></a>
+### mfg otp-smprg-set
+<a name="mfg-otp-smprg-set"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg otp-smprg-set <device> [OPTIONS]
-
-set smart programming mode for OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --otp_smart_prog_mode=<otp_smart_prog_mode>,
-      -m <otp_smart_prog_mode> ]        --- OTP Smart Programming Mode
-                                            * 0 - Disable Smart Programming
-                                            Mode
-                                            * 1 - Enable Smart Programming
-                                            Mode
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help otp-mode-status-get
-<a name="switchtec-mfg-help-otp-mode-status-get"></a>
+### mfg otp-mode-status-get
+<a name="mfg-otp-mode-status-get"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg otp-mode-status-get <device>
-
-get status about programming modes of OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help otp-cust-id-prog
-<a name="switchtec-mfg-help-otp-cust-id-prog"></a>
+### mfg otp-cust-id-prog
+<a name="mfg-otp-cust-id-prog"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg otp-cust-id-prog <device> [OPTIONS]
-
-program given customer id in OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --customer_id=<customer_id>,
-      -c <customer_id> ]                --- Customer ID
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help otp-config-read
-<a name="switchtec-mfg-help-otp-config-read"></a>
+### mfg otp-config-read
+<a name="mfg-otp-config-read"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg otp-config-read <device> [<bin_file>] [OPTIONS]
-
-set smart programming mode for OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-  [<bin_file>]                          --- OTP Config Read
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --start_address=<Config Start address>,
-      -s <Config Start address> ]       --- Start Address from the OTP to
-                                            read Config data
-                                             Config region starts from
-                                            0x1800
-                                            
-  [  --len=<Config Length>, -l <Config Length> ] --- Length in bytes to read Config
-                                            data from OTP
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help otp-config-prog
-<a name="switchtec-mfg-help-otp-config-prog"></a>
+### mfg otp-config-prog
+<a name="mfg-otp-config-prog"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg otp-config-prog <device> [OPTIONS]
-
-program the config data into OTP
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --is_firmware_halt=<is_firmware_halt>,
-      -h <is_firmware_halt> ]           --- Enter 1 to Halt the firmware in
-                                            while(1)
-                                            
-  [  --config_data_bin=<otp_config_data_bin>,
-      -f <otp_config_data_bin> ]        --- OTP Config Data Bin
-                                            File(.bin)
-                                            Should contain Config data to be
-                                            written into OTP
-                                            
-  [  --yes, -y ]                        --- assume yes when prompted
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help sjtag-unlock
-<a name="switchtec-mfg-help-sjtag-unlock"></a>
+### mfg sjtag-unlock
+<a name="mfg-sjtag-unlock"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg sjtag-unlock <device> [<sjtag_debug_token_file>] [OPTIONS]
-
-read SJTAG unlock status & mode
-
-
-[1mPositional Arguments:[0m
-   <device>                             --- Switchtec device to operate on.
-                                            Can be any of:
-                                             * a device path
-                                            (/dev/switchtec0)
-                                             * an index (0, 1, 2)
-                                             * a PCI address (3:00.1)
-                                             * an I2C path with slave
-                                            address (/dev/i2c-1@0x20)
-                                            
-  [<sjtag_debug_token_file>]            --- Optional Argument. If not
-                                            provided, the Debug Token will
-                                            be generated
-                                            SJTAG Debug Token
-                                            File(.bin)
-                                            Generated by the HSM Server
-                                            
-
-
-[1mEnvironment Variables:[0m
-    SWITCHTEC_DEV                       --- if set, the value will be used
-                                            for the <device> argument
-
-
-[1mOptions:[0m
-  [  --verbose, -v ]                    --- print additional sjtag-unlock
-                                            information
-  [  --force_hr, -f ]                   --- send HR for all SJTAG mode
+/bin/sh: 1: mfg: not found
 ```
 
-### ./switchtec mfg help otp-ini2bin
-<a name="switchtec-mfg-help-otp-ini2bin"></a>
+### mfg otp-ini2bin
+<a name="mfg-otp-ini2bin"></a>
 
 ```text
-[1mUsage:[0m ./switchtec mfg help./switchtec mfg otp-ini2bin [<bin_file>] [OPTIONS]
-
-generate bin from ini file
-
-
-[1mPositional Arguments:[0m
-  [<bin_file>]                          --- OTP Bin file
-
-
-[1mOptions:[0m
-  [  --ini_file=<arg>, -i <arg> ]       --- ini file as an input
+/bin/sh: 1: mfg: not found
 ```
