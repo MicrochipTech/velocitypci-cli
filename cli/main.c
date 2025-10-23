@@ -122,30 +122,6 @@ int mfg_handler(const char *optarg, void *value_addr,
 	return switchtec_handler(optarg, value_addr, opt);
 }
 
-int pax_handler(const char *optarg, void *value_addr,
-		const struct argconfig_options *opt)
-{
-	char *end;
-	long num;
-
-	errno = 0;
-	num = strtol(optarg, &end, 0);
-	global_pax_id = num;
-
-	if ((end == optarg) || errno || num < 0 ||
-	    (global_pax_id & ~SWITCHTEC_PAX_ID_MASK)) {
-		fprintf(stderr, "Invalid PAX ID specified: %s\n", optarg);
-		return 1;
-	}
-
-	if (set_global_pax_id()) {
-		fprintf(stderr, "%s: Setting PAX ID is not supported.\n", optarg);
-		return 4;
-	}
-
-	return 0;
-}
-
 #define CMD_DESC_LIST "list all Switchtec devices on this machine"
 
 static int list(int argc, char **argv)

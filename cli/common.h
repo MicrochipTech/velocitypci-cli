@@ -30,8 +30,6 @@ int switchtec_handler(const char *optarg, void *value_addr,
 		      const struct argconfig_options *opt);
 int mfg_handler(const char *optarg, void *value_addr,
 		const struct argconfig_options *opt);
-int pax_handler(const char *optarg, void *value_addr,
-		const struct argconfig_options *opt);
 enum switchtec_fw_type check_and_print_fw_image(int img_fd,
 						const char *img_filename);
 
@@ -73,16 +71,7 @@ enum switchtec_fw_type check_and_print_fw_image(int img_fd,
 					      required_positional)
 
 #define __DEVICE_OPTION(type) \
-	DEVICE_OPTION_BASIC(UART_HELP_TEXT, switchtec_handler, (type)), \
-	{ \
-			"pax", 'x', .cfg_type=CFG_CUSTOM, \
-			.value_addr=&cfg.dev, \
-			.argument_type=required_argument, \
-			.custom_handler=pax_handler, \
-			.env="SWITCHTEC_PAX", \
-			.help="PAX ID within a PAX fabric. Only valid on " \
-			"Switchtec PAX devices" \
-	}
+	DEVICE_OPTION_BASIC(UART_HELP_TEXT, switchtec_handler, (type))
 
 #define DEVICE_OPTION		__DEVICE_OPTION(required_positional)
 #define DEVICE_OPTION_OPTIONAL	__DEVICE_OPTION(optional_positional)
