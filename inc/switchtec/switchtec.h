@@ -483,8 +483,7 @@ static inline int switchtec_is_gen5(struct switchtec_dev *dev)
  */
 static inline int switchtec_max_supported_ports(struct switchtec_dev *dev)
 {
-	return switchtec_is_gen5(dev) ? SWITCHTEC_MAX_PORTS :
-	       switchtec_is_gen4(dev) ? 52 : 48;
+	return SWITCHTEC_MAX_PORTS;
 }
 
 /**
