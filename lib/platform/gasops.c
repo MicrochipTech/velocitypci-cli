@@ -359,7 +359,7 @@ int gasop_event_summary(struct switchtec_dev *dev,
 
 	for (i = 0; i < SWITCHTEC_MAX_PFF_CSR; i++) {
 		reg = gas_reg_read16(dev, pff_csr[i].vendor_id);
-		if (reg != MICROSEMI_VENDOR_ID)
+		if (reg != EFAR_VENDOR_ID)
 			break;
 
 		sum->pff[i] = gas_reg_read32(dev, pff_csr[i].pff_event_summary);
