@@ -208,7 +208,7 @@ int gasop_pff_to_port(struct switchtec_dev *dev, int pff,
 			return 0;
 		}
 
-		reg = __gas_read32(dev, &pcfg->vep_pff_inst_id);
+		reg = __gas_read32(dev, &pcfg->vep_pff_inst_id) & 0xffU;
 		if (reg == pff) {
 			*port = SWITCHTEC_PFF_PORT_VEP;
 			return 0;
