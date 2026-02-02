@@ -1055,7 +1055,7 @@ static int log_dump(int argc, char **argv)
 		return ret;
 	}
 
-	if (boot_phase != SWITCHTEC_BOOT_PHASE_FW &&
+	if (((boot_phase != SWITCHTEC_BOOT_PHASE_FW ) || (boot_phase != SWITCHTEC_BOOT_PHASE_MM))&&
 	    (cfg.type == SWITCHTEC_LOG_RAM ||
 	     cfg.type == SWITCHTEC_LOG_FLASH) &&
 	    cfg.format == LOG_FMT_TXT &&
