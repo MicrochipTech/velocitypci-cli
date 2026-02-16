@@ -2327,7 +2327,8 @@ static int sjtag_unlock(int argc, char **argv)
 			.cfg_type=CFG_FILE_R,
 			.value_addr=&cfg.sjtag_debug_token,
 			.argument_type=required_argument,
-			.help="Optional Argument. If not provided, the Debug Token will be generated\n"
+			.help="Optional Argument. If provided the input debug token file will be used for SJTAG Unlocking. If not provided, HSM server will be used for SJTAG Unlocking and the Debug Token (.bin) will be generated\n" \
+				  "Note: When both -i and -o are provided, -i overides -o\n"
 		},
 		{
 			"debug_token_output_file", 'o',
@@ -2335,7 +2336,7 @@ static int sjtag_unlock(int argc, char **argv)
 			.value_addr=&cfg.out_fd,
 			.argument_type=required_argument,
 			.force_default="sjtag_debug_token.bin",
-			.help="Optional Argument. If not provided, generated Debug Token File will be named sjtag_debug_token.bin\n"
+			.help="Optional Argument. If not provided, the HSM generated Debug Token File will be named sjtag_debug_token.bin\n"
 		},
         {
 			"verbose", 'v', "", CFG_NONE, &cfg.verbose, no_argument,
@@ -2378,6 +2379,12 @@ static int sjtag_unlock(int argc, char **argv)
         {
             if (cfg.sjtag_debug_token_file)
 			{
+				if (cfg.out_fd > 0)
+				{
+					close(cfg.out_fd);
+					unlink(cfg.out_filename);
+					printf("HSM not used for Debug Token Generation. Using provided Debug Token(-i) for Unlocking.\n");
+				}
                 ret = switchtec_read_sjtag_debug_token_file(cfg.sjtag_debug_token, &debug_token);
                 fclose(cfg.sjtag_debug_token);
                 if (ret)
@@ -2414,14 +2421,24 @@ static int sjtag_unlock(int argc, char **argv)
 
 				/* Save the generated Debug Token as a binary */
 				ret = write(cfg.out_fd, debug_token.debug_token, SJTAG_DEBUG_TOKEN_LEN);
-				if (ret < 0)
+
+				close(cfg.out_fd);
+
+				if (ret != SJTAG_DEBUG_TOKEN_LEN)
 				{
-					switchtec_perror("Error saving the Debug token");
+					if (ret < 0)
+					{
+						perror("Error saving the Debug token");
+					}
+					else
+					{
+						perror("Error: Incomplete Debug Token");
+					}
+					ret = -1;
+					break;
 				}
-				else
-				{
-					fprintf(stderr, "\nGenerated SJTAG Debug token saved to %s\n", cfg.out_filename);
-				}
+
+				fprintf(stdout, "\nGenerated SJTAG Debug token saved to %s\n", cfg.out_filename);
             }
 
             ret = switchtec_sjtag_get_nonce(cfg.dev, &nonce);
