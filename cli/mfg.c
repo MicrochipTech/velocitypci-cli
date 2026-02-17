@@ -58,6 +58,8 @@
 #define PING_SPI_CLK_SEL_MASK       0x30000
 #define PING_SPI_CLK_SEL_OFFSET     16
 #define PING_SPI_BUS_RATE_MASK      0xFFFF
+#define MIN_PORT					1
+#define MAX_PORT					65535
 
 static const struct argconfig_choice recovery_mode_choices[] = {
 	{"I2C", SWITCHTEC_BL2_RECOVERY_I2C, "I2C"},
@@ -2306,6 +2308,9 @@ static int sjtag_unlock(int argc, char **argv)
     struct switchtec_sn_ver_info sn_info = {};
     uint8_t sjtag_hr[SJTAG_HR_LEN];
 	struct sjtag_debug_token debug_token;
+	const char *port_str;
+	unsigned long temp;
+	char *endptr = NULL;
 
     int ret;
     static struct {
@@ -2314,11 +2319,16 @@ static int sjtag_unlock(int argc, char **argv)
 		const char *sjtag_debug_token_file;
 		int out_fd;
 		const char *out_filename;
+		const char *sjtag_server_ip;
+		uint16_t sjtag_server_port;
         bool verbose;
         bool force_hr;
     } cfg = {
-    .verbose = false,
-    .force_hr = false};
+		.out_fd = -1,
+		.sjtag_server_ip = NULL,
+		.sjtag_server_port = 0,
+		.verbose = false,
+		.force_hr = false};
 
     const struct argconfig_options opts[] = {
         DEVICE_OPTION_MFG,
@@ -2335,8 +2345,21 @@ static int sjtag_unlock(int argc, char **argv)
 			.cfg_type=CFG_FD_WR,
 			.value_addr=&cfg.out_fd,
 			.argument_type=required_argument,
-			.force_default="sjtag_debug_token.bin",
 			.help="Optional Argument. If not provided, the HSM generated Debug Token File will be named sjtag_debug_token.bin\n"
+		},
+		{
+			"sjtag_server_ip", 's',
+			.cfg_type=CFG_STRING,
+			.value_addr=&cfg.sjtag_server_ip,
+			.argument_type=required_argument,
+			.help="SJTAG HSM Server IP. Can also set via HSM_SERVER_IP environment variable."
+		},
+		{
+			"sjtag_server_port", 'p',
+			.cfg_type=CFG_SHORT,
+			.value_addr=&cfg.sjtag_server_port,
+			.argument_type=required_argument,
+			.help="SJTAG HSM Server Port. Can also set via HSM_SERVER_PORT environment variable."
 		},
         {
 			"verbose", 'v', "", CFG_NONE, &cfg.verbose, no_argument,
@@ -2361,7 +2384,7 @@ static int sjtag_unlock(int argc, char **argv)
 			break;
 		}
 
-        if(true == cfg.verbose)
+        if (true == cfg.verbose)
         {
             printf("SJTAG Mode: %x\n", (status.data & 0x03));
         }
@@ -2377,14 +2400,22 @@ static int sjtag_unlock(int argc, char **argv)
         }
         else
         {
+			/* Open default output file only if no input file is provided */
+			if (!cfg.sjtag_debug_token_file && cfg.out_fd < 0)
+			{
+				cfg.out_filename = "sjtag_debug_token.bin";
+				cfg.out_fd = open(cfg.out_filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				if (cfg.out_fd < 0)
+				{
+					perror("Failed to open default output file");
+					ret = -1;
+					break;
+				}
+			}
+
             if (cfg.sjtag_debug_token_file)
 			{
-				if (cfg.out_fd > 0)
-				{
-					close(cfg.out_fd);
-					unlink(cfg.out_filename);
-					printf("HSM not used for Debug Token Generation. Using provided Debug Token(-i) for Unlocking.\n");
-				}
+				printf("HSM not used for Debug Token Generation. Using provided Debug Token(-i) for Unlocking.\n");
                 ret = switchtec_read_sjtag_debug_token_file(cfg.sjtag_debug_token, &debug_token);
                 fclose(cfg.sjtag_debug_token);
                 if (ret)
@@ -2396,11 +2427,56 @@ static int sjtag_unlock(int argc, char **argv)
             }
             else
             {
+				/* If SJTAG IP and Port are not provided fetch it from environment variables*/
+				if (cfg.sjtag_server_ip == NULL)
+				{
+					cfg.sjtag_server_ip = getenv("HSM_SERVER_IP");
+				}
+
+				if (cfg.sjtag_server_port == 0)
+				{
+					/* Environment variables are always strings. convert the string to integer */
+					port_str = getenv("HSM_SERVER_PORT");
+					if (port_str != NULL) 
+					{
+						errno = 0;
+						temp = strtoul(port_str, &endptr, 10);
+
+						if ((errno != 0) || temp > MAX_PORT || temp < MIN_PORT || endptr == port_str || *endptr != '\0') 
+						{
+							fprintf(stderr, "Error: Invalid port number in HSM_SERVER_PORT environment variable\n");
+							ret = -1;
+							if (cfg.out_fd > 0)
+							{
+								close(cfg.out_fd);
+							}
+							break;
+						}
+						cfg.sjtag_server_port = (uint16_t)temp;
+					}
+				}
+
+				/* Check for Invalid IP and Port */
+				if((cfg.sjtag_server_ip == NULL) || (cfg.sjtag_server_port == 0))
+				{
+					fprintf(stderr, "Error: SJTAG server IP and Port are required when generating token from HSM server.\n");
+					ret = -1;
+					if (cfg.out_fd > 0)
+					{
+						close(cfg.out_fd);
+					}
+					break;
+				}
+
                 ret = switchtec_sjtag_get_uuid_idcode(cfg.dev, uuid.uuid, sjtag_unlock.idcode);
                 if (ret)
 				{
 					switchtec_perror("Failed to retrive the UUID/IDCODE from the device");
                     ret = -1;
+					if (cfg.out_fd > 0)
+					{
+						close(cfg.out_fd);
+					}
 					break;
 				}
 
@@ -2409,13 +2485,28 @@ static int sjtag_unlock(int argc, char **argv)
 				{
 					switchtec_perror("Failed to retrive the SUV from the device");
 					ret = -1;
+					if (cfg.out_fd > 0)
+					{
+						close(cfg.out_fd);
+					}
 					break;
 				}
 
-                ret = sjtag_debug_token_gen(sjtag_unlock.idcode, uuid.uuid, (uint8_t *)&sn_info.ver_sec_unlock, debug_token.debug_token, cfg.verbose);
+                ret = sjtag_debug_token_gen(sjtag_unlock.idcode, 
+											uuid.uuid, 
+											(uint8_t *)&sn_info.ver_sec_unlock, 
+											debug_token.debug_token, 
+											cfg.sjtag_server_ip,
+											cfg.sjtag_server_port,
+											cfg.verbose);
+
                 if(ret)
                 {
                     ret = -1;
+					if (cfg.out_fd > 0)
+					{
+						close(cfg.out_fd);
+					}
                     break;
                 }
 
@@ -2463,6 +2554,7 @@ static int sjtag_unlock(int argc, char **argv)
             }
         }
     }while(false);
+
     return ret;
 } /* sjtag_unlock() */
 
