@@ -85,10 +85,11 @@ static const char* parse_recovery_reason(enum stmfd_rcvry_reason phase_id)
                                     "BL2 - Strap Assertion",
                                     "BL2 - Firmware Assertion",
                                     "BL2 - Image Execute",
-                                    "Main FW" };
+                                    "Main FW",
+				    "Minimal Mode"};
     uint8_t reason_idx = 0;
 
-    if ((phase_id >= STMFD_RCVRY_BL1_STRAP) && (phase_id <= STMFD_RCVRY_MAINFW))
+    if ((phase_id >= STMFD_RCVRY_BL1_STRAP) && (phase_id <= STMFD_RCVRY_MINIMAL_MODE))
     {
         reason_idx = phase_id;
     }
@@ -399,7 +400,7 @@ static int info(int argc, char **argv)
 			fprintf(stderr,
 				"\nAdditional (verbose) chip info is not available on this chip!\n\n");
 		} else if (switchtec_gen(cfg.dev) == SWITCHTEC_GEN4 &&
-			   phase_id != SWITCHTEC_BOOT_PHASE_FW) {
+			   ((phase_id != SWITCHTEC_BOOT_PHASE_FW) || (phase_id != SWITCHTEC_BOOT_PHASE_MM))){
 			print_security_config(&state, NULL);
 			fprintf(stderr,
 				"\nAdditional (verbose) chip info is only available in the Main Firmware phase!\n\n");

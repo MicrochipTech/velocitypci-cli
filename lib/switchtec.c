@@ -1850,6 +1850,9 @@ static uint8_t parse_boot_phase_ping(enum stmfd_rcvry_reason reason)
 		case STMFD_RCVRY_MAINFW:
 			boot_phase = SWITCHTEC_BOOT_PHASE_FW;
 			break;
+		case STMFD_RCVRY_MINIMAL_MODE:
+			boot_phase = SWITCHTEC_BOOT_PHASE_MM;
+			break;
 		default:
 			boot_phase = SWITCHTEC_BOOT_PHASE_UNKNOWN;
 			break;

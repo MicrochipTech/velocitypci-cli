@@ -119,6 +119,7 @@ enum switchtec_boot_phase {
 	SWITCHTEC_BOOT_PHASE_BL1 = 1,
 	SWITCHTEC_BOOT_PHASE_BL2,
 	SWITCHTEC_BOOT_PHASE_FW,
+	SWITCHTEC_BOOT_PHASE_MM,
 	SWITCHTEC_BOOT_PHASE_UNKNOWN
 };
 
@@ -132,6 +133,7 @@ enum stmfd_rcvry_reason {
 	STMFD_RCVRY_BL2_ASSERT,
 	STMFD_RCVRY_BL2_EXEC,
 	STMFD_RCVRY_MAINFW,
+	STMFD_RCVRY_MINIMAL_MODE,
 	STMFD_RCVRY_INVALID = 0xFF
 };
 
@@ -483,8 +485,7 @@ static inline int switchtec_is_gen5(struct switchtec_dev *dev)
  */
 static inline int switchtec_max_supported_ports(struct switchtec_dev *dev)
 {
-	return switchtec_is_gen5(dev) ? SWITCHTEC_MAX_PORTS :
-	       switchtec_is_gen4(dev) ? 52 : 48;
+	return SWITCHTEC_MAX_PORTS;
 }
 
 /**
@@ -673,6 +674,8 @@ static inline const char* switchtec_phase_id_str(
 		return "BL2";
 	case SWITCHTEC_BOOT_PHASE_FW:
 		return "Main Firmware";
+	case SWITCHTEC_BOOT_PHASE_MM:
+		return "Minimal Mode";
 	default:
 		return "Unknown Phase";
 	}

@@ -835,6 +835,55 @@ static int rcvr_extended(int argc, char **argv)
 	return 0;
 }
 
+#define CMD_DESC_REF_CLK "Enable or disable the output reference clock of a port"
+
+static int refclk(int argc, char **argv)
+{
+	int ret;
+
+	static struct {
+		struct switchtec_dev *dev;
+		int port_id;
+		int enable;
+		int disable;
+	} cfg = {
+		.port_id = -1
+	};
+	const struct argconfig_options opts[] = {
+		DEVICE_OPTION,
+		{"disable", 'd', "", CFG_NONE, &cfg.disable, no_argument,
+		 "disable the rfclk output"},
+		{"enable", 'e', "", CFG_NONE, &cfg.enable, no_argument,
+		 "enable the rfclk output"},
+		{"port", 'p', "NUM", CFG_NONNEGATIVE, &cfg.port_id,
+		required_argument, "port to operate on"},
+		{NULL}};
+
+	argconfig_parse(argc, argv, CMD_DESC_REF_CLK, opts, &cfg,
+			sizeof(cfg));
+
+	if (cfg.enable == cfg.disable) {
+		fprintf(stderr, "Must set either --enable or --disable but not both\n");
+		return -1;
+	}
+
+	if (cfg.port_id == -1) {
+		fprintf(stderr, "Must specify port ID using --port or -p\n");
+		return -1;
+	}
+
+	ret = switchtec_diag_refclk_ctl(cfg.dev, cfg.port_id, cfg.enable);
+	if (ret) {
+		switchtec_perror("refclk_ctl");
+		return -1;
+	}
+
+	printf("REFCLK Output %s for Port %d\n",
+	       cfg.enable ? "Enabled" : "Disabled", cfg.port_id);
+
+	return 0;
+}
+
 static const struct cmd commands[] = {
 	CMD(w2h,		CMD_DESC_EYE_W2H),
 	CMD(eye,		CMD_DESC_EYE),
@@ -846,6 +895,7 @@ static const struct cmd commands[] = {
 	CMD(port_eq_txtable,	CMD_DESC_PORT_EQ_TXTABLE),
 	CMD(rcvr_extended,	CMD_DESC_RCVR_EXTENDED),
 	CMD(rcvr_obj,		CMD_DESC_RCVR_OBJ),
+	CMD(refclk,		CMD_DESC_REF_CLK),
 	CMD(ltssm_log,		CMD_DESC_LTSSM_LOG),
 	{}
 };
