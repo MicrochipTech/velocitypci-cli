@@ -1202,7 +1202,7 @@ enum switchtec_diag_eye_data_mode {
 };
 
 enum switchtec_diag_loopback_enable {
-	/* RX->TX loopback type is not supported by PCI100X */
+	/* enum 0: Unsupported loopback type */
 	SWITCHTEC_DIAG_LOOPBACK_TX_TO_RX = 1 << 1,
 	SWITCHTEC_DIAG_LOOPBACK_LTSSM = 1 << 2,
 };
