@@ -344,8 +344,6 @@ static int print_loopback_mode(struct switchtec_dev *dev, int port_id)
 
 	if (!enable)
 		b += snprintf(&buf[b], sizeof(buf) - b, "DISABLED, ");
-	if (enable & SWITCHTEC_DIAG_LOOPBACK_RX_TO_TX)
-		b += snprintf(&buf[b], sizeof(buf) - b, "RX->TX, ");
 	if (enable & SWITCHTEC_DIAG_LOOPBACK_TX_TO_RX)
 		b += snprintf(&buf[b], sizeof(buf) - b, "TX->RX, ");
 	if (enable & SWITCHTEC_DIAG_LOOPBACK_LTSSM)
@@ -381,7 +379,6 @@ static int loopback(int argc, char **argv)
 		int port_id;
 		int disable;
 		int enable_tx_to_rx;
-		int enable_rx_to_tx;
 		int enable_ltssm;
 		int speed;
 	} cfg = {
@@ -397,8 +394,6 @@ static int loopback(int argc, char **argv)
 		 "Disable all loopback modes"},
 		{"ltssm", 'l', "", CFG_NONE, &cfg.enable_ltssm, no_argument,
 		 "Enable LTSSM loopback mode"},
-		{"rx-to-tx", 'r', "", CFG_NONE, &cfg.enable_rx_to_tx, no_argument,
-		 "Enable RX->TX loopback mode"},
 		{"tx-to-rx", 't', "", CFG_NONE, &cfg.enable_tx_to_rx, no_argument,
 		 "Enable TX->RX loopback mode"},
 		{"speed", 's', "GEN", CFG_CHOICES, &cfg.speed, required_argument,
@@ -413,8 +408,7 @@ static int loopback(int argc, char **argv)
 		return -1;
 	}
 
-	if (cfg.disable && (cfg.enable_rx_to_tx || cfg.enable_tx_to_rx ||
-			    cfg.enable_ltssm)) {
+	if (cfg.disable && (cfg.enable_tx_to_rx || cfg.enable_ltssm)) {
 		fprintf(stderr,
 			"Must not specify -d / --disable with an enable flag\n");
 		return -1;
@@ -424,10 +418,7 @@ static int loopback(int argc, char **argv)
 	if (ret)
 		return ret;
 
-	if (cfg.disable || cfg.enable_rx_to_tx || cfg.enable_tx_to_rx ||
-	    cfg.enable_ltssm) {
-		if (cfg.enable_rx_to_tx)
-			enable |= SWITCHTEC_DIAG_LOOPBACK_RX_TO_TX;
+	if (cfg.disable || cfg.enable_tx_to_rx || cfg.enable_ltssm) {
 		if (cfg.enable_tx_to_rx)
 			enable |= SWITCHTEC_DIAG_LOOPBACK_TX_TO_RX;
 		if (cfg.enable_ltssm)
