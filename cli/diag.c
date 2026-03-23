@@ -342,7 +342,6 @@ static int print_loopback_mode(struct switchtec_dev *dev, int port_id)
 		return -1;
 	}
 
-	/* Removing RX->TX loopback type as PCI100X doesn't support it */
 	if (!enable)
 		b += snprintf(&buf[b], sizeof(buf) - b, "DISABLED, ");
 	if (enable & SWITCHTEC_DIAG_LOOPBACK_TX_TO_RX)
@@ -387,7 +386,6 @@ static int loopback(int argc, char **argv)
 		.speed = SWITCHTEC_DIAG_LTSSM_GEN4,
 	};
 
-	/* Removing RX->TX loopback type as PCI100X doesn't support it */
 	const struct argconfig_options opts[] = {
 		DEVICE_OPTION,
 		{"port", 'p', "PORT_ID", CFG_NONNEGATIVE, &cfg.port_id,
