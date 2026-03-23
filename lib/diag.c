@@ -370,6 +370,8 @@ int switchtec_diag_eye_cancel(struct switchtec_dev *dev)
  * @param[in]  ltssm_speed  LTSSM loopback max speed
  *
  * @return 0 on success, error code on failure
+ *
+ * @note RX->TX loopback type is not supported by PCI100X
  */
 int switchtec_diag_loopback_set(struct switchtec_dev *dev, int port_id,
 		int enable, enum switchtec_diag_ltssm_speed ltssm_speed)
@@ -386,14 +388,6 @@ int switchtec_diag_loopback_set(struct switchtec_dev *dev, int port_id,
 		.speed = ltssm_speed,
 	};
 	int ret;
-
-	int_in.type = DIAG_LOOPBACK_RX_TO_TX;
-	int_in.enable = !!(enable & SWITCHTEC_DIAG_LOOPBACK_RX_TO_TX);
-
-	ret = switchtec_cmd(dev, MRPC_INT_LOOPBACK, &int_in,
-			    sizeof(int_in), NULL, 0);
-	if (ret)
-		return ret;
 
 	int_in.type = DIAG_LOOPBACK_TX_TO_RX;
 	int_in.enable = !!(enable & SWITCHTEC_DIAG_LOOPBACK_TX_TO_RX);
@@ -420,6 +414,8 @@ int switchtec_diag_loopback_set(struct switchtec_dev *dev, int port_id,
  * @param[out] ltssm_speed   LTSSM loopback max speed
  *
  * @return 0 on succes, error code on failure
+ *
+ * @note RX->TX loopback type is not supported by PCI100X
  */
 int switchtec_diag_loopback_get(struct switchtec_dev *dev, int port_id,
 		int *enabled, enum switchtec_diag_ltssm_speed *ltssm_speed)
@@ -427,7 +423,7 @@ int switchtec_diag_loopback_get(struct switchtec_dev *dev, int port_id,
 	struct switchtec_diag_loopback_in int_in = {
 		.sub_cmd = MRPC_LOOPBACK_GET_INT_LOOPBACK,
 		.port_id = port_id,
-		.type = DIAG_LOOPBACK_RX_TO_TX,
+		.type = DIAG_LOOPBACK_TX_TO_RX,
 	};
 	struct switchtec_diag_loopback_ltssm_in lt_in = {
 		.sub_cmd = MRPC_LOOPBACK_GET_LTSSM_LOOPBACK,
@@ -437,15 +433,6 @@ int switchtec_diag_loopback_get(struct switchtec_dev *dev, int port_id,
 	struct switchtec_diag_loopback_ltssm_out lt_out;
 	int ret, en = 0;
 
-	ret = switchtec_cmd(dev, MRPC_INT_LOOPBACK, &int_in, sizeof(int_in),
-			    &int_out, sizeof(int_out));
-	if (ret)
-		return ret;
-
-	if (int_out.enabled)
-		en |= SWITCHTEC_DIAG_LOOPBACK_RX_TO_TX;
-
-	int_in.type = DIAG_LOOPBACK_TX_TO_RX;
 	ret = switchtec_cmd(dev, MRPC_INT_LOOPBACK, &int_in, sizeof(int_in),
 			    &int_out, sizeof(int_out));
 	if (ret)

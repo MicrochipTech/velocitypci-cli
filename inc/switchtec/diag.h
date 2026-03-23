@@ -138,7 +138,7 @@ struct switchtec_diag_refclk_ctl_in {
 };
 
 enum switchtec_diag_loopback_type {
-	DIAG_LOOPBACK_RX_TO_TX = 0,
+	/* RX->TX loopback type is not supported by PCI100X */
 	DIAG_LOOPBACK_TX_TO_RX = 1,
 };
 
