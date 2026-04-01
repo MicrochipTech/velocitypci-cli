@@ -170,7 +170,7 @@ install-bin: compile
 ifeq ($(UT), yes)
 ifeq ($(MINGW), YES)
 	@$(NQ) echo "  COPY     $(BINDIR)/$(LEGACY_EXENAME)"
-	$(Q)cp -f $(BINDIR)/$(INSTEXENAME).exe $(BINDIR)/$(LEGACY_EXENAME)
+	$(Q)cp -f $(BINDIR)/$(INSTEXENAME) $(BINDIR)/$(LEGACY_EXENAME)
 else
 	@$(NQ) echo "  SYMLINK  $(BINDIR)/$(LEGACY_EXENAME) -> $(INSTEXENAME)"
 	$(Q)ln -sf $(INSTEXENAME) $(BINDIR)/$(LEGACY_EXENAME)
