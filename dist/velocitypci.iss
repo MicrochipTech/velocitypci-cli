@@ -1,40 +1,40 @@
-#define AppVersionStr GetFileProductVersion("x86_64-w64-mingw32/switchtec.exe")
-#define AppVersion GetFileVersion("x86_64-w64-mingw32/switchtec.exe")
+#define AppVersionStr GetFileProductVersion("x86_64-w64-mingw32/velocitypci.exe")
+#define AppVersion GetFileVersion("x86_64-w64-mingw32/velocitypci.exe")
 
 [Setup]
-AppName=Switchtec Management CLI
+AppName=VelocityPCI Management CLI
 AppVersion={#AppVersionStr}
 VersionInfoVersion={#AppVersion}
-DefaultDirName={pf}\Switchtec
+DefaultDirName={pf}\VelocityPCI
 Compression=lzma2
 SolidCompression=yes
 ArchitecturesInstallIn64BitMode=x64
 OutputDir=.
-OutputBaseFilename=switchtec-user-{#AppVersionStr}
+OutputBaseFilename=velocitypci-cli-{#AppVersionStr}
 ChangesEnvironment=true
 DisableWelcomePage=no
 
 [Files]
-Source: "x86_64-w64-mingw32\switchtec.exe"; DestDir: "{app}"; \
+Source: "x86_64-w64-mingw32\velocitypci.exe"; DestDir: "{app}"; \
 	Check: Is64BitInstallMode
 Source: "x86_64-w64-mingw32\libwinpthread-1.dll"; DestDir: "{app}"; \
 	Check: Is64BitInstallMode
 
 ; Place all x86 files here, first one should be marked 'solidbreak'
-Source: "i686-w64-mingw32\switchtec.exe";  DestDir: "{app}"; \
+Source: "i686-w64-mingw32\velocitypci.exe";  DestDir: "{app}"; \
 	Check: not Is64BitInstallMode; Flags: solidbreak
 Source: "i686-w64-mingw32\libwinpthread-1.dll"; DestDir: "{app}"; \
 	Check: not Is64BitInstallMode
 
 Source: "less.exe"; DestDir: "{app}"; Flags: solidbreak
 
-Source: "x86_64-w64-mingw32\switchtec.dll"; DestDir: "{app}\x64"
-Source: "x86_64-w64-mingw32\libswitchtec.a"; DestDir: "{app}\x64"
-Source: "x86_64-w64-mingw32\libswitchtec.dll.a"; DestDir: "{app}\x64"
+Source: "x86_64-w64-mingw32\velocitypci.dll"; DestDir: "{app}\x64"
+Source: "x86_64-w64-mingw32\libvelocitypci.a"; DestDir: "{app}\x64"
+Source: "x86_64-w64-mingw32\libvelocitypci.dll.a"; DestDir: "{app}\x64"
 
-Source: "i686-w64-mingw32\switchtec.dll"; DestDir: "{app}\x32"
-Source: "i686-w64-mingw32\libswitchtec.a"; DestDir: "{app}\x32"
-Source: "i686-w64-mingw32\libswitchtec.dll.a"; DestDir: "{app}\x32"
+Source: "i686-w64-mingw32\velocitypci.dll"; DestDir: "{app}\x32"
+Source: "i686-w64-mingw32\libvelocitypci.a"; DestDir: "{app}\x32"
+Source: "i686-w64-mingw32\libvelocitypci.dll.a"; DestDir: "{app}\x32"
 
 Source: "..\inc\switchtec\*"; DestDir: "{app}\inc\switchtec"; \
 	Flags: ignoreversion recursesubdirs

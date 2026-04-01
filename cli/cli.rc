@@ -23,7 +23,7 @@
 */
 
 #define VER_FILETYPE		VFT_APP
-#define VER_INTERNALNAME_STR	"switchtec.exe"
-#define VER_PRODUCTNAME_STR	"Switchtec Management CLI"
+#define VER_INTERNALNAME_STR	"velocitypci.exe"
+#define VER_PRODUCTNAME_STR	"VelocityPCI Management CLI"
 
 #include "windows/version.rc"

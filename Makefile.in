@@ -40,7 +40,7 @@ SYSCONFDIR ?= $(DESTDIR)/etc
 CC=@CC@
 WINDRES=@WINDRES@
 override CPPFLAGS+=@CPPFLAGS@
-override CPPFLAGS+=-I. -Iinc -I$(OBJDIR) -DCOMPLETE_ENV=\"SWITCHTEC_COMPLETE\"
+override CPPFLAGS+=-I. -Iinc -I$(OBJDIR) -DCOMPLETE_ENV=\"VELOCITYPCI_COMPLETE\"
 override CFLAGS+=-g -Wall -Wno-initializer-overrides @CFLAGS@
 DEPFLAGS= -MT $@ -MMD -MP -MF $(OBJDIR)/$*.d
 LDLIBS=@LIBS@ -lm
@@ -56,7 +56,7 @@ endif
 LIB_OBJS=$(addprefix $(OBJDIR)/, $(patsubst %.c,%.o, $(LIB_SRCS)))
 CLI_OBJS=$(addprefix $(OBJDIR)/, $(patsubst %.c,%.o, $(CLI_SRCS)))
 
-STLIBNAME ?= libswitchtec.a
+STLIBNAME ?= libvelocitypci.a
 
 MACHINE=$(shell $(CC) -dumpmachine)
 
@@ -65,19 +65,21 @@ ifeq ($(findstring mingw,$(MACHINE)),mingw)
 endif
 
 ifeq ($(MINGW), YES)
-  EXENAME ?= switchtec.exe
-  INSTEXENAME ?= switchtec
-  SHLIBNAME ?= switchtec.dll
-  IMPLIBNAME ?= libswitchtec.dll.a
+  EXENAME ?= velocitypci.exe
+  INSTEXENAME ?= velocitypci
+  LEGACY_EXENAME ?= switchtec.exe
+  SHLIBNAME ?= velocitypci.dll
+  IMPLIBNAME ?= libvelocitypci.dll.a
   override LDFLAGS += -Wl,--out-implib,$(IMPLIBNAME)
   LDLIBS += -lsetupapi -lws2_32
   SHLDLIBS = $(LDLIBS)
   override CPPFLAGS += -DNTDDI_VERSION=NTDDI_VISTA -D_WIN32_WINNT=_WIN32_WINNT_VISTA
   override CFLAGS += -D__USE_MINGW_ANSI_STDIO -DNCURSES_STATIC
 else
-  EXENAME ?= switchtec
+  EXENAME ?= velocitypci
   INSTEXENAME ?= $(EXENAME)
-  SHLIBNAME ?= libswitchtec.so
+  LEGACY_EXENAME ?= switchtec
+  SHLIBNAME ?= libvelocitypci.so
   IMPLIBNAME ?= $(SHLIBNAME)
   LDCONFIG=ldconfig
   override CFLAGS += -fPIC
@@ -99,14 +101,21 @@ CFLAGS += -Werror
 endif
 
 compile: $(STLIBNAME) $(SHLIBNAME) $(EXENAME) examples/temp
+ifeq ($(UT), yes)
+ifeq ($(MINGW), YES)
+	$(Q)cp -f $(EXENAME) $(LEGACY_EXENAME)
+else
+	$(Q)ln -sf $(EXENAME) $(LEGACY_EXENAME)
+endif
+endif
 
 clean:
-	$(Q)rm -rf $(STLIBNAME) $(SHLIBNAME) $(EXENAME) $(OBJDIR) *.a \
-		examples/temp examples/*.o
+	$(Q)rm -rf $(STLIBNAME) $(SHLIBNAME) $(EXENAME) $(LEGACY_EXENAME) \
+		$(OBJDIR) *.a examples/temp examples/*.o
 
 distclean: clean
 	$(Q)rm -rf config.log config.status *.lib *.exe *.so *.dll build* \
-		Makefile autom4te.cache *.tar* switchtec.spec
+		Makefile autom4te.cache *.tar* velocitypci.spec
 
 $(OBJDIR)/version.h $(OBJDIR)/version.mk: FORCE $(OBJDIR)
 	@$(SHELL_PATH) ./VERSION-GEN
@@ -148,16 +157,25 @@ examples/%: examples/%.o | $(SHLIBNAME)
 	$(Q)$(LINK.o) $^ $(IMPLIBNAME) $(LDLIBS) -o $@
 
 install-bash-completion:
-	@$(NQ) echo "  INSTALL  $(SYSCONFDIR)/bash_completion.d/bash-switchtec-completion.sh"
+	@$(NQ) echo "  INSTALL  $(SYSCONFDIR)/bash_completion.d/bash-velocitypci-completion.sh"
 	$(Q)install -d $(SYSCONFDIR)/bash_completion.d
-	$(Q)install -m 644 -T ./completions/bash-switchtec-completion.sh \
-		$(SYSCONFDIR)/bash_completion.d/switchtec
+	$(Q)install -m 644 -T ./completions/bash-velocitypci-completion.sh \
+		$(SYSCONFDIR)/bash_completion.d/velocitypci
 
 install-bin: compile
 	$(Q)install -d $(BINDIR) $(LIBDIR)
 
 	@$(NQ) echo "  INSTALL  $(BINDIR)/$(INSTEXENAME)"
 	$(Q)install $(EXENAME) $(BINDIR)/$(INSTEXENAME)
+ifeq ($(UT), yes)
+ifeq ($(MINGW), YES)
+	@$(NQ) echo "  COPY     $(BINDIR)/$(LEGACY_EXENAME)"
+	$(Q)cp -f $(BINDIR)/$(INSTEXENAME).exe $(BINDIR)/$(LEGACY_EXENAME)
+else
+	@$(NQ) echo "  SYMLINK  $(BINDIR)/$(LEGACY_EXENAME) -> $(INSTEXENAME)"
+	$(Q)ln -sf $(INSTEXENAME) $(BINDIR)/$(LEGACY_EXENAME)
+endif
+endif
 	@$(NQ) echo "  INSTALL  $(LIBDIR)/$(STLIBNAME)"
 	$(Q)install -m 0664 $(STLIBNAME) $(LIBDIR)
 	@$(NQ) echo "  INSTALL  $(LIBDIR)/$(IMPLIBNAME).$(VERSION)"
@@ -184,15 +202,15 @@ ifneq ($(MINGW), YES)
 	$(Q)$(LDCONFIG) $(LIBDIR)
 endif
 
-switchtec.spec: switchtec.spec.in $(OBJDIR)/version.mk
+velocitypci.spec: velocitypci.spec.in $(OBJDIR)/version.mk
 	sed -e 's/@@VERSION@@/$(VERSION)/g' < $< | sed -e 's/@@RELEASE@@/$(RELEASE)/g' > $@+
 	mv $@+ $@
 
-PKG=switchtec-$(VERSION)-$(RELEASE)
-dist: switchtec.spec
+PKG=velocitypci-$(VERSION)-$(RELEASE)
+dist: velocitypci.spec
 	git archive --format=tar --prefix=$(PKG)/ HEAD > $(PKG).tar
 	@echo $(VERSION)-$(RELEASE) > version
-	tar -rf $(PKG).tar --xform="s%^%$(PKG)/%" switchtec.spec version
+	tar -rf $(PKG).tar --xform="s%^%$(PKG)/%" velocitypci.spec version
 	xz -f $(PKG).tar
 	rm -f version
 

@@ -122,7 +122,7 @@ int mfg_handler(const char *optarg, void *value_addr,
 	return switchtec_handler(optarg, value_addr, opt);
 }
 
-#define CMD_DESC_LIST "list all Switchtec devices on this machine"
+#define CMD_DESC_LIST "list all VelocityPCI devices on this machine"
 
 static int list(int argc, char **argv)
 {
@@ -1239,7 +1239,7 @@ done:
 	return ret;
 }
 
-#define CMD_DESC_TEST "test if the Switchtec interface is working"
+#define CMD_DESC_TEST "test if the VelocityPCI interface is working"
 
 static int test(int argc, char **argv)
 {
@@ -2453,7 +2453,7 @@ REGISTER_SUBCMD(subcmd);
 
 static struct prog_info prog_info = {
 	.usage = "<command> [<device>] [OPTIONS]",
-	.desc = "The <device> must be a Switchtec device "
+	.desc = "The <device> must be a VelocityPCI device "
 		"(ex: /dev/switchtec0)",
 };
 

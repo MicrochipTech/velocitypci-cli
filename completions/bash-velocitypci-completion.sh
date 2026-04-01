@@ -1,10 +1,10 @@
 
-_switchtec_comp () {
+_velocitypci_comp () {
         local cur prev words cword
 	_init_completion || return
 	local compargs=""
 
-	opts=$(SWITCHTEC_COMPLETE=1 ${words[*]:0:$cword})
+	opts=$(VELOCITYPCI_COMPLETE=1 ${words[*]:0:$cword})
 	compfile=$?
 
 	if [ $compfile -eq 2 ]; then
@@ -17,5 +17,5 @@ _switchtec_comp () {
 	return 0
 }
 
-complete -F _switchtec_comp switchtec
-complete -F _switchtec_comp ./switchtec
+complete -F _velocitypci_comp velocitypci
+complete -F _velocitypci_comp ./velocitypci

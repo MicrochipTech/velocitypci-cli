@@ -1,17 +1,17 @@
-Name: 		switchtec
+Name: 		velocitypci
 Version: 	@@VERSION@@
 Release: 	@@RELEASE@@%{?dist}
 Summary:  	Userspace application and library  for the Microsemi PCIe Switch
 License: 	MIT
 Group: 		Development/Tools
-URL: 		https://github.com/Microsemi/switchtec-user
-Source: 	switchtec-@@VERSION@@-@@RELEASE@@.tar.xz
-Provides:	switchtec
+URL: 		https://github.com/MicrochipTech/velocitypci-cli
+Source: 	velocitypci-@@VERSION@@-@@RELEASE@@.tar.xz
+Provides:	velocitypci
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 This application and C library allows for communicating with
-Microsemi's Switchtec management interface.
+Microchip's VelocityPCI management interface.
 
 This provides the following features:
 
@@ -25,7 +25,7 @@ This provides the following features:
 * A simple ncurses GUI that shows salient information for the switch
 
 %prep
-%setup -n switchtec-@@VERSION@@-@@RELEASE@@
+%setup -n velocitypci-@@VERSION@@-@@RELEASE@@
 
 %build
 %configure --with-curses
@@ -43,10 +43,10 @@ make install-pkg DESTDIR=%{buildroot}
 
 %files
 %defattr(-,root,root)
-/usr/local/bin/switchtec
-/usr/local/lib/libswitchtec.*
+/usr/local/bin/velocitypci
+/usr/local/lib/libvelocitypci.*
 /usr/local/include/switchtec/*.*
-/etc/bash_completion.d/switchtec
+/etc/bash_completion.d/velocitypci
 
 %clean
 rm -rf $RPM_BUILD_ROOT
