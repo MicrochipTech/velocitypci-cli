@@ -2451,7 +2451,7 @@ static int sjtag_unlock(int argc, char **argv)
 						{
 							fprintf(stderr, "Error: Invalid port number in HSM_SERVER_PORT environment variable\n");
 							ret = -1;
-							if (cfg.out_fd > 0)
+							if (cfg.out_fd >= 0)
 							{
 								close(cfg.out_fd);
 							}
@@ -2466,7 +2466,7 @@ static int sjtag_unlock(int argc, char **argv)
 				{
 					fprintf(stderr, "Error: SJTAG server IP and Port are required when generating token from HSM server.\n");
 					ret = -1;
-					if (cfg.out_fd > 0)
+					if (cfg.out_fd >= 0)
 					{
 						close(cfg.out_fd);
 					}
@@ -2478,7 +2478,7 @@ static int sjtag_unlock(int argc, char **argv)
 				{
 					switchtec_perror("Failed to retrive the UUID/IDCODE from the device");
                     ret = -1;
-					if (cfg.out_fd > 0)
+					if (cfg.out_fd >= 0)
 					{
 						close(cfg.out_fd);
 					}
@@ -2490,7 +2490,7 @@ static int sjtag_unlock(int argc, char **argv)
 				{
 					switchtec_perror("Failed to retrive the SUV from the device");
 					ret = -1;
-					if (cfg.out_fd > 0)
+					if (cfg.out_fd >= 0)
 					{
 						close(cfg.out_fd);
 					}
@@ -2508,7 +2508,7 @@ static int sjtag_unlock(int argc, char **argv)
                 if(ret)
                 {
                     ret = -1;
-					if (cfg.out_fd > 0)
+					if (cfg.out_fd >= 0)
 					{
 						close(cfg.out_fd);
 					}
