@@ -1001,7 +1001,7 @@ int sjtag_resp_is_success(uint8_t *resp_header)
  *
  * @return Returns 0 on Success and -1 on Failure
  */
-int sjtag_debug_token_gen(uint8_t *idcode_ptr, uint8_t *uuid_ptr, uint8_t *suv_ptr, uint8_t *sjtag_debug_token, bool verbose)
+int sjtag_debug_token_gen(uint8_t *idcode_ptr, uint8_t *uuid_ptr, uint8_t *suv_ptr, uint8_t *sjtag_debug_token, const char *server_ip, uint16_t server_port, bool verbose)
 {
     int ret = 0;
     int socket_server;
@@ -1024,8 +1024,8 @@ int sjtag_debug_token_gen(uint8_t *idcode_ptr, uint8_t *uuid_ptr, uint8_t *suv_p
 
         /* Set port and IP */
         server_address.sin_family = AF_INET;
-        server_address.sin_port = htons(SJTAG_SERVER_PORT);
-        server_address.sin_addr.s_addr = inet_addr(SJTAG_SERVER_IP);
+        server_address.sin_port = htons(server_port);
+        server_address.sin_addr.s_addr = inet_addr(server_ip);
 
         /* Send a connection request to Plugin server */
         if(connect(socket_server, (struct sockaddr*)&server_address, sizeof(server_address)) < 0)

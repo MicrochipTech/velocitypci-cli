@@ -60,8 +60,6 @@
 
 #define SKU_NO_OF_BLOCKS		4
 
-#define SJTAG_SERVER_IP			"10.40.56.34"
-#define SJTAG_SERVER_PORT		(5001)
 #define SJTAG_SERVER_HEADER_LEN (4)
 #define SJTAG_IDCODE_LEN		(4)
 #define SJTAG_HR_LEN 			(32)
@@ -394,7 +392,7 @@ int switchtec_sjtag_hr_send(struct switchtec_dev *dev,
 
 int switchtec_read_sjtag_debug_token_file(FILE *debug_token_file, struct sjtag_debug_token *debug_token);
 void sjtag_hr_calc(uint8_t *sjtag_debug_token, uint8_t *sjtag_nonce, uint8_t *digest, bool verbose);
-int sjtag_debug_token_gen(uint8_t *idcode_ptr, uint8_t *uuid_ptr, uint8_t *suv_ptr, uint8_t *sjtag_debug_token, bool verbose);
+int sjtag_debug_token_gen(uint8_t *idcode_ptr, uint8_t *uuid_ptr, uint8_t *suv_ptr, uint8_t *sjtag_debug_token, const char *server_ip, uint16_t server_port, bool verbose);
 void sjtag_hr_compute(uint8_t *sjtag_uuid, uint8_t *sjtag_suv, uint8_t *sjtag_nonce, uint8_t *sjtag_hr);
 
 
