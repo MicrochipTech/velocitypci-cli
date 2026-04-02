@@ -2317,7 +2317,6 @@ static int sjtag_unlock(int argc, char **argv)
     static struct {
         struct switchtec_dev *dev;
 		FILE *sjtag_debug_token;
-		const char *sjtag_debug_token_file;
 		int out_fd;
 		const char *out_filename;
 		const char *sjtag_server_ip;
@@ -2402,7 +2401,7 @@ static int sjtag_unlock(int argc, char **argv)
         else
         {
 			/* Open default output file only if no input file is provided */
-			if (!cfg.sjtag_debug_token_file && cfg.out_fd < 0)
+			if (!cfg.sjtag_debug_token && cfg.out_fd < 0)
 			{
 				cfg.out_filename = "sjtag_debug_token.bin";
 				cfg.out_fd = open(cfg.out_filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -2414,8 +2413,13 @@ static int sjtag_unlock(int argc, char **argv)
 				}
 			}
 
-            if (cfg.sjtag_debug_token_file)
+            if (cfg.sjtag_debug_token)
 			{
+				if (cfg.out_fd >= 0)
+				{
+					close(cfg.out_fd);
+				}
+
 				printf("HSM not used for Debug Token Generation. Using provided Debug Token(-i) for Unlocking.\n");
                 ret = switchtec_read_sjtag_debug_token_file(cfg.sjtag_debug_token, &debug_token);
                 fclose(cfg.sjtag_debug_token);
