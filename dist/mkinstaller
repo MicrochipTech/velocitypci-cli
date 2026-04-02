@@ -56,9 +56,9 @@ function build()
 	./configure --host $host
 	make clean
 	make
-	cp switchtec.exe switchtec.dll libswitchtec* dist/$host
-	strip dist/$host/switchtec.exe
-	strip dist/$host/switchtec.dll
+	cp velocitypci.exe velocitypci.dll libvelocitypci* dist/$host
+	strip dist/$host/velocitypci.exe
+	strip dist/$host/velocitypci.dll
 
 	cp /$pth/bin/libwinpthread-1.dll dist/$host
 
@@ -69,4 +69,4 @@ function build()
 build i686-w64-mingw32 mingw32
 build x86_64-w64-mingw32 mingw64
 
-iscc switchtec.iss
+iscc velocitypci.iss

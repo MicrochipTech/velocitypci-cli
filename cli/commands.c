@@ -83,7 +83,7 @@ static const char *dash_to_underscore(const char *str)
 
 static int print_version(void)
 {
-	fprintf(stderr, "switchtec cli version %s\n", VERSION);
+	fprintf(stderr, "velocitypci cli version %s\n", VERSION);
 	return 0;
 }
 
@@ -117,7 +117,7 @@ static void general_help(const struct subcommand *subcmd,
 
 	print_completions(subcmd->cmds);
 
-	fprintf(stderr, "switchtec-%s\n", VERSION);
+	fprintf(stderr, "velocitypci-%s\n", VERSION);
 
 	usage(subcmd, prog_info);
 

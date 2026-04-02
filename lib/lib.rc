@@ -23,7 +23,7 @@
 */
 
 #define VER_FILETYPE		VFT_DLL
-#define VER_INTERNALNAME_STR	"switchtec.dll"
-#define VER_PRODUCTNAME_STR	"Switchtec Management Library"
+#define VER_INTERNALNAME_STR	"velocitypci.dll"
+#define VER_PRODUCTNAME_STR	"VelocityPCI Management Library"
 
 #include "windows/version.rc"
