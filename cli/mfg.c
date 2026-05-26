@@ -1013,7 +1013,7 @@ static int sku_set(int argc, char **argv)
 			.value_addr=&cfg.sku_info,
 			.argument_type=required_argument,
 			.help="Set SKU Info\n" \
-			"Valid Range : 0 - 5, 7\n"},
+			"Valid Range : 0 - 5, 7, 9\n"},
 		{NULL}
 	};
 
@@ -1026,8 +1026,9 @@ static int sku_set(int argc, char **argv)
 	 * 3 - PCI1004
 	 * 4 - PCI1005
 	 * 5 - PCI1006
-	 * 7 - PCI1008*/
-	if (!((cfg.sku_info <= 5)|| (cfg.sku_info == 7)))
+	 * 7 - PCI1008
+	 * 9 - PCI1010 */
+	if (!((cfg.sku_info <= 5) || (cfg.sku_info == 7) || (cfg.sku_info == 9)))
 	{
 		printf("\nInvalid SKU Info!\n");
 		return -1;
