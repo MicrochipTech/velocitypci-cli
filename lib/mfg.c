@@ -55,7 +55,9 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#if HAVE_LIBCRYPTO
 #include <openssl/sha.h>
+#endif
 #ifndef _WIN32
 #include <arpa/inet.h>
 #endif
@@ -898,6 +900,7 @@ int switchtec_sjtag_status_get(struct switchtec_dev *dev,
 * @return void
 *
 ********************************************************************************/
+#if HAVE_LIBCRYPTO
 void sjtag_hr_calc(uint8_t *sjtag_debug_token, uint8_t *sjtag_nonce, uint8_t *digest, bool verbose)
 {
 	uint8_t sjtag_sha256_msg[SJTAG_SHA256_MSG_LEN] = {0};
@@ -929,6 +932,7 @@ void sjtag_hr_calc(uint8_t *sjtag_debug_token, uint8_t *sjtag_nonce, uint8_t *di
         printf("\n");
     }
 }
+#endif
 
 /**
  * @brief This function generates the command header to send to the server.

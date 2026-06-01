@@ -259,6 +259,7 @@ static void print_port_title(struct switchtec_dev *dev,
 
 #define CMD_DESC_GUI "display a simple ncurses GUI"
 
+#if defined(HAVE_LIBCURSES) || defined(HAVE_LIBNCURSES)
 static int gui(int argc, char **argv)
 {
 	int ret;
@@ -297,6 +298,20 @@ static int gui(int argc, char **argv)
 
 	return ret;
 }
+#endif
+
+#if !defined(HAVE_LIBCURSES) && !defined(HAVE_LIBNCURSES)
+static int no_libcurses(int argc, char **argv)
+{
+	fprintf(stderr,
+			"This command is only available when the libcurses development library is installed.\n"
+			"Try installing the libcurses development library in your system and rebuild this\n"
+			"program by running 'configure' and then 'make'.\n");
+	return -1;
+}
+
+#define gui	no_libcurses
+#endif
 
 #define PCI_ACS_P2P_MASK (PCI_ACS_CTRL_REQ_RED | PCI_ACS_CTRL_CMPLT_RED | \
 			  PCI_ACS_EGRESS_CTRL)

@@ -147,6 +147,10 @@ $(SHLIBNAME): $(LIB_OBJS)
 $(EXENAME): $(CLI_OBJS) $(STLIBNAME)
 	@$(NQ) echo "  LD    $@"
 	$(Q)$(LINK.o) $^ $(LDLIBS) -o $@
+	@grep -qE "^[[:space:]]*#[[:space:]]*define[[:space:]]+HAVE_LIBN?CURSES" config.h || \
+	    $(NQ) echo "  NOTE  libcurses not enabled - 'gui' and 'diag eye' commands are not supported"
+	@grep -qE "^[[:space:]]*#[[:space:]]*define[[:space:]]+HAVE_LIBCRYPTO" config.h || \
+	    $(NQ) echo "  NOTE  openssl not enabled - 'mfg kmsk-entry-add', 'mfg debug-unlock', 'mfg debug-lock-update' and 'mfg sjtag-unlock' commands are not supported"
 
 examples/%.o: examples/%.c
 	@$(NQ) echo "  CC    $<"

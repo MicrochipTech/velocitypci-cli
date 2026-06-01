@@ -50,7 +50,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <openssl/sha.h>
 #include <lib/switchtec_priv.h>
 
 #define PCI100X_DEV_FAM     0
@@ -2174,6 +2173,7 @@ static int no_openssl(int argc, char **argv)
 #define kmsk_entry_add		no_openssl
 #define debug_unlock		no_openssl
 #define debug_lock_update	no_openssl
+#define sjtag_unlock		no_openssl
 
 #endif
 
@@ -2282,6 +2282,7 @@ static int otp_ini2bin(int argc, char **argv)
 
 #define CMD_DESC_SJTAG_STS_GET "read SJTAG unlock status & mode"
 #define CMD_DESC_SJTAG_UNLOCK "SJTAG unlock command"
+#if HAVE_LIBCRYPTO
 /*******************************************************************************
 * FUNCTION sjtag_unlock()
 *_______________________________________________________________________________
@@ -2562,6 +2563,7 @@ static int sjtag_unlock(int argc, char **argv)
 
     return ret;
 } /* sjtag_unlock() */
+#endif
 
 static const struct cmd commands[] = {
 	CMD(ping, CMD_DESC_PING),

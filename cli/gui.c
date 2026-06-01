@@ -447,13 +447,4 @@ int gui_main(struct switchtec_dev *dev, unsigned all_ports, unsigned reset,
 	return 0;
 }
 
-#else
-
-int gui_main(struct switchtec_dev *dev, unsigned all_ports, unsigned reset,
-	     unsigned refresh, int duration, enum switchtec_bw_type bw_type)
-{
-	printf("gui requires libcurses support when velocitypci-cli is built\n");
-	return 0;
-}
-
 #endif
