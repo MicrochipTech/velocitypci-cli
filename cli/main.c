@@ -1200,10 +1200,15 @@ static int log_parse(int argc, char **argv)
 				  cfg.parsed_log_file, cfg.log_type,
 				  cfg.gen, &info);
 	if (ret < 0)
+	{
 		switchtec_perror("log_parse");
+	}
 	else
-		fprintf(stderr, "\nParsed log saved to %s.\n",
-			cfg.parsed_log_filename);
+	{
+		fprintf(stderr, "\nParsed log saved to %s.\n", cfg.parsed_log_filename);
+		/* return 0 for command success */
+		ret = 0;
+	}
 
 	if (info.version_mismatch && cfg.log_type != SWITCHTEC_LOG_PARSE_TYPE_FTDC) {
 		fprintf(stderr, "\nWARNING: The two input files have different version numbers.\n");
@@ -1974,9 +1979,15 @@ static int fw_read(int argc, char **argv)
 	progress_finish(cfg.no_progress_bar);
 
 	if (ret < 0)
+	{
 		switchtec_perror("fw_read");
-
-	fprintf(stderr, "\nFirmware read to %s.\n", cfg.out_filename);
+	}
+	else
+	{
+		fprintf(stderr, "\nFirmware read to %s.\n", cfg.out_filename);
+		/* return 0 for command success */
+		ret = 0;
+	}
 
 	switchtec_fw_part_summary_free(sum);
 
