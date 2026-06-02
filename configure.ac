@@ -35,3 +35,10 @@ AC_CONFIG_FILES([Makefile])
 AC_CONFIG_HEADER([config.h])
 
 AC_OUTPUT()
+
+AS_IF([test "x$ac_cv_lib_ncurses_initscr" != xyes &&
+       test "x$ac_cv_lib_curses_initscr"  != xyes],
+      [echo "NOTE  libcurses not enabled - 'gui' and 'diag eye' commands are not supported"])
+AS_IF([test "x$ac_cv_lib_crypto_RSA_free" != xyes ||
+       test "x$ac_cv_header_openssl_pem_h" != xyes],
+      [echo "NOTE  openssl not enabled - 'mfg kmsk-entry-add', 'mfg debug-unlock', 'mfg debug-lock-update', and 'mfg sjtag-unlock' commands are not supported"])

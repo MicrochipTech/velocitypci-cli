@@ -451,6 +451,12 @@ int eye_plot_graph(int *data, bool plot_6p_points, unsigned int w2h_score)
 }
 #else /* defined(HAVE_LIBCURSES) || defined(HAVE_LIBNCURSES) */
 
+int eye_plot_graph(int *data, bool plot_6p_points, unsigned int w2h_score)
+{
+	printf("eye plot requires libcurses support when velocitypci-cli is built\n");
+	return 0;
+}
+
 int graph_draw_win(struct range *X, struct range *Y, int *data, int *shades,
 		   const char *title, char x_title, char y_title, char *status,
 		   graph_anim_fn *anim, void *opaque)

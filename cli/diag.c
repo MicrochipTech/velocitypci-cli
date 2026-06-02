@@ -280,6 +280,7 @@ static int w2h(int argc, char **argv)
 
 #define CMD_DESC_EYE "Capture eye data"
 
+#if defined(HAVE_LIBCURSES) || defined(HAVE_LIBNCURSES)
 static int eye(int argc, char **argv)
 {
 	int ret, gen;
@@ -319,6 +320,20 @@ static int eye(int argc, char **argv)
 
 	return ret;
 }
+#endif
+
+#if !defined(HAVE_LIBCURSES) && !defined(HAVE_LIBNCURSES)
+static int no_libcurses(int argc, char **argv)
+{
+	fprintf(stderr,
+			"This command is only available when the libcurses development library is installed.\n"
+			"Try installing the libcurses development library in your system and rebuild this\n"
+			"program by running 'configure' and then 'make'.\n");
+	return -1;
+}
+
+#define eye	no_libcurses
+#endif
 
 static const struct argconfig_choice loopback_ltssm_speeds[] = {
 	{"GEN1", SWITCHTEC_DIAG_LTSSM_GEN1, "GEN1 LTSSM Speed"},
