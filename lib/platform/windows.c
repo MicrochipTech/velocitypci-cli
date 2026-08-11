@@ -78,14 +78,14 @@ static int count_devices(void)
 	DWORD count = 0;
 	SP_DEVICE_INTERFACE_DATA deviface;
 
-	devinfo = SetupDiGetClassDevs(&SWITCHTEC_INTERFACE_GUID,
+	devinfo = SetupDiGetClassDevs(&MCHP_PCIE_MNGT_EP_INTERFACE_GUID,
 				      NULL, NULL, DIGCF_DEVICEINTERFACE |
 				      DIGCF_PRESENT);
 
 	deviface.cbSize = sizeof(SP_DEVICE_INTERFACE_DATA);
 
 	while (SetupDiEnumDeviceInterfaces(devinfo, NULL,
-					   &SWITCHTEC_INTERFACE_GUID,
+					   &MCHP_PCIE_MNGT_EP_INTERFACE_GUID,
 					   count++, &deviface));
 
 	return count - 1;
@@ -284,7 +284,7 @@ int switchtec_list(struct switchtec_device_info **devlist)
 		return -errno;
 	}
 
-	devinfo = SetupDiGetClassDevs(&SWITCHTEC_INTERFACE_GUID,
+	devinfo = SetupDiGetClassDevs(&MCHP_PCIE_MNGT_EP_INTERFACE_GUID,
 				      NULL, NULL, DIGCF_DEVICEINTERFACE |
 				      DIGCF_PRESENT);
 	if (devinfo == INVALID_HANDLE_VALUE)
@@ -293,7 +293,7 @@ int switchtec_list(struct switchtec_device_info **devlist)
 	deviface.cbSize = sizeof(SP_DEVICE_INTERFACE_DATA);
 
 	while (SetupDiEnumDeviceInterfaces(devinfo, NULL,
-					   &SWITCHTEC_INTERFACE_GUID,
+					   &MCHP_PCIE_MNGT_EP_INTERFACE_GUID,
 					   idx, &deviface))
 	{
 		snprintf(dl[cnt].name, sizeof(dl[cnt].name),
@@ -466,7 +466,7 @@ struct switchtec_dev *switchtec_open_by_path(const char *path)
 		return NULL;
 
 	append_guid(path, path_with_guid, sizeof(path_with_guid),
-		    &SWITCHTEC_INTERFACE_GUID);
+		    &MCHP_PCIE_MNGT_EP_INTERFACE_GUID);
 
 	wdev->hdl = CreateFile(path_with_guid, GENERIC_READ | GENERIC_WRITE,
 			       FILE_SHARE_READ | FILE_SHARE_WRITE,
@@ -500,7 +500,7 @@ struct switchtec_dev *switchtec_open_by_index(int index)
 	struct switchtec_dev *dev = NULL;
 	BOOL status;
 
-	devinfo = SetupDiGetClassDevs(&SWITCHTEC_INTERFACE_GUID,
+	devinfo = SetupDiGetClassDevs(&MCHP_PCIE_MNGT_EP_INTERFACE_GUID,
 				      NULL, NULL, DIGCF_DEVICEINTERFACE |
 				      DIGCF_PRESENT);
 	if (devinfo == INVALID_HANDLE_VALUE)
@@ -509,7 +509,7 @@ struct switchtec_dev *switchtec_open_by_index(int index)
 	deviface.cbSize = sizeof(SP_DEVICE_INTERFACE_DATA);
 
 	status = SetupDiEnumDeviceInterfaces(devinfo, NULL,
-					     &SWITCHTEC_INTERFACE_GUID,
+					     &MCHP_PCIE_MNGT_EP_INTERFACE_GUID,
 					     index, &deviface);
 	if (!status) {
 		errno = ENODEV;
@@ -540,7 +540,7 @@ struct switchtec_dev *switchtec_open_by_pci_addr(int domain, int bus,
 	int dbus, ddevice, dfunc;
 	int idx = 0;
 
-	devinfo = SetupDiGetClassDevs(&SWITCHTEC_INTERFACE_GUID,
+	devinfo = SetupDiGetClassDevs(&MCHP_PCIE_MNGT_EP_INTERFACE_GUID,
 				      NULL, NULL, DIGCF_DEVICEINTERFACE |
 				      DIGCF_PRESENT);
 	if (devinfo == INVALID_HANDLE_VALUE)
@@ -549,7 +549,7 @@ struct switchtec_dev *switchtec_open_by_pci_addr(int domain, int bus,
 	deviface.cbSize = sizeof(SP_DEVICE_INTERFACE_DATA);
 
 	while (SetupDiEnumDeviceInterfaces(devinfo, NULL,
-					   &SWITCHTEC_INTERFACE_GUID,
+					   &MCHP_PCIE_MNGT_EP_INTERFACE_GUID,
 					   idx++, &deviface))
 	{
 		status = get_path(devinfo, &deviface,  &devdata,
