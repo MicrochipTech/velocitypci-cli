@@ -49,7 +49,6 @@
 #include "switchtec/errors.h"
 #include "switchtec/endian.h"
 #include "switchtec/mrpc.h"
-#include "switchtec/errors.h"
 #include <unistd.h>
 
 #include <errno.h>
@@ -61,7 +60,6 @@
 #ifndef _WIN32
 #include <arpa/inet.h>
 #endif
-#include <iconv.h>
 
 #include "lib/crc.h"
 #include "config.h"
