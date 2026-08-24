@@ -1312,10 +1312,8 @@ static int temp(int argc, char **argv)
 		return 1;
 	}
 
-	if (have_decent_term())
-		printf("%.3g °C\n", ret);
-	else
-		printf("%.3g degC\n", ret);
+	printf("%.3g degC\n", ret);
+
 	return 0;
 }
 
