@@ -22,6 +22,7 @@
  *
  */
 
+#include "config.h"
 #include "commands.h"
 #include "argconfig.h"
 #include "suffix.h"
