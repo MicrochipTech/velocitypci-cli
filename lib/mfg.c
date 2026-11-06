@@ -55,7 +55,7 @@
 #include <stdio.h>
 #include <string.h>
 #if HAVE_LIBCRYPTO
-#include <openssl/sha.h>
+#include <openssl/evp.h>
 #endif
 #ifndef _WIN32
 #include <arpa/inet.h>
@@ -68,6 +68,9 @@
 
 #if HAVE_LIBCRYPTO
 #include <openssl/pem.h>
+#if OPENSSL_VERSION_NUMBER >= 0x30000000L
+#include <openssl/core_names.h>
+#endif
 #endif
 #define SWITCHTEC_ACTV_IMG_ID_KMAN		1
 #define SWITCHTEC_ACTV_IMG_ID_BL2		2
@@ -100,29 +103,6 @@
 static int switchtec_mfg_cmd(struct switchtec_dev *dev, uint32_t cmd,
 			     const void *payload, size_t payload_len,
 			     void *resp, size_t resp_len);
-
-#if (HAVE_LIBCRYPTO && !HAVE_DECL_RSA_GET0_KEY)
-/**
- * openssl1.0 or older versions don't have this function, so copy
- * the code from openssl1.1 here
- *
- * @param r [in] Pointer to the RSA structure
- * @param n [out] Pointer to the BIGNUM structure for the modulus
- * @param e [out] Pointer to the BIGNUM structure for the public exponent
- * @param d [out] Pointer to the BIGNUM structure for the private exponent
- * @return void
- */
-static void RSA_get0_key(const RSA *r, const BIGNUM **n,
-			 const BIGNUM **e, const BIGNUM **d)
-{
-	if (n != NULL)
-		*n = r->n;
-	if (e != NULL)
-		*e = r->e;
-	if (d != NULL)
-		*d = r->d;
-}
-#endif
 
 /**
  * @brief Get I2C operands based on the Switchtec generation.
@@ -902,7 +882,6 @@ int switchtec_sjtag_status_get(struct switchtec_dev *dev,
 void sjtag_hr_calc(uint8_t *sjtag_debug_token, uint8_t *sjtag_nonce, uint8_t *digest, bool verbose)
 {
 	uint8_t sjtag_sha256_msg[SJTAG_SHA256_MSG_LEN] = {0};
-    SHA256_CTX sha256_algo;
 
     if(true == verbose)
     {
@@ -917,9 +896,8 @@ void sjtag_hr_calc(uint8_t *sjtag_debug_token, uint8_t *sjtag_nonce, uint8_t *di
 	(void)memcpy((void*)(sjtag_sha256_msg), (void*)sjtag_debug_token, SJTAG_DEBUG_TOKEN_LEN);
 	(void)memcpy((void*)(&sjtag_sha256_msg[SJTAG_DEBUG_TOKEN_LEN]), (void*)sjtag_nonce, SJTAG_NONCE_LEN);
 
-	SHA256_Init(&sha256_algo);
-    SHA256_Update(&sha256_algo, sjtag_sha256_msg, SJTAG_SHA256_MSG_LEN);
-    SHA256_Final(digest, &sha256_algo);
+	(void)EVP_Digest(sjtag_sha256_msg, SJTAG_SHA256_MSG_LEN, digest, NULL,
+			 EVP_sha256(), NULL);
     if(true == verbose)
     {
         printf("Host Response: ");
@@ -1776,6 +1754,73 @@ int switchtec_kmsk_set(struct switchtec_dev *dev,
 }
 
 #if HAVE_LIBCRYPTO
+
+#if OPENSSL_VERSION_NUMBER >= 0x30000000L
+
+/**
+ * @brief Read public key from public key file
+ * @param[in]  pubk_file Public key file
+ * @param[out] pubk	 Public key
+ * @return 0 on success, error code on failure
+ */
+int switchtec_read_pubk_file(FILE *pubk_file, struct switchtec_pubkey *pubk)
+{
+	EVP_PKEY *pkey;
+	BIGNUM *modulus_bn = NULL;
+	BIGNUM *exponent_bn = NULL;
+	uint32_t exponent_tmp = 0;
+	int ret = -1;
+
+	pkey = PEM_read_PUBKEY(pubk_file, NULL, NULL, NULL);
+	if (pkey == NULL) {
+		fseek(pubk_file, 0L, SEEK_SET);
+		pkey = PEM_read_PrivateKey(pubk_file, NULL, NULL, NULL);
+		if (pkey == NULL)
+			return -1;
+	}
+
+	if (EVP_PKEY_get_bn_param(pkey, OSSL_PKEY_PARAM_RSA_N, &modulus_bn) &&
+	    EVP_PKEY_get_bn_param(pkey, OSSL_PKEY_PARAM_RSA_E, &exponent_bn) &&
+	    BN_num_bytes(modulus_bn) <= SWITCHTEC_PUB_KEY_LEN &&
+	    BN_num_bytes(exponent_bn) <= (int)sizeof(exponent_tmp)) {
+		BN_bn2bin(modulus_bn, pubk->pubkey);
+		BN_bn2bin(exponent_bn, (uint8_t *)&exponent_tmp);
+		pubk->pubkey_exp = be32toh(exponent_tmp);
+		ret = 0;
+	}
+
+	BN_free(modulus_bn);
+	BN_free(exponent_bn);
+	EVP_PKEY_free(pkey);
+
+	return ret;
+}
+
+#else /* OPENSSL_VERSION_NUMBER < 3.0 */
+
+#if !HAVE_DECL_RSA_GET0_KEY
+/**
+ * openssl1.0 or older versions don't have this function, so copy
+ * the code from openssl1.1 here
+ *
+ * @param r [in] Pointer to the RSA structure
+ * @param n [out] Pointer to the BIGNUM structure for the modulus
+ * @param e [out] Pointer to the BIGNUM structure for the public exponent
+ * @param d [out] Pointer to the BIGNUM structure for the private exponent
+ * @return void
+ */
+static void RSA_get0_key(const RSA *r, const BIGNUM **n,
+			 const BIGNUM **e, const BIGNUM **d)
+{
+	if (n != NULL)
+		*n = r->n;
+	if (e != NULL)
+		*e = r->e;
+	if (d != NULL)
+		*d = r->d;
+}
+#endif
+
 /**
  * @brief Read public key from public key file
  * @param[in]  pubk_file Public key file
@@ -1788,6 +1833,7 @@ int switchtec_read_pubk_file(FILE *pubk_file, struct switchtec_pubkey *pubk)
 	const BIGNUM *modulus_bn;
 	const BIGNUM *exponent_bn;
 	uint32_t exponent_tmp = 0;
+	int ret = -1;
 
 	RSAKey = PEM_read_RSA_PUBKEY(pubk_file, NULL, NULL, NULL);
 	if (RSAKey == NULL) {
@@ -1799,15 +1845,22 @@ int switchtec_read_pubk_file(FILE *pubk_file, struct switchtec_pubkey *pubk)
 
 	RSA_get0_key(RSAKey, &modulus_bn, &exponent_bn, NULL);
 
-	BN_bn2bin(modulus_bn, pubk->pubkey);
-	BN_bn2bin(exponent_bn, (uint8_t *)&exponent_tmp);
+	if (BN_num_bytes(modulus_bn) <= SWITCHTEC_PUB_KEY_LEN &&
+	    BN_num_bytes(exponent_bn) <= (int)sizeof(exponent_tmp)) {
+		BN_bn2bin(modulus_bn, pubk->pubkey);
+		BN_bn2bin(exponent_bn, (uint8_t *)&exponent_tmp);
+		pubk->pubkey_exp = be32toh(exponent_tmp);
+		ret = 0;
+	}
 
-	pubk->pubkey_exp = be32toh(exponent_tmp);
 	RSA_free(RSAKey);
 
-	return 0;
+	return ret;
 }
-#endif
+
+#endif /* OPENSSL_VERSION_NUMBER */
+
+#endif /* HAVE_LIBCRYPTO */
 
 
 /**
